@@ -17,7 +17,7 @@ class labelinputfield extends Component {
           <label className="flabel">{this.state._label}</label>
         </Grid.Column>
         <Grid.Column padded>
-          <input placeholder={this.state._placeholder} className="finput" />
+          <Input fluid placeholder={this.state._placeholder} />
         </Grid.Column>
       </Grid.Row>
     );

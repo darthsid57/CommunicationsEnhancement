@@ -90,7 +90,7 @@ class Communication extends Component {
     } else {
       return (
         <Container className="mainpage">
-          <Showme />
+          {/* <Showme /> */}
           <Menu inverted widths={8} color="grey" stackable>
             <Menu.Item
               name="home"
@@ -239,77 +239,7 @@ class Communication extends Component {
           </Segment.Group>
           <Header as="h1">Communication Details</Header>
           <Divider inverted />
-          <Grid columns={2} divided padded>
-            <Grid.Row>
-              <Grid.Column>
-                <Dropdown
-                  placeholder="Type of Communication"
-                  selection
-                  fluid
-                  options={this.state.options}
-                />
-                <Dropdown
-                  placeholder="Type of Communication"
-                  selection
-                  fluid
-                  options={this.state.options}
-                  onChange={this.handleTypeofCommChange}
-                />
-                <TypeofCommunication
-                  typeofcategory={this.state.typeofcategory}
-                />
-              </Grid.Column>
-              <Grid.Column>
-                <Dropdown placeholder="Sub Category" selection fluid />
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column>
-                <Form>
-                  <Grid columns={2} divided>
-                    <Labelinputfield
-                      label="Type of Incident :*"
-                      placeholder="Type of Incident"
-                    />
-
-                    <Labelinputfield
-                      label="Time of Incident :*"
-                      placeholder="Time of Incident"
-                    />
-                    <Labelinputfield
-                      label="Incident Area:*"
-                      placeholder="Incident Area"
-                    />
-                  </Grid>
-                </Form>
-              </Grid.Column>
-              <Grid.Column>
-                <Form>
-                  <Form.Field>
-                    <Grid columns={2} divided>
-                      <Labelinputfield
-                        label="Vehicle Number"
-                        placeholder="Vehicle Number"
-                      />
-                      <Grid.Row columns={2} padded>
-                        <DropdownOptions placeholder="Location of Incident" />
-                        <Pickerfordate />
-                      </Grid.Row>
-                      <Grid.Row>
-                        <Grid.Column
-                          padded
-                          verticalAlign="middle"
-                          textAlign="center"
-                        >
-                          <TextArea rows={3} placeholder="Tell us more" fluid />
-                        </Grid.Column>
-                      </Grid.Row>
-                    </Grid>
-                  </Form.Field>
-                </Form>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
+          <TypeofCommunication typeofcategory={this.state.typeofcategory} />
 
           <Grid columns={2} divided>
             <Grid.Row padded>
@@ -675,3 +605,73 @@ export default Communication;
 //          return res.send(200).end();
 //    });
 // };);
+
+// {/* <Grid columns={2} divided padded>
+//             <Grid.Row>
+//               <Grid.Column>
+//                 {/* <Dropdown
+//                   placeholder="Type of Communication"
+//                   selection
+//                   fluid
+//                   options={this.state.options}
+//                 /> */}
+//                 {/* <Dropdown
+//                   placeholder="Type of Communication"
+//                   selection
+//                   fluid
+//                   options={this.state.options}
+//                   onChange={this.handleTypeofCommChange}
+//                 /> */}
+
+//               </Grid.Column>
+//               <Grid.Column>
+//                 <Dropdown placeholder="Sub Category" selection fluid />
+//               </Grid.Column>
+//             </Grid.Row>
+//             <Grid.Row>
+//               <Grid.Column>
+//                 <Form>
+//                   <Grid columns={2} divided>
+//                     <Labelinputfield
+//                       label="Type of Incident :*"
+//                       placeholder="Type of Incident"
+//                     />
+
+//                     <Labelinputfield
+//                       label="Time of Incident :*"
+//                       placeholder="Time of Incident"
+//                     />
+//                     <Labelinputfield
+//                       label="Incident Area:*"
+//                       placeholder="Incident Area"
+//                     />
+//                   </Grid>
+//                 </Form>
+//               </Grid.Column>
+//               <Grid.Column>
+//                 <Form>
+//                   <Form.Field>
+//                     <Grid columns={2} divided>
+//                       <Labelinputfield
+//                         label="Vehicle Number"
+//                         placeholder="Vehicle Number"
+//                       />
+//                       <Grid.Row columns={2} padded>
+//                         <DropdownOptions placeholder="Location of Incident" />
+//                         <Pickerfordate />
+//                       </Grid.Row>
+//                       <Grid.Row>
+//                         <Grid.Column
+//                           padded
+//                           verticalAlign="middle"
+//                           textAlign="center"
+//                         >
+//                           <TextArea rows={3} placeholder="Tell us more" fluid />
+//                         </Grid.Column>
+//                       </Grid.Row>
+//                     </Grid>
+//                   </Form.Field>
+//                 </Form>
+//               </Grid.Column>
+//             </Grid.Row>
+//           </Grid> */}

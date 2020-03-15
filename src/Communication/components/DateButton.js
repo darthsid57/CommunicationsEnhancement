@@ -17,12 +17,11 @@ class Example extends React.Component {
 
   render() {
     return (
-      <Grid.Column padded verticalAlign="middle" textAlign="center">
-        <DatePicker
-          selected={this.state.startDate}
-          onChange={this.handleChange}
-        />
-      </Grid.Column>
+      <DatePicker
+        selected={this.state.startDate}
+        onChange={this.handleChange}
+        className="finput"
+      />
     );
   }
 }
