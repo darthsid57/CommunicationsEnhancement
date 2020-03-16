@@ -37,7 +37,15 @@ class Communication extends Component {
         { key: 2, text: "Choice 2", value: 2 },
         { key: 3, text: "Choice 3", value: 3 }
       ],
-      typeofcategory: ""
+      typeofcategory: "",
+      clientNumber: "",
+      phoneContact: "",
+      clientName: "",
+      emailAddress: "",
+      idNumber: "",
+      idType: "",
+      region: "",
+      office: ""
     };
 
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -47,6 +55,20 @@ class Communication extends Component {
     );
 
     this.handleTypeofCommChange = this.handleTypeofCommChange.bind(this);
+    this.handleClientNumberChange = this.handleClientNumberChange.bind(this);
+    // this.handlePhoneContactChange = this.handlePhoneContactChange.bind(this);
+    // this.handleClientNameChange = this.handleClientNameChange.bind(this);
+    // this.handleEmailAddressChange = this.handleEmailAddressChange.bind(this);
+    // this.handleIdNumberChange = this.handleIdNumberChange.bind(this);
+    // this.handleIdTypeChange = this.handleIdTypeChange.bind(this);
+    // this.handleRegionChange = this.handleRegionChange.bind(this);
+    // this.handleOfficeChange = this.handleOfficeChange.bind(this);
+  }
+
+  handleClientNumberChange(event) {
+    console.log(event.target.value);
+    this.setState({ clientNumber: event.target.value });
+    console.log(this.state.clientNumber);
   }
 
   handleTypeofCommChange(event, { value }) {
@@ -159,6 +181,7 @@ class Communication extends Component {
                               <input
                                 placeholder="Client Number"
                                 className="finput"
+                                onChange={this.handleClientNumberChange}
                               />
                             </Grid.Column>
                           </Grid.Row>
@@ -239,7 +262,7 @@ class Communication extends Component {
           </Segment.Group>
           <Header as="h1">Communication Details</Header>
           <Divider inverted />
-          <TypeofCommunication typeofcategory={this.state.typeofcategory} />
+          <TypeofCommunication ClientNumber={this.state.clientNumber} />
 
           {/* <Grid columns={2} divided>
             <Grid.Row padded>

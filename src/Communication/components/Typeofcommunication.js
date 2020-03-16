@@ -25,7 +25,8 @@ class TypeofCommunication extends Component {
         { key: 2, text: "Commendation", value: 2 },
         { key: 3, text: "Complain", value: 3 }
       ],
-      requestType: 3
+      requestType: 3,
+      ClientNumber: this.props.ClientNumber
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -73,7 +74,8 @@ class TypeofCommunication extends Component {
   //   }
 
   render() {
-    console.log(this.state.requestType);
+    //console.log(this.state.requestType);
+    console.log(this.state.ClientNumber);
     if (this.state.requestType === 1) {
       return (
         <Grid columns={2} divided padded>
