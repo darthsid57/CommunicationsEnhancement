@@ -241,7 +241,7 @@ class Communication extends Component {
           <Divider inverted />
           <TypeofCommunication typeofcategory={this.state.typeofcategory} />
 
-          <Grid columns={2} divided>
+          {/* <Grid columns={2} divided>
             <Grid.Row padded>
               <Grid.Column padded>
                 <Grid.Row padded></Grid.Row>
@@ -264,7 +264,7 @@ class Communication extends Component {
                 </Form.Field>
                 <Form.Field onSubmit={this.onFormSubmit} padded inline>
                   {/* <Header as="h3">File Upload</Header> */}
-                  <Input type="file" name="myImage" onChange={this.onChange} />
+          {/* <Input type="file" name="myImage" onChange={this.onChange} />
                   <Button type="submit" color="google plus">
                     Upload
                   </Button>
@@ -282,7 +282,7 @@ class Communication extends Component {
             <Grid.Row>
               <Label>test1</Label>
             </Grid.Row>
-          </Grid>
+          </Grid> */}
         </Container>
       );
     }

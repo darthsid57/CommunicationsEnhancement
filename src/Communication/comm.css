@@ -19,6 +19,8 @@
   padding: 20px;
   height: 50px;
   color: black;
+  width: fit-content;
+  text-align: center;
 }
 
 .menupage {

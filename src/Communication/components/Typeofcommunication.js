@@ -1,20 +1,31 @@
 import React, { Component } from "react";
-import { Label, Dropdown, Grid, TextArea, Form } from "semantic-ui-react";
+import {
+  Label,
+  Dropdown,
+  Grid,
+  TextArea,
+  Form,
+  Input,
+  Checkbox,
+  Button
+} from "semantic-ui-react";
 import Labelinputfield from "./labelinputfield";
 import DropdownOptions from "./Dropdownoptions";
 import Pickerfordate from "./DateButton";
 import "../comm.css";
+import FooterComponent from "./Footer";
+import LabelDatepicker from "./DateButton";
 
 class TypeofCommunication extends Component {
   constructor(props) {
     super(props);
     this.state = {
       options: [
-        { key: 1, text: "Query", value: 1 },
+        { key: 1, text: "Enquiry", value: 1 },
         { key: 2, text: "Commendation", value: 2 },
         { key: 3, text: "Complain", value: 3 }
       ],
-      requestType: 2
+      requestType: 3
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -68,19 +79,6 @@ class TypeofCommunication extends Component {
         <Grid columns={2} divided padded>
           <Grid.Row>
             <Grid.Column>
-              {/* <Dropdown
-                  placeholder="Type of Communication"
-                  selection
-                  fluid
-                  options={this.state.options}
-                /> */}
-              {/* <Dropdown
-                  placeholder="Type of Communication"
-                  selection
-                  fluid
-                  options={this.state.options}
-                  onChange={this.handleTypeofCommChange}
-                /> */}
               <Dropdown
                 placeholder="Type of Communication"
                 selection
@@ -89,49 +87,27 @@ class TypeofCommunication extends Component {
                 onChange={this.handleChange}
               />
             </Grid.Column>
-            <Grid.Column>
-              <Dropdown placeholder="Sub Category1" selection fluid />
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Column>
-              <Form>
-                <Grid columns={2} divided>
-                  <Labelinputfield
-                    label="Type of Incident :*"
-                    placeholder="Type of Incident"
-                  />
-
-                  <Labelinputfield
-                    label="Time of Incident :*"
-                    placeholder="Time of Incident"
-                  />
-                  <Labelinputfield
-                    label="Incident Area:*"
-                    placeholder="Incident Area"
-                  />
-                </Grid>
-              </Form>
-            </Grid.Column>
-            <Grid.Column>
+            <Grid.Column padded>
               <Form>
                 <Form.Field>
                   <Grid columns={2} divided>
-                    <Labelinputfield
-                      label="Vehicle Number"
-                      placeholder="Vehicle Number"
-                    />
                     <Grid.Row columns={2} padded>
-                      <DropdownOptions placeholder="Location of Incident" />
-                      <Pickerfordate />
+                      <Grid.Column>
+                        <Label size="big" className="flabel">
+                          Date of Enquiry :*
+                        </Label>
+                      </Grid.Column>
+                      <Grid.Column>
+                        <Pickerfordate />
+                      </Grid.Column>
                     </Grid.Row>
-                    <Grid.Row>
+                    <Grid.Row columns={1}>
                       <Grid.Column
                         padded
                         verticalAlign="middle"
                         textAlign="center"
                       >
-                        <TextArea rows={3} placeholder="Tell us more" fluid />
+                        <TextArea rows={3} placeholder="Other Details*" fluid />
                       </Grid.Column>
                     </Grid.Row>
                   </Grid>
@@ -139,6 +115,8 @@ class TypeofCommunication extends Component {
               </Form>
             </Grid.Column>
           </Grid.Row>
+
+          <FooterComponent />
         </Grid>
       );
     }
@@ -207,6 +185,7 @@ class TypeofCommunication extends Component {
               </Form>
             </Grid.Column>
           </Grid.Row>
+          <FooterComponent />
         </Grid>
       );
     }
@@ -268,17 +247,24 @@ class TypeofCommunication extends Component {
                       label="Vehicle Number"
                       placeholder="Vehicle Number"
                     />
-                    <Grid.Row columns={2} padded>
-                      <DropdownOptions placeholder="Location of Incident" />
-                      <Pickerfordate />
+                    <Grid.Row columns={3} padded>
+                      <Grid.Column>
+                        <DropdownOptions placeholder="Location of Incident" />
+                      </Grid.Column>
+                      <Grid.Column>
+                        <label className="flabel">Incident Date:*</label>
+                      </Grid.Column>
+                      <Grid.Column>
+                        <Pickerfordate />
+                      </Grid.Column>
                     </Grid.Row>
-                    <Grid.Row>
+                    <Grid.Row columns={1}>
                       <Grid.Column
                         padded
                         verticalAlign="middle"
                         textAlign="center"
                       >
-                        <TextArea rows={3} placeholder="Tell us more" fluid />
+                        <TextArea rows={3} placeholder="Other Details*" fluid />
                       </Grid.Column>
                     </Grid.Row>
                   </Grid>
@@ -286,6 +272,7 @@ class TypeofCommunication extends Component {
               </Form>
             </Grid.Column>
           </Grid.Row>
+          <FooterComponent />
         </Grid>
       );
     }
