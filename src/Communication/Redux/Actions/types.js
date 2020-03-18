@@ -1,0 +1,3 @@
+export const GET_REGION_DATA = "GET_REGION_DATA";
+export const GET_DISTRICT_DATA = "GET_DISTRICT_DATA";
+export const GET_OFFICE_DATA = "GET_OFFICE_DATA";

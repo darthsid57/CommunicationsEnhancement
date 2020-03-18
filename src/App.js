@@ -6,6 +6,8 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Communication from "./Communication/Communication";
 import ShopContext from "../src/Communication/context/shop-context";
 import LoginPage from "../src/Communication/components/loginPage";
+import { Provider } from "react-redux";
+import store from "./Communication/Redux/store";
 
 class App extends Component {
   state = {
@@ -29,14 +31,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <ShopContext.Provider
-          value={{
-            products: this.state.products,
-            cart: this.state.cart,
-            addProductToCart: this.addProductToCart,
-            removeProductFromCart: this.removeProductFromCart
-          }}
-        >
+        <Provider store={store}>
           <BrowserRouter>
             <Switch>
               <Route exact path="/" component={Communication} />
@@ -44,10 +39,31 @@ class App extends Component {
               <Route path="*" component={() => "404 NOT FOUND"} />
             </Switch>
           </BrowserRouter>
-        </ShopContext.Provider>
+        </Provider>
       </div>
     );
   }
 }
 
 export default App;
+
+{
+  /* <div>
+<ShopContext.Provider
+  value={{
+    products: this.state.products,
+    cart: this.state.cart,
+    addProductToCart: this.addProductToCart,
+    removeProductFromCart: this.removeProductFromCart
+  }}
+>
+  <BrowserRouter>
+    <Switch>
+      <Route exact path="/" component={Communication} />
+      <Route path="/login" component={LoginPage} />
+      <Route path="*" component={() => "404 NOT FOUND"} />
+    </Switch>
+  </BrowserRouter>
+</ShopContext.Provider>
+</div> */
+}

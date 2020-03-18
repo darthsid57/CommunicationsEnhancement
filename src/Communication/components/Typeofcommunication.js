@@ -15,6 +15,7 @@ import Pickerfordate from "./DateButton";
 import "../comm.css";
 import FooterComponent from "./Footer";
 import LabelDatepicker from "./DateButton";
+import Regions from "../Redux/data/Regions";
 
 class TypeofCommunication extends Component {
   constructor(props) {
@@ -89,6 +90,7 @@ class TypeofCommunication extends Component {
                 options={this.state.options}
                 onChange={this.handleChange}
               />
+              <Regions label="Region" placeholder="Region" />
             </Grid.Column>
             <Grid.Column padded>
               <Form>
