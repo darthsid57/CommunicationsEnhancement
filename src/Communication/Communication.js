@@ -56,7 +56,7 @@ class Communication extends Component {
 
     this.handleTypeofCommChange = this.handleTypeofCommChange.bind(this);
     this.handleClientNumberChange = this.handleClientNumberChange.bind(this);
-    // this.handlePhoneContactChange = this.handlePhoneContactChange.bind(this);
+    this.handlePhoneContactChange = this.handlePhoneContactChange.bind(this);
     // this.handleClientNameChange = this.handleClientNameChange.bind(this);
     // this.handleEmailAddressChange = this.handleEmailAddressChange.bind(this);
     // this.handleIdNumberChange = this.handleIdNumberChange.bind(this);
@@ -69,6 +69,10 @@ class Communication extends Component {
     console.log(event.target.value);
     this.setState({ clientNumber: event.target.value });
     console.log(this.state.clientNumber);
+  }
+
+  handlePhoneContactChange(event) {
+    this.setState({});
   }
 
   handleTypeofCommChange(event, { value }) {

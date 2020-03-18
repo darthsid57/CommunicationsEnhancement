@@ -7,5 +7,9 @@ export default React.createContext({
     { id: "p3", title: "G502 Mouse", price: 0.99 },
     { id: "p4", title: "HS50 Corsair", price: 2.99 }
   ],
-  cart: []
+  cart: [],
+
+  addProductToCart: product => {},
+
+  removeProductFromCart: productId => {}
 });

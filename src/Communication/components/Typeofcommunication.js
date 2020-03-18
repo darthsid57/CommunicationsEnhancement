@@ -21,7 +21,7 @@ class TypeofCommunication extends Component {
     super(props);
     this.state = {
       options: [
-        { key: 1, text: "Enquiry", value: 1 },
+        { key: 1, text: "Enquery", value: 1 },
         { key: 2, text: "Commendation", value: 2 },
         { key: 3, text: "Complain", value: 3 }
       ],
@@ -76,6 +76,7 @@ class TypeofCommunication extends Component {
   render() {
     //console.log(this.state.requestType);
     console.log(this.state.ClientNumber);
+
     if (this.state.requestType === 1) {
       return (
         <Grid columns={2} divided padded>
