@@ -16,7 +16,7 @@ class Regions extends Component {
         fluid
         selection
         search
-        options={this.props.branches}
+        options={this.props.Regions}
         onChange={this.props.onChange}
         error={this.props.error}
       />

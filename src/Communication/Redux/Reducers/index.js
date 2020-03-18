@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import regionReducer from "./regionReducer";
 
 const allReducers = combineReducers({
-  regions: regionReducer
+  Regions: regionReducer
 });
 
 export default allReducers;

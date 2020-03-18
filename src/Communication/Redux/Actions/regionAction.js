@@ -1,13 +1,18 @@
 import { GET_REGION_DATA } from "./types";
+import { POST_REGION_DATA } from "./types";
 import Axios from "axios";
 
 export const getRegion = () => dispatch => {
   console.log("GET Regions");
 
-  Axios.get("http://localhost:2567/server/region").then(regions =>
+  Axios.get("http://192.168.1.2:2567/server/region").then(regions =>
     dispatch({
       type: GET_REGION_DATA,
       payload: regions.data
     })
   );
 };
+
+export function addRegion(payload) {
+  return { type: "POST_REGION_DATA", payload };
+}
