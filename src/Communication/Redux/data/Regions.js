@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getRegion } from "../Actions/regionAction";
-import { Dropdown } from "semantic-ui-react";
+import { Dropdown, Grid } from "semantic-ui-react";
 
 class Regions extends Component {
   componentWillMount() {
@@ -10,16 +10,18 @@ class Regions extends Component {
 
   render() {
     return (
-      <Dropdown
-        label={this.props.label}
-        placeholder={this.props.placeholder}
-        fluid
-        selection
-        search
-        options={this.props.Regions}
-        onChange={this.props.onChange}
-        error={this.props.error}
-      />
+      <Grid.Column>
+        <Dropdown
+          label={this.props.label}
+          placeholder={this.props.placeholder}
+          fluid
+          selection
+          search
+          options={this.props.Regions}
+          onChange={this.props.onChange}
+          error={this.props.error}
+        />
+      </Grid.Column>
     );
   }
 }

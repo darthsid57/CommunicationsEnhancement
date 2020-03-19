@@ -7,7 +7,8 @@ import {
   Form,
   Input,
   Checkbox,
-  Button
+  Button,
+  Responsive
 } from "semantic-ui-react";
 import Labelinputfield from "./labelinputfield";
 import DropdownOptions from "./Dropdownoptions";
@@ -27,11 +28,13 @@ class TypeofCommunication extends Component {
         { key: 3, text: "Complain", value: 3 }
       ],
       requestType: 3,
-      ClientNumber: this.props.ClientNumber
+      ClientNumber: this.props.ClientNumber,
+      regionValue: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleTypeofCommChange = this.handleTypeofCommChange.bind(this);
+    this.handleRegionChange = this.handleRegionChange.bind(this);
   }
 
   //   handleChange(event) {
@@ -74,14 +77,21 @@ class TypeofCommunication extends Component {
   //     }
   //   }
 
+  handleRegionChange(event, { value }) {
+    console.log(value);
+    this.setState({
+      regionValue: value
+    });
+  }
+
   render() {
     //console.log(this.state.requestType);
     console.log(this.state.ClientNumber);
 
     if (this.state.requestType === 1) {
       return (
-        <Grid columns={2} divided padded>
-          <Grid.Row>
+        <Grid columns={2} divided padded stackable>
+          <Grid.Row stackable>
             <Grid.Column>
               <Dropdown
                 placeholder="Type of Communication"
@@ -90,12 +100,11 @@ class TypeofCommunication extends Component {
                 options={this.state.options}
                 onChange={this.handleChange}
               />
-              <Regions label="Region" placeholder="Region" />
             </Grid.Column>
             <Grid.Column padded>
               <Form>
                 <Form.Field>
-                  <Grid columns={2} divided>
+                  <Grid columns={2} divided stackable>
                     <Grid.Row columns={2} padded>
                       <Grid.Column>
                         <Label size="big" className="flabel">
@@ -127,9 +136,9 @@ class TypeofCommunication extends Component {
     }
     if (this.state.requestType === 2) {
       return (
-        <Grid columns={2} divided padded>
-          <Grid.Row>
-            <Grid.Column>
+        <Grid stackable columns={2} divided padded>
+          <Grid.Row stackable>
+            <Grid.Column stackable>
               {/* <Dropdown
                   placeholder="Type of Communication"
                   selection
@@ -151,13 +160,13 @@ class TypeofCommunication extends Component {
                 onChange={this.handleChange}
               />
             </Grid.Column>
-            <Grid.Column>
-              <Pickerfordate />
+            <Grid.Column stackable>
+              <Pickerfordate stackable />
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row>
-            <Grid.Column>
-              <Grid columns={2} divided>
+          <Grid.Row stackable>
+            <Grid.Column stackable>
+              <Grid columns={2} divided stackable>
                 <Labelinputfield
                   label="Staff Name :"
                   placeholder="Staff Name"
@@ -169,15 +178,16 @@ class TypeofCommunication extends Component {
                 />
               </Grid>
             </Grid.Column>
-            <Grid.Column>
+            <Grid.Column stackable>
               <Form>
                 <Form.Field>
-                  <Grid divided>
-                    <Grid.Row>
+                  <Grid divided stackable>
+                    <Grid.Row stackable>
                       <Grid.Column
                         padded
                         verticalAlign="middle"
                         textAlign="center"
+                        stackable
                       >
                         <TextArea
                           rows={5}
@@ -195,10 +205,11 @@ class TypeofCommunication extends Component {
       );
     }
     if (this.state.requestType === 3) {
+      //Complain
       return (
-        <Grid columns={2} divided padded>
-          <Grid.Row>
-            <Grid.Column>
+        <Grid stackable columns={2} divided padded>
+          <Grid.Row stackable>
+            <Grid.Column stackable>
               {/* <Dropdown
                 placeholder="Type of Communication"
                 selection
@@ -220,14 +231,14 @@ class TypeofCommunication extends Component {
                 onChange={this.handleChange}
               />
             </Grid.Column>
-            <Grid.Column>
+            <Grid.Column stackable>
               <Dropdown placeholder="Sub Category3" selection fluid />
             </Grid.Column>
           </Grid.Row>
-          <Grid.Row>
-            <Grid.Column>
+          <Grid.Row stackable>
+            <Grid.Column stackable>
               <Form>
-                <Grid columns={2} divided>
+                <Grid columns={2} divided stackable>
                   <Labelinputfield
                     label="Type of Incident :*"
                     placeholder="Type of Incident"
@@ -244,19 +255,19 @@ class TypeofCommunication extends Component {
                 </Grid>
               </Form>
             </Grid.Column>
-            <Grid.Column>
-              <Form>
-                <Form.Field>
-                  <Grid columns={2} divided>
+            <Grid.Column stackable>
+              <Form stackable>
+                <Form.Field stackable>
+                  <Grid columns={2} divided stackable>
                     <Labelinputfield
                       label="Vehicle Number"
                       placeholder="Vehicle Number"
                     />
-                    <Grid.Row columns={3} padded>
+                    <Grid.Row columns={3} padded stackable>
                       <Grid.Column>
                         <DropdownOptions placeholder="Location of Incident" />
                       </Grid.Column>
-                      <Grid.Column>
+                      <Grid.Column stackable>
                         <label className="flabel">Incident Date:*</label>
                       </Grid.Column>
                       <Grid.Column>

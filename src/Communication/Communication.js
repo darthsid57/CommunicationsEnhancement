@@ -21,9 +21,11 @@ import {
   Label,
   TextArea,
   Responsive,
-  Segment
+  Segment,
+  Accordion
 } from "semantic-ui-react";
 import TypeofCommunication from "./components/Typeofcommunication";
+import Regions from "../Communication/Redux/data/Regions";
 
 class Communication extends Component {
   state = { activeItem: "home" };
@@ -45,7 +47,9 @@ class Communication extends Component {
       idNumber: "",
       idType: "",
       region: "",
-      office: ""
+      office: "",
+      activeIndex: 0,
+      regionValue: ""
     };
 
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -57,6 +61,8 @@ class Communication extends Component {
     this.handleTypeofCommChange = this.handleTypeofCommChange.bind(this);
     this.handleClientNumberChange = this.handleClientNumberChange.bind(this);
     this.handlePhoneContactChange = this.handlePhoneContactChange.bind(this);
+    this.handleClickAccordion = this.handleClickAccordion.bind(this);
+    this.handleRegionChange = this.handleRegionChange.bind(this);
     // this.handleClientNameChange = this.handleClientNameChange.bind(this);
     // this.handleEmailAddressChange = this.handleEmailAddressChange.bind(this);
     // this.handleIdNumberChange = this.handleIdNumberChange.bind(this);
@@ -108,8 +114,69 @@ class Communication extends Component {
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
+  handleClickAccordion = (e, titleProps) => {
+    const { index } = titleProps;
+    const { activeIndex } = this.state;
+    const newIndex = activeIndex === index ? -1 : index;
+
+    this.setState({ activeIndex: newIndex });
+  };
+
+  handleRegionChange(event, { value }) {
+    console.log(value);
+    this.setState({
+      regionValue: value
+    });
+  }
+
   render() {
-    const { activeItem } = this.state;
+    const { activeItem, activeIndex } = this.state;
+
+    const SizeForm = (
+      <Menu inverted widths={8} color="grey" stackable>
+        <Menu.Item
+          name="home"
+          active={activeItem === "home"}
+          onClick={this.handleItemClick}
+        />
+        <Menu.Item
+          name="licensing"
+          active={activeItem === "licensing"}
+          onClick={this.handleItemClick}
+          link="https://www.lta.com.fj/"
+        />
+        <Menu.Item
+          name="registration"
+          active={activeItem === "registration"}
+          onClick={this.handleItemClick}
+        />
+        <Menu.Item
+          name="road safety"
+          active={activeItem === "road safety"}
+          onClick={this.handleItemClick}
+        />
+        <Menu.Item
+          name="enforcement"
+          active={activeItem === "enforcement"}
+          onClick={this.handleItemClick}
+        />
+        <Menu.Item
+          name="passengers"
+          active={activeItem === "passengers"}
+          onClick={this.handleItemClick}
+        />
+        <Menu.Item
+          name="agencies"
+          active={activeItem === "agencies"}
+          onClick={this.handleItemClick}
+        />
+        <Menu.Item
+          name="about us"
+          active={activeItem === "about us"}
+          onClick={this.handleItemClick}
+        />
+      </Menu>
+    );
 
     if (this.state.typeofcategory === "Choice 2") {
       return <CommendationForm />;
@@ -117,153 +184,174 @@ class Communication extends Component {
       return (
         <Container className="mainpage">
           {/* <Showme /> */}
-          <Menu inverted widths={8} color="grey" stackable>
-            <Menu.Item
-              name="home"
-              active={activeItem === "home"}
-              onClick={this.handleItemClick}
-            />
-            <Menu.Item
-              name="licensing"
-              active={activeItem === "licensing"}
-              onClick={this.handleItemClick}
-              link="https://www.lta.com.fj/"
-            />
-            <Menu.Item
-              name="registration"
-              active={activeItem === "registration"}
-              onClick={this.handleItemClick}
-            />
-            <Menu.Item
-              name="road safety"
-              active={activeItem === "road safety"}
-              onClick={this.handleItemClick}
-            />
-            <Menu.Item
-              name="enforcement"
-              active={activeItem === "enforcement"}
-              onClick={this.handleItemClick}
-            />
-            <Menu.Item
-              name="passengers"
-              active={activeItem === "passengers"}
-              onClick={this.handleItemClick}
-            />
-            <Menu.Item
-              name="agencies"
-              active={activeItem === "agencies"}
-              onClick={this.handleItemClick}
-            />
-            <Menu.Item
-              name="about us"
-              active={activeItem === "about us"}
-              onClick={this.handleItemClick}
-            />
-          </Menu>
+          <Segment.Group>
+            <Responsive as={Segment} maxWidth={767}>
+              <Accordion as={Menu} vertical>
+                <Menu.Item>
+                  <Accordion.Title
+                    active={activeIndex === 0}
+                    content="Menu"
+                    index={0}
+                    onClick={this.handleClickAccordion}
+                  />
+                  <Accordion.Content
+                    active={activeIndex === 0}
+                    content={SizeForm}
+                  />
+                </Menu.Item>
+              </Accordion>
+            </Responsive>
+            <Responsive as={Segment} minWidth={1125}>
+              <Menu inverted widths={8} color="grey" stackable>
+                <Menu.Item
+                  name="home"
+                  active={activeItem === "home"}
+                  onClick={this.handleItemClick}
+                />
+                <Menu.Item
+                  name="licensing"
+                  active={activeItem === "licensing"}
+                  onClick={this.handleItemClick}
+                  link="https://www.lta.com.fj/"
+                />
+                <Menu.Item
+                  name="registration"
+                  active={activeItem === "registration"}
+                  onClick={this.handleItemClick}
+                />
+                <Menu.Item
+                  name="road safety"
+                  active={activeItem === "road safety"}
+                  onClick={this.handleItemClick}
+                />
+                <Menu.Item
+                  name="enforcement"
+                  active={activeItem === "enforcement"}
+                  onClick={this.handleItemClick}
+                />
+                <Menu.Item
+                  name="passengers"
+                  active={activeItem === "passengers"}
+                  onClick={this.handleItemClick}
+                />
+                <Menu.Item
+                  name="agencies"
+                  active={activeItem === "agencies"}
+                  onClick={this.handleItemClick}
+                />
+                <Menu.Item
+                  name="about us"
+                  active={activeItem === "about us"}
+                  onClick={this.handleItemClick}
+                />
+              </Menu>
+            </Responsive>
+          </Segment.Group>
+
           <Header as="h1">Communication Management</Header>
           <Divider inverted />
           <Header as="h2">Customer Details</Header>
-          <Segment.Group>
-            <Responsive as={Segment} minWidth={768}>
-              <Grid columns={2} divided padded fluid>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form>
-                      <Form.Field>
-                        <Grid columns={2} divided>
-                          <Grid.Row>
-                            <Grid.Column
-                              padded
-                              verticalAlign="middle"
-                              textAlign="left"
-                            >
-                              <label className="flabel">Client Number</label>
-                              <br />
-                              <label>(Licence Number)</label>
-                            </Grid.Column>
-                            <Grid.Column padded>
-                              <input
-                                placeholder="Client Number"
-                                className="finput"
-                                onChange={this.handleClientNumberChange}
-                              />
-                            </Grid.Column>
-                          </Grid.Row>
-                          <Grid.Row>
-                            <Grid.Column
-                              padded
-                              verticalAlign="middle"
-                              textAlign="left"
-                            >
-                              <label className="flabel">Client Name :*</label>
-                            </Grid.Column>
-                            <Grid.Column padded>
-                              <input
-                                placeholder="Client Name"
-                                className="finput"
-                              />
-                            </Grid.Column>
-                          </Grid.Row>
-                          <Grid.Row columns={3}>
-                            <Grid.Column
-                              padded
-                              verticalAlign="middle"
-                              textAlign="center"
-                            >
-                              <label className="flabel">ID Number :*</label>
-                            </Grid.Column>
-                            <Grid.Column padded>
-                              <input
-                                placeholder="ID Number"
-                                className="finput"
-                              />
-                            </Grid.Column>
-                            <Grid.Column padded>
-                              <Dropdown placeholder="ID Type" selection fluid />
-                            </Grid.Column>
-                          </Grid.Row>
-                        </Grid>
-                      </Form.Field>
-                    </Form>
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Form>
-                      <Form.Field>
-                        <Grid columns={2} divided>
-                          <Grid.Row>
-                            <Grid.Column
-                              padded
-                              textAlign="center"
-                              verticalAlign="middle"
-                            >
-                              <label className="flabel">Phone Contact :*</label>
-                            </Grid.Column>
-                            <Grid.Column padded textAlign="center">
-                              <label>
-                                (Please provide a valid Contact Number)
-                              </label>
-                              <input
-                                placeholder="Phone Contact"
-                                className="finput"
-                              />
-                            </Grid.Column>
-                          </Grid.Row>
-                          <Labelinputfield
-                            label="Email Address :*"
-                            placeholder="Email Address"
+          <Grid columns={2} divided padded fluid stackable>
+            <Grid.Row>
+              <Grid.Column>
+                <Form>
+                  <Form.Field>
+                    <Grid columns={2} divided stackable>
+                      <Grid.Row>
+                        <Grid.Column
+                          padded
+                          verticalAlign="middle"
+                          textAlign="center"
+                        >
+                          <label className="flabel">Client Number</label>
+                          <br />
+                          <label>(Licence Number)</label>
+                        </Grid.Column>
+                        <Grid.Column
+                          padded
+                          verticalAlign="middle"
+                          textAlign="center"
+                        >
+                          <input
+                            placeholder="Client Number"
+                            className="finput"
+                            onChange={this.handleClientNumberChange}
                           />
-                          <Grid.Row>
-                            <DropdownOptions placeholder="Region" />
-                            <DropdownOptions placeholder="Office" />
-                          </Grid.Row>
-                        </Grid>
-                      </Form.Field>
-                    </Form>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-            </Responsive>
-          </Segment.Group>
+                        </Grid.Column>
+                      </Grid.Row>
+                      <Grid.Row>
+                        <Grid.Column
+                          padded
+                          verticalAlign="middle"
+                          textAlign="center"
+                        >
+                          <label className="flabel">Client Name :*</label>
+                        </Grid.Column>
+                        <Grid.Column
+                          padded
+                          verticalAlign="middle"
+                          textAlign="center"
+                        >
+                          <input placeholder="Client Name" className="finput" />
+                        </Grid.Column>
+                      </Grid.Row>
+                      <Grid.Row columns={3}>
+                        <Grid.Column
+                          padded
+                          verticalAlign="middle"
+                          textAlign="center"
+                        >
+                          <label className="flabel">ID Number :*</label>
+                        </Grid.Column>
+                        <Grid.Column padded>
+                          <input placeholder="ID Number" className="finput" />
+                        </Grid.Column>
+                        <Grid.Column padded>
+                          <Dropdown placeholder="ID Type" selection fluid />
+                        </Grid.Column>
+                      </Grid.Row>
+                    </Grid>
+                  </Form.Field>
+                </Form>
+              </Grid.Column>
+              <Grid.Column>
+                <Form>
+                  <Form.Field>
+                    <Grid columns={2} divided stackable>
+                      <Grid.Row>
+                        <Grid.Column
+                          padded
+                          textAlign="center"
+                          verticalAlign="middle"
+                        >
+                          <label className="flabel">Phone Contact :*</label>
+                        </Grid.Column>
+                        <Grid.Column padded textAlign="center">
+                          {/* <label>(Please provide a valid Contact Number)</label> */}
+                          <input
+                            placeholder="Phone Contact"
+                            className="finput"
+                          />
+                        </Grid.Column>
+                      </Grid.Row>
+                      <Labelinputfield
+                        label="Email Address :*"
+                        placeholder="Email Address"
+                      />
+                      <Grid.Row>
+                        <Regions
+                          label="Region"
+                          placeholder="Region"
+                          onChange={this.handleRegionChange}
+                        />
+                        <DropdownOptions placeholder="Office" />
+                      </Grid.Row>
+                    </Grid>
+                  </Form.Field>
+                </Form>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
           <Header as="h1">Communication Details</Header>
           <Divider inverted />
           <TypeofCommunication ClientNumber={this.state.clientNumber} />
