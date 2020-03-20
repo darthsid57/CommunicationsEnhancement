@@ -25,7 +25,7 @@ class TypeofCommunication extends Component {
       options: [
         { key: 1, text: "Enquery", value: 1 },
         { key: 2, text: "Commendation", value: 2 },
-        { key: 3, text: "Complain", value: 3 }
+        { key: 3, text: "Grievance", value: 3 }
       ],
       requestType: 3,
       ClientNumber: this.props.ClientNumber,

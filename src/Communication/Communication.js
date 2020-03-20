@@ -24,8 +24,11 @@ import {
   Segment,
   Accordion
 } from "semantic-ui-react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import TypeofCommunication from "./components/Typeofcommunication";
 import Regions from "../Communication/Redux/data/Regions";
+import Offices from "../Communication/Redux/data/offices";
+import IdTypes from "../Communication/Redux/data/IdType";
 
 class Communication extends Component {
   state = { activeItem: "home" };
@@ -49,7 +52,9 @@ class Communication extends Component {
       region: "",
       office: "",
       activeIndex: 0,
-      regionValue: ""
+      regionValue: "",
+      officeValue: "",
+      IdTypeValue: ""
     };
 
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -63,12 +68,12 @@ class Communication extends Component {
     this.handlePhoneContactChange = this.handlePhoneContactChange.bind(this);
     this.handleClickAccordion = this.handleClickAccordion.bind(this);
     this.handleRegionChange = this.handleRegionChange.bind(this);
+    this.handleOfficeChange = this.handleOfficeChange.bind(this);
+
     // this.handleClientNameChange = this.handleClientNameChange.bind(this);
     // this.handleEmailAddressChange = this.handleEmailAddressChange.bind(this);
     // this.handleIdNumberChange = this.handleIdNumberChange.bind(this);
-    // this.handleIdTypeChange = this.handleIdTypeChange.bind(this);
-    // this.handleRegionChange = this.handleRegionChange.bind(this);
-    // this.handleOfficeChange = this.handleOfficeChange.bind(this);
+    this.handleIdTypeChange = this.handleIdTypeChange.bind(this);
   }
 
   handleClientNumberChange(event) {
@@ -129,6 +134,20 @@ class Communication extends Component {
     });
   }
 
+  handleOfficeChange(event, { value }) {
+    console.log(value);
+    this.setState({
+      officeValue: value
+    });
+  }
+
+  handleIdTypeChange(event, { value }) {
+    console.log(value);
+    this.setState({
+      IdTypeValue: value
+    });
+  }
+
   render() {
     const { activeItem, activeIndex } = this.state;
 
@@ -138,42 +157,57 @@ class Communication extends Component {
           name="home"
           active={activeItem === "home"}
           onClick={this.handleItemClick}
+          href="https://www.lta.com.fj"
+          target="_blank"
         />
         <Menu.Item
           name="licensing"
           active={activeItem === "licensing"}
           onClick={this.handleItemClick}
-          link="https://www.lta.com.fj/"
+          href="https://www.lta.com.fj/licensing"
+          target="_blank"
         />
         <Menu.Item
           name="registration"
           active={activeItem === "registration"}
           onClick={this.handleItemClick}
+          href="https://www.lta.com.fj/registration"
+          target="_blank"
         />
         <Menu.Item
           name="road safety"
           active={activeItem === "road safety"}
           onClick={this.handleItemClick}
+          href="https://www.lta.com.fj/road-safety"
+          target="_blank"
         />
         <Menu.Item
           name="enforcement"
           active={activeItem === "enforcement"}
           onClick={this.handleItemClick}
+          href="https://www.lta.com.fj/enforcement"
+          target="_blank"
         />
         <Menu.Item
           name="passengers"
           active={activeItem === "passengers"}
           onClick={this.handleItemClick}
+          href="https://www.lta.com.fj/passengers"
+          target="_blank"
         />
         <Menu.Item
           name="agencies"
           active={activeItem === "agencies"}
           onClick={this.handleItemClick}
+          href="https://www.lta.com.fj/agencies"
+          target="_blank"
         />
         <Menu.Item
           name="about us"
           active={activeItem === "about us"}
           onClick={this.handleItemClick}
+          href="https://www.lta.com.fj/about-us"
+          target="_blank"
         />
       </Menu>
     );
@@ -207,42 +241,57 @@ class Communication extends Component {
                   name="home"
                   active={activeItem === "home"}
                   onClick={this.handleItemClick}
+                  href="https://www.lta.com.fj"
+                  target="_blank"
                 />
                 <Menu.Item
                   name="licensing"
                   active={activeItem === "licensing"}
                   onClick={this.handleItemClick}
-                  link="https://www.lta.com.fj/"
+                  href="https://www.lta.com.fj/licensing"
+                  target="_blank"
                 />
                 <Menu.Item
                   name="registration"
                   active={activeItem === "registration"}
                   onClick={this.handleItemClick}
+                  href="https://www.lta.com.fj/registration"
+                  target="_blank"
                 />
                 <Menu.Item
                   name="road safety"
                   active={activeItem === "road safety"}
                   onClick={this.handleItemClick}
+                  href="https://www.lta.com.fj/road-safety"
+                  target="_blank"
                 />
                 <Menu.Item
                   name="enforcement"
                   active={activeItem === "enforcement"}
                   onClick={this.handleItemClick}
+                  href="https://www.lta.com.fj/enforcement"
+                  target="_blank"
                 />
                 <Menu.Item
                   name="passengers"
                   active={activeItem === "passengers"}
                   onClick={this.handleItemClick}
+                  href="https://www.lta.com.fj/passengers"
+                  target="_blank"
                 />
                 <Menu.Item
                   name="agencies"
                   active={activeItem === "agencies"}
                   onClick={this.handleItemClick}
+                  href="https://www.lta.com.fj/agencies"
+                  target="_blank"
                 />
                 <Menu.Item
                   name="about us"
                   active={activeItem === "about us"}
                   onClick={this.handleItemClick}
+                  href="https://www.lta.com.fj/about-us"
+                  target="_blank"
                 />
               </Menu>
             </Responsive>
@@ -307,7 +356,11 @@ class Communication extends Component {
                           <input placeholder="ID Number" className="finput" />
                         </Grid.Column>
                         <Grid.Column padded>
-                          <Dropdown placeholder="ID Type" selection fluid />
+                          <IdTypes
+                            label="ID Type"
+                            placeholder="ID Type"
+                            onChange={this.handleIdTypeChange}
+                          />
                         </Grid.Column>
                       </Grid.Row>
                     </Grid>
@@ -344,7 +397,11 @@ class Communication extends Component {
                           placeholder="Region"
                           onChange={this.handleRegionChange}
                         />
-                        <DropdownOptions placeholder="Office" />
+                        <Offices
+                          label="Office"
+                          placeholder="Office"
+                          onChange={this.handleOfficeChange}
+                        />
                       </Grid.Row>
                     </Grid>
                   </Form.Field>

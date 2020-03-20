@@ -1,4 +1,4 @@
-import { GET_DISTRICT_DATA } from "../Actions/types";
+import { GET_IDTYPE_DATA } from "../Actions/types";
 
 const initialState = {
   items: []
@@ -6,8 +6,8 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case GET_DISTRICT_DATA:
-      console.log("Reducer for Districts");
+    case GET_IDTYPE_DATA:
+      console.log("Reducer for IDType");
       return {
         ...state,
         items: action.payload
