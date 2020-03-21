@@ -29,7 +29,7 @@ import TypeofCommunication from "./components/Typeofcommunication";
 import Regions from "../Communication/Redux/data/Regions";
 import Offices from "../Communication/Redux/data/offices";
 import IdTypes from "../Communication/Redux/data/IdType";
-import AddNewUser from "../Communication/Redux/data/AddNewUser";
+import User from "../Communication/Redux/data/User";
 
 class Communication extends Component {
   state = { activeItem: "home" };
@@ -302,7 +302,8 @@ class Communication extends Component {
           <Divider inverted />
           <Header as="h2">Customer Details</Header>
           <Grid columns={2} divided padded fluid stackable>
-            <Grid.Row>
+            <User />
+            {/* <Grid.Row>
               <Grid.Column>
                 <Form>
                   <Form.Field>
@@ -327,7 +328,7 @@ class Communication extends Component {
                             className="finput"
                             onChange={this.handleClientNumberChange}
                           />
-                          <AddNewUser />
+
                         </Grid.Column>
                       </Grid.Row>
                       <Grid.Row>
@@ -383,7 +384,7 @@ class Communication extends Component {
                         </Grid.Column>
                         <Grid.Column padded textAlign="center">
                           {/* <label>(Please provide a valid Contact Number)</label> */}
-                          <input
+            {/* <input
                             placeholder="Phone Contact"
                             className="finput"
                           />
@@ -409,7 +410,7 @@ class Communication extends Component {
                   </Form.Field>
                 </Form>
               </Grid.Column>
-            </Grid.Row>
+            </Grid.Row> */}
           </Grid>
           <Header as="h1">Communication Details</Header>
           <Divider inverted />
