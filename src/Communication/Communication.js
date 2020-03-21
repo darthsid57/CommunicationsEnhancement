@@ -29,6 +29,7 @@ import TypeofCommunication from "./components/Typeofcommunication";
 import Regions from "../Communication/Redux/data/Regions";
 import Offices from "../Communication/Redux/data/offices";
 import IdTypes from "../Communication/Redux/data/IdType";
+import AddNewUser from "../Communication/Redux/data/AddNewUser";
 
 class Communication extends Component {
   state = { activeItem: "home" };
@@ -326,6 +327,7 @@ class Communication extends Component {
                             className="finput"
                             onChange={this.handleClientNumberChange}
                           />
+                          <AddNewUser />
                         </Grid.Column>
                       </Grid.Row>
                       <Grid.Row>
