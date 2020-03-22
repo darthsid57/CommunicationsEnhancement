@@ -30,13 +30,22 @@ class TypeofCommunication extends Component {
         { key: 3, text: "Grievance", value: 3 }
       ],
       requestType: 3,
+      regionValue: "",
       clientNumber: "",
-      regionValue: ""
+      clientName: "",
+      IdNumber: "",
+      phoneContact: "",
+      emailAddress: "",
+      IdType: "",
+      region: "",
+      office: "",
+      customerDetail: []
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleTypeofCommChange = this.handleTypeofCommChange.bind(this);
     this.handleRegionChange = this.handleRegionChange.bind(this);
+    this.handleStateUpdate = this.handleStateUpdate.bind(this);
   }
 
   //   handleChange(event) {
@@ -53,10 +62,15 @@ class TypeofCommunication extends Component {
     });
     console.log(value);
     this.props.getNewUser();
-    console.log(this.props.UserDetail);
-    this.setState({
-      clientNumber: this.props.UserDetail
-    });
+
+    console.log(this.props.clientNumber);
+    this.handleStateUpdate(this.props.clientNumber);
+  }
+
+  handleStateUpdate(value) {
+    this.setState({ clientNumber: value });
+
+    console.log(this.state.clientNumber);
   }
 
   handleTypeofCommChange() {
@@ -93,7 +107,6 @@ class TypeofCommunication extends Component {
 
   render() {
     //console.log(this.state.requestType);
-    console.log(this.state.clientNumber);
 
     if (this.state.requestType === 1) {
       return (
@@ -230,7 +243,10 @@ class TypeofCommunication extends Component {
                 options={this.state.options}
                 onChange={this.handleTypeofCommChange}
               /> */}
-              <Label>{this.state.clientNumber}</Label>
+              <Label>{this.props.clientNumber}</Label>
+
+              <Label>{this.props.clientName}</Label>
+              <Label>{this.props.IdNumber}</Label>
               <Dropdown
                 placeholder="Type of Communication"
                 selection
@@ -305,8 +321,21 @@ class TypeofCommunication extends Component {
 
 function mapStateToProps(state) {
   return {
-    UserDetail: state.UserDetail.clientNumber
+    clientNumber: state.CustomerDetail.clientNumber,
+    clientName: state.CustomerDetail.clientName,
+    IdNumber: state.CustomerDetail.IdNumber,
+    phoneContact: state.CustomerDetail.phoneContact,
+    emailAddress: state.CustomerDetail.emailAddress,
+    IdType: state.CustomerDetail.IdType,
+    region: state.CustomerDetail.region,
+    office: state.CustomerDetail.office
   };
 }
+
+// function mapStateToProps(state) {
+//   return {
+//     CustomerDetail: state.CustomerDetail
+//   };
+// }
 
 export default connect(mapStateToProps, { getNewUser })(TypeofCommunication);

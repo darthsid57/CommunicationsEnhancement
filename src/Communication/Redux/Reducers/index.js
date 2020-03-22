@@ -10,7 +10,7 @@ const allReducers = combineReducers({
   Offices: officeReducer,
   Districts: districtReducer,
   IdTypes: idTypeReducer,
-  UserDetail: userReducer
+  CustomerDetail: userReducer
 });
 
 export default allReducers;

@@ -1,6 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addNewUser } from "../Actions/UserAction";
+import {
+  addClientNumber,
+  addClientName,
+  addIdNumber,
+  addPhoneContact,
+  addEmailAddress,
+  addIdType,
+  addRegion,
+  addOffice
+} from "../Actions/UserAction";
 import { Input, Label, Grid, Form } from "semantic-ui-react";
 import Regions from "../../Redux/data/Regions";
 import Offices from "../../Redux/data/offices";
@@ -8,13 +17,85 @@ import IdTypes from "../../Redux/data/IdType";
 import Labelinputfield from "../../components/labelinputfield";
 
 class User extends Component {
-  state = { clientNumber: "" };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      UserDetail: {
+        clientNumber: "",
+        clientName: "",
+        IdNumber: "",
+        phoneContact: "",
+        emailAddress: "",
+        IdType: "",
+        region: "",
+        office: ""
+      }
+    };
+
+    this.handleClientNumberChange = this.handleClientNumberChange.bind(this);
+    this.handleClientNameChange = this.handleClientNameChange.bind(this);
+    this.handleIdNumberChange = this.handleIdNumberChange.bind(this);
+    this.handlePhoneContactChange = this.handlePhoneContactChange.bind(this);
+    this.handleEmailAddressChange = this.handleEmailAddressChange.bind(this);
+    this.handleIdTypeChange = this.handleIdTypeChange.bind(this);
+    this.handleRegionChange = this.handleRegionChange.bind(this);
+    this.handleOfficeChange = this.handleOfficeChange.bind(this);
+  }
+
+  // state = { clientNumber: "" };
 
   handleClientNumberChange(event) {
+    this.setState({ clientNumber: event.target.value });
+
     const inputValue = event.target.value;
-    this.props.addNewUser(inputValue);
+    this.props.addClientNumber(inputValue);
 
     console.log(event.target.value);
+  }
+
+  handleClientNameChange(event) {
+    this.setState({ clientName: event.target.value });
+
+    const inputValue = event.target.value;
+    this.props.addClientName(inputValue);
+
+    console.log(event.target.value);
+  }
+
+  handleIdNumberChange(event) {
+    this.setState({ IdNumber: event.target.value });
+
+    const inputValue = event.target.value;
+    this.props.addIdNumber(inputValue);
+
+    console.log(event.target.value);
+  }
+
+  handlePhoneContactChange(event) {
+    const inputValue = event.target.value;
+    this.props.addPhoneContact(inputValue);
+  }
+
+  handleEmailAddressChange(event) {
+    const inputValue = event.target.value;
+    this.props.addEmailAddress(inputValue);
+  }
+
+  handleIdTypeChange(event, { value }) {
+    console.log(value);
+    const inputValue = value;
+    this.props.addIdType(inputValue);
+  }
+
+  handleRegionChange(event, { value }) {
+    const inputValue = value;
+    this.props.addRegion(inputValue);
+  }
+
+  handleOfficeChange(event, { value }) {
+    const inputValue = value;
+    this.props.addOffice(inputValue);
   }
 
   render() {
@@ -36,10 +117,6 @@ class User extends Component {
                       className="finput"
                       onChange={this.handleClientNumberChange}
                     />
-                    <Input
-                      onChange={this.handleClientNumberChange.bind(this)}
-                    />
-                    <Label>{this.props.UserDetail}</Label>
                   </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
@@ -47,7 +124,11 @@ class User extends Component {
                     <label className="flabel">Client Name :*</label>
                   </Grid.Column>
                   <Grid.Column padded verticalAlign="middle" textAlign="center">
-                    <input placeholder="Client Name" className="finput" />
+                    <input
+                      placeholder="Client Name"
+                      className="finput"
+                      onChange={this.handleClientNameChange}
+                    />
                   </Grid.Column>
                 </Grid.Row>
                 <Grid.Row columns={3}>
@@ -55,7 +136,11 @@ class User extends Component {
                     <label className="flabel">ID Number :*</label>
                   </Grid.Column>
                   <Grid.Column padded>
-                    <input placeholder="ID Number" className="finput" />
+                    <input
+                      placeholder="ID Number"
+                      className="finput"
+                      onChange={this.handleIdNumberChange}
+                    />
                   </Grid.Column>
                   <Grid.Column padded>
                     <IdTypes
@@ -109,12 +194,26 @@ class User extends Component {
 
 function mapStateToProps(state) {
   return {
-    UserDetail: state.UserDetail.clientNumber
+    clientNumber: state.CustomerDetail.clientNumber,
+    clientName: state.CustomerDetail.clientName,
+    IdNumber: state.CustomerDetail.IdNumber,
+    phoneContact: state.CustomerDetail.phoneContact,
+    emailAddress: state.CustomerDetail.emailAddress,
+    IdType: state.CustomerDetail.IdType,
+    region: state.CustomerDetail.region,
+    office: state.CustomerDetail.office
   };
 }
 
 const mapDispatchToProps = {
-  addNewUser
+  addClientNumber,
+  addClientName,
+  addIdNumber,
+  addPhoneContact,
+  addEmailAddress,
+  addIdType,
+  addRegion,
+  addOffice
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(User);
