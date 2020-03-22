@@ -19,6 +19,7 @@ import "../comm.css";
 import FooterComponent from "./Footer";
 import LabelDatepicker from "./DateButton";
 import Regions from "../Redux/data/Regions";
+import SubCategory from "../Redux/data/Subcategory";
 
 class TypeofCommunication extends Component {
   constructor(props) {
@@ -39,13 +40,19 @@ class TypeofCommunication extends Component {
       IdType: "",
       region: "",
       office: "",
-      customerDetail: []
+      customerDetail: [],
+      SubCategory: "",
+      LocationOfIncident: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleTypeofCommChange = this.handleTypeofCommChange.bind(this);
     this.handleRegionChange = this.handleRegionChange.bind(this);
     this.handleStateUpdate = this.handleStateUpdate.bind(this);
+    this.handleSubCategoryChange = this.handleSubCategoryChange.bind(this);
+    this.handleLocationOfIncidentChange = this.handleLocationOfIncidentChange.bind(
+      this
+    );
   }
 
   //   handleChange(event) {
@@ -102,6 +109,20 @@ class TypeofCommunication extends Component {
     console.log(value);
     this.setState({
       regionValue: value
+    });
+  }
+
+  handleSubCategoryChange(event, { value }) {
+    console.log(value);
+    this.setState({
+      SubCategory: value
+    });
+  }
+
+  handleLocationOfIncidentChange(event, { value }) {
+    console.log(value);
+    this.setState({
+      LocationOfIncident: value
     });
   }
 
@@ -243,10 +264,6 @@ class TypeofCommunication extends Component {
                 options={this.state.options}
                 onChange={this.handleTypeofCommChange}
               /> */}
-              <Label>{this.props.clientNumber}</Label>
-
-              <Label>{this.props.clientName}</Label>
-              <Label>{this.props.IdNumber}</Label>
               <Dropdown
                 placeholder="Type of Communication"
                 selection
@@ -256,7 +273,10 @@ class TypeofCommunication extends Component {
               />
             </Grid.Column>
             <Grid.Column stackable>
-              <Dropdown placeholder="Sub Category3" selection fluid />
+              <SubCategory
+                placeholder="Sub-Category"
+                onChange={this.handleSubCategoryChange}
+              />
             </Grid.Column>
           </Grid.Row>
           <Grid.Row stackable>
@@ -289,10 +309,13 @@ class TypeofCommunication extends Component {
                     />
                     <Grid.Row columns={3} padded stackable>
                       <Grid.Column>
-                        <DropdownOptions placeholder="Location of Incident" />
+                        <Regions
+                          placeholder="Location of Incident"
+                          onChange={this.handleLocationOfIncidentChange}
+                        />
                       </Grid.Column>
                       <Grid.Column stackable>
-                        <label className="flabel">Incident Date:*</label>
+                        <label className="flabel">Incident Date:</label>
                       </Grid.Column>
                       <Grid.Column>
                         <Pickerfordate />
