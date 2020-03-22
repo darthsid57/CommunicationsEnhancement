@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getNewUser } from "../Redux/Actions/UserAction";
 import Axios from "axios";
+import DatePicker from "react-datepicker";
+
 import {
   Label,
   Dropdown,
@@ -43,7 +45,12 @@ class TypeofCommunication extends Component {
       office: "",
       customerDetail: [],
       SubCategory: "",
-      LocationOfIncident: ""
+      LocationOfIncident: "",
+      currentTime: new Date(),
+      typeofIncident: "",
+      timeofIncident: "",
+      incidentArea: "",
+      vehicleNumber: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -55,6 +62,10 @@ class TypeofCommunication extends Component {
       this
     );
     this.handleSubmitGrievance = this.handleSubmitGrievance.bind(this);
+    this.handleTypeOfincident = this.handleTypeOfincident.bind(this);
+    this.handleTimeofIncident = this.handleTimeofIncident.bind(this);
+    this.handleIncidentArea = this.handleIncidentArea.bind(this);
+    this.handleVehicleNumberChange = this.handleVehicleNumberChange.bind(this);
   }
 
   //   handleChange(event) {
@@ -76,7 +87,13 @@ class TypeofCommunication extends Component {
       emailAddress: this.props.emailAddress,
       IdType: this.props.IdType,
       region: this.props.region,
-      office: this.props.office
+      office: this.props.office,
+      SubCategory: this.state.SubCategory,
+      LocationOfIncident: this.state.LocationOfIncident,
+      typeofIncident: this.state.typeofIncident,
+      timeofIncident: this.state.timeofIncident,
+      incidentArea: this.state.incidentArea,
+      vehicleNumber: this.state.vehicleNumber
     };
 
     console.log(grievance);
@@ -89,7 +106,13 @@ class TypeofCommunication extends Component {
       emailAddress: grievance.emailAddress,
       IdType: grievance.IdType,
       region: grievance.region,
-      office: grievance.office
+      office: grievance.office,
+      SubCategory: grievance.SubCategory,
+      LocationOfIncident: grievance.LocationOfIncident,
+      typeofIncident: grievance.typeofIncident,
+      timeofIncident: grievance.timeofIncident,
+      incidentArea: grievance.incidentArea,
+      vehicleNumber: grievance.vehicleNumber
     }).then(response => {
       console.log(response);
       console.log(response.data);
@@ -157,6 +180,26 @@ class TypeofCommunication extends Component {
     this.setState({
       LocationOfIncident: value
     });
+  }
+
+  handleTypeOfincident(event) {
+    console.log(event.target.value);
+    this.setState({ typeofIncident: event.target.value });
+  }
+
+  handleTimeofIncident(value) {
+    console.log(value);
+    this.setState({ timeofIncident: value });
+  }
+
+  handleIncidentArea(event) {
+    console.log(event.target.value);
+    this.setState({ incidentArea: event.target.value });
+  }
+
+  handleVehicleNumberChange(event) {
+    console.log(event.target.value);
+    this.setState({ vehicleNumber: event.target.value });
   }
 
   render() {
@@ -319,12 +362,31 @@ class TypeofCommunication extends Component {
                   <Labelinputfield
                     label="Type of Incident :*"
                     placeholder="Type of Incident"
+                    onChange={this.handleTypeOfincident}
                   />
+                  <Grid.Row columns={2}>
+                    <Grid.Column
+                      padded
+                      verticalAlign="middle"
+                      textAlign="center"
+                    >
+                      <label className="flabel">
+                        Date and Time of Incident :
+                      </label>
+                    </Grid.Column>
+                    <Grid.Column padded fluid>
+                      <DatePicker
+                        selected={this.state.currentTime}
+                        showTimeSelect
+                        showTimeSelectOnly
+                        timeIntervals={1}
+                        timeCaption="Time"
+                        dateFormat="h:mm aa"
+                        onChange={date => this.handleTimeofIncident(date)}
+                      />
+                    </Grid.Column>
+                  </Grid.Row>
 
-                  <Labelinputfield
-                    label="Time of Incident :*"
-                    placeholder="Time of Incident"
-                  />
                   <Labelinputfield
                     label="Incident Area:*"
                     placeholder="Incident Area"
@@ -339,6 +401,7 @@ class TypeofCommunication extends Component {
                     <Labelinputfield
                       label="Vehicle Number"
                       placeholder="Vehicle Number"
+                      onChange={this.handleVehicleNumberChange}
                     />
                     <Grid.Row columns={3} padded stackable>
                       <Grid.Column>
