@@ -90,7 +90,12 @@ export default function(state = initialState, action) {
         // ...state
         clientNumber: CustomerDetails.clientNumber,
         clientName: CustomerDetails.clientName,
-        IdNumber: CustomerDetails.IdNumber
+        IdNumber: CustomerDetails.IdNumber,
+        phoneContact: CustomerDetails.phoneContact,
+        emailAddress: CustomerDetails.emailAddress,
+        IdType: CustomerDetails.IdType,
+        region: CustomerDetails.region,
+        office: CustomerDetails.office
       };
     default:
       return state;

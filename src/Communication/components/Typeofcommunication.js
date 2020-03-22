@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getNewUser } from "../Redux/Actions/UserAction";
+import Axios from "axios";
 import {
   Label,
   Dropdown,
@@ -53,6 +54,7 @@ class TypeofCommunication extends Component {
     this.handleLocationOfIncidentChange = this.handleLocationOfIncidentChange.bind(
       this
     );
+    this.handleSubmitGrievance = this.handleSubmitGrievance.bind(this);
   }
 
   //   handleChange(event) {
@@ -62,6 +64,37 @@ class TypeofCommunication extends Component {
 
   //     console.log(event.target.value);
   //   }
+
+  handleSubmitGrievance(event) {
+    event.preventDefault();
+
+    const grievance = {
+      clientNumber: this.props.clientNumber,
+      clientName: this.props.clientName,
+      IdNumber: this.props.IdNumber,
+      phoneContact: this.props.phoneContact,
+      emailAddress: this.props.emailAddress,
+      IdType: this.props.IdType,
+      region: this.props.region,
+      office: this.props.office
+    };
+
+    console.log(grievance);
+
+    Axios.post("http://192.168.1.2:2567/server/grievance", {
+      clientNumber: grievance.clientNumber,
+      clientName: grievance.clientName,
+      IdNumber: grievance.IdNumber,
+      phoneContact: grievance.phoneContact,
+      emailAddress: grievance.emailAddress,
+      IdType: grievance.IdType,
+      region: grievance.region,
+      office: grievance.office
+    }).then(response => {
+      console.log(response);
+      console.log(response.data);
+    });
+  }
 
   handleChange(event, { value }) {
     this.setState({
@@ -335,7 +368,47 @@ class TypeofCommunication extends Component {
               </Form>
             </Grid.Column>
           </Grid.Row>
-          <FooterComponent />
+          <Grid.Row padded>
+            <Grid.Column padded>
+              <Grid.Row padded>
+                <Checkbox
+                  label="I hereby declare that all the information provided is true . 
+                  The information you give us in relation to this communication may be given to the police , 
+                  law enforcement officers or any licensing body. "
+                  padded
+                />
+              </Grid.Row>
+              <Form.Field padded>
+                <Label as="a" basic color="red" pointing="right">
+                  Note
+                </Label>
+                <span>
+                  Its Mandatory to fill in all the information that is required
+                  by the Land Transport Authority.
+                </span>
+              </Form.Field>
+              <Form.Field onSubmit={this.onFormSubmit} padded inline>
+                {/* <Header as="h3">File Upload</Header> */}
+                <Input type="file" name="myImage" onChange={this.onChange} />
+                <Button type="submit" color="google plus">
+                  Upload
+                </Button>
+              </Form.Field>
+            </Grid.Column>
+            <Grid.Column>
+              <Button
+                color="orange"
+                type="submit"
+                padded
+                onClick={this.handleSubmitGrievance}
+              >
+                Submit
+              </Button>
+              <Button color="green" type="submit" padded>
+                Reset
+              </Button>
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
       );
     }

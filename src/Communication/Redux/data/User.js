@@ -164,12 +164,17 @@ class User extends Component {
                   </Grid.Column>
                   <Grid.Column padded textAlign="center">
                     {/* <label>(Please provide a valid Contact Number)</label> */}
-                    <input placeholder="Phone Contact" className="finput" />
+                    <input
+                      placeholder="Phone Contact"
+                      className="finput"
+                      onChange={this.handlePhoneContactChange}
+                    />
                   </Grid.Column>
                 </Grid.Row>
                 <Labelinputfield
                   label="Email Address :*"
                   placeholder="Email Address"
+                  onChange={this.handleEmailAddressChange}
                 />
                 <Grid.Row>
                   <Regions
