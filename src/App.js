@@ -6,6 +6,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Communication from "./Communication/Communication";
 import ShopContext from "../src/Communication/context/shop-context";
 import LoginPage from "../src/Communication/components/loginPage";
+import ViewPageInternal from "../src/Communication/ViewPageInternal";
 import { Provider } from "react-redux";
 import store from "./Communication/Redux/store";
 
@@ -36,6 +37,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Communication} />
               <Route path="/login" component={LoginPage} />
+              <Route path="/ViewPageInternal" component={ViewPageInternal} />
               <Route path="*" component={() => "404 NOT FOUND"} />
             </Switch>
           </BrowserRouter>

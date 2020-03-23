@@ -29,7 +29,7 @@ class TypeofCommunication extends Component {
     super(props);
     this.state = {
       options: [
-        { key: 1, text: "Enquery", value: 1 },
+        { key: 1, text: "Enquiry", value: 1 },
         { key: 2, text: "Commendation", value: 2 },
         { key: 3, text: "Grievance", value: 3 }
       ],
@@ -52,7 +52,13 @@ class TypeofCommunication extends Component {
       incidentArea: "",
       vehicleNumber: "",
       incidentDate: "",
-      otherDetails: ""
+      otherDetails: "",
+      dateOfEnquiry: "",
+      otherDetailsEnquiry: "",
+      isChecked: true,
+      declaration: "",
+      file: null,
+      enquiryDate: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -70,6 +76,18 @@ class TypeofCommunication extends Component {
     this.handleVehicleNumberChange = this.handleVehicleNumberChange.bind(this);
     this.handleIncidentDateChange = this.handleIncidentDateChange.bind(this);
     this.handleOtherDetailsChange = this.handleOtherDetailsChange.bind(this);
+    this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
+    this.handleImageFileGrievanceChange = this.handleImageFileGrievanceChange.bind(
+      this
+    );
+    this.handleUploadButtonGrievance = this.handleUploadButtonGrievance.bind(
+      this
+    );
+    this.handleEnquiryDateChange = this.handleEnquiryDateChange.bind(this);
+    this.handleSubmitEnquery = this.handleSubmitEnquery.bind(this);
+    this.handleOtherDetailsEnquiryChange = this.handleOtherDetailsEnquiryChange.bind(
+      this
+    );
   }
 
   //   handleChange(event) {
@@ -99,7 +117,8 @@ class TypeofCommunication extends Component {
       incidentArea: this.state.incidentArea,
       vehicleNumber: this.state.vehicleNumber,
       incidentDate: this.state.incidentDate,
-      otherDetails: this.state.otherDetails
+      otherDetails: this.state.otherDetails,
+      declaration: this.state.declaration
     };
 
     console.log(grievance);
@@ -120,7 +139,45 @@ class TypeofCommunication extends Component {
       incidentArea: grievance.incidentArea,
       vehicleNumber: grievance.vehicleNumber,
       incidentDate: grievance.incidentDate,
-      otherDetails: grievance.otherDetails
+      otherDetails: grievance.otherDetails,
+      declaration: grievance.declaration
+    }).then(response => {
+      console.log(response);
+      console.log(response.data);
+    });
+  }
+
+  handleSubmitEnquery(event) {
+    event.preventDefault();
+
+    const enquiry = {
+      clientNumber: this.props.clientNumber,
+      clientName: this.props.clientName,
+      IdNumber: this.props.IdNumber,
+      phoneContact: this.props.phoneContact,
+      emailAddress: this.props.emailAddress,
+      IdType: this.props.IdType,
+      region: this.props.region,
+      office: this.props.office,
+      dateOfEnquiry: this.state.dateOfEnquiry,
+      otherDetailsEnquiry: this.state.otherDetailsEnquiry,
+      declaration: this.state.declaration
+    };
+
+    console.log(enquiry);
+
+    Axios.post("http://localhost:2567/server/enquiry", {
+      clientNumber: enquiry.clientNumber,
+      clientName: enquiry.clientName,
+      IdNumber: enquiry.IdNumber,
+      phoneContact: enquiry.phoneContact,
+      emailAddress: enquiry.emailAddress,
+      IdType: enquiry.IdType,
+      region: enquiry.region,
+      office: enquiry.office,
+      dateOfEnquiry: enquiry.dateOfEnquiry,
+      otherDetailsEnquiry: enquiry.otherDetailsEnquiry,
+      declaration: enquiry.declaration
     }).then(response => {
       console.log(response);
       console.log(response.data);
@@ -220,9 +277,54 @@ class TypeofCommunication extends Component {
     this.setState({ otherDetails: event.target.value });
   }
 
+  handleOtherDetailsEnquiryChange(event, { value }) {
+    console.log(event.target.value);
+    this.setState({ otherDetailsEnquiry: event.target.value });
+  }
+
+  handleEnquiryDateChange(date) {
+    console.log(date);
+    this.setState({ dateOfEnquiry: date });
+  }
+
+  handleCheckBoxChange() {
+    this.setState({ isChecked: !this.state.isChecked });
+
+    if (this.state.isChecked === true) {
+      console.log("Checked");
+      this.setState({ declaration: 1 });
+    } else {
+      console.log("Not Checked");
+      this.setState({ declaration: 0 });
+    }
+  }
+
+  handleImageFileGrievanceChange(event) {
+    this.setState({ file: event.target.files[0] });
+  }
+
+  handleUploadButtonGrievance(event) {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append("myImage", this.state.file);
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data"
+      }
+    };
+
+    Axios.post("http://localhost:2567/upload/upload", formData, config)
+      .then(response => {
+        alert("The File is successfully uploaded");
+      })
+      .catch(error => {});
+  }
+
   render() {
     //console.log(this.state.requestType);
 
+    //Enquiry
     if (this.state.requestType === 1) {
       return (
         <Grid columns={2} divided padded stackable>
@@ -242,12 +344,15 @@ class TypeofCommunication extends Component {
                   <Grid columns={2} divided stackable>
                     <Grid.Row columns={2} padded>
                       <Grid.Column>
-                        <Label size="big" className="flabel">
-                          Date of Enquiry :*
-                        </Label>
+                        <label size="big" className="flabel">
+                          Date of Enquiry :
+                        </label>
                       </Grid.Column>
                       <Grid.Column>
-                        <Pickerfordate />
+                        <Pickerfordate
+                          selected={this.state.enquiryDate}
+                          onChange={this.handleEnquiryDateChange}
+                        />
                       </Grid.Column>
                     </Grid.Row>
                     <Grid.Row columns={1}>
@@ -256,7 +361,12 @@ class TypeofCommunication extends Component {
                         verticalAlign="middle"
                         textAlign="center"
                       >
-                        <TextArea rows={3} placeholder="Other Details*" fluid />
+                        <TextArea
+                          rows={3}
+                          placeholder="Other Details*"
+                          fluid
+                          onChange={this.handleOtherDetailsEnquiryChange}
+                        />
                       </Grid.Column>
                     </Grid.Row>
                   </Grid>
@@ -265,7 +375,60 @@ class TypeofCommunication extends Component {
             </Grid.Column>
           </Grid.Row>
 
-          <FooterComponent />
+          <Grid.Row padded>
+            <Grid.Column padded>
+              <Grid.Row padded>
+                <Checkbox
+                  label="I hereby declare that all the information provided is true . 
+                  The information you give us in relation to this communication may be given to the police , 
+                  law enforcement officers or any licensing body. "
+                  padded
+                  onChange={this.handleCheckBoxChange}
+                />
+              </Grid.Row>
+              <Form.Field padded>
+                <Label as="a" basic color="red" pointing="right">
+                  Note
+                </Label>
+                <span>
+                  Its Mandatory to fill in all the information that is required
+                  by the Land Transport Authority.
+                </span>
+              </Form.Field>
+              <Form.Field
+                onSubmit={this.handleUploadButtonGrievance}
+                padded
+                inline
+              >
+                {/* <Header as="h3">File Upload</Header> */}
+                <Input
+                  type="file"
+                  name="myImage"
+                  onChange={this.handleImageFileGrievanceChange}
+                />
+                <Button
+                  type="submit"
+                  color="google plus"
+                  onClick={this.handleUploadButtonGrievance}
+                >
+                  Upload
+                </Button>
+              </Form.Field>
+            </Grid.Column>
+            <Grid.Column>
+              <Button
+                color="orange"
+                type="submit"
+                padded
+                onClick={this.handleSubmitEnquery}
+              >
+                Submit
+              </Button>
+              <Button color="green" type="submit" padded>
+                Reset
+              </Button>
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
       );
     }
@@ -408,6 +571,7 @@ class TypeofCommunication extends Component {
                   <Labelinputfield
                     label="Incident Area:*"
                     placeholder="Incident Area"
+                    onChange={this.handleIncidentArea}
                   />
                 </Grid>
               </Form>
@@ -464,6 +628,7 @@ class TypeofCommunication extends Component {
                   The information you give us in relation to this communication may be given to the police , 
                   law enforcement officers or any licensing body. "
                   padded
+                  onChange={this.handleCheckBoxChange}
                 />
               </Grid.Row>
               <Form.Field padded>
@@ -475,10 +640,22 @@ class TypeofCommunication extends Component {
                   by the Land Transport Authority.
                 </span>
               </Form.Field>
-              <Form.Field onSubmit={this.onFormSubmit} padded inline>
+              <Form.Field
+                onSubmit={this.handleUploadButtonGrievance}
+                padded
+                inline
+              >
                 {/* <Header as="h3">File Upload</Header> */}
-                <Input type="file" name="myImage" onChange={this.onChange} />
-                <Button type="submit" color="google plus">
+                <Input
+                  type="file"
+                  name="myImage"
+                  onChange={this.handleImageFileGrievanceChange}
+                />
+                <Button
+                  type="submit"
+                  color="google plus"
+                  onClick={this.handleUploadButtonGrievance}
+                >
                   Upload
                 </Button>
               </Form.Field>

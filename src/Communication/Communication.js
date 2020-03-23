@@ -755,7 +755,7 @@ class Communication extends Component {
 
 export default Communication;
 
-//NodeJS Code for File Upload
+// NodeJS Code for File Upload
 // const path = require("path");
 // const multer = require("multer");
 
