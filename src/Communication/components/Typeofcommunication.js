@@ -50,7 +50,9 @@ class TypeofCommunication extends Component {
       typeofIncident: "",
       timeofIncident: "",
       incidentArea: "",
-      vehicleNumber: ""
+      vehicleNumber: "",
+      incidentDate: "",
+      otherDetails: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -66,6 +68,8 @@ class TypeofCommunication extends Component {
     this.handleTimeofIncident = this.handleTimeofIncident.bind(this);
     this.handleIncidentArea = this.handleIncidentArea.bind(this);
     this.handleVehicleNumberChange = this.handleVehicleNumberChange.bind(this);
+    this.handleIncidentDateChange = this.handleIncidentDateChange.bind(this);
+    this.handleOtherDetailsChange = this.handleOtherDetailsChange.bind(this);
   }
 
   //   handleChange(event) {
@@ -93,12 +97,14 @@ class TypeofCommunication extends Component {
       typeofIncident: this.state.typeofIncident,
       timeofIncident: this.state.timeofIncident,
       incidentArea: this.state.incidentArea,
-      vehicleNumber: this.state.vehicleNumber
+      vehicleNumber: this.state.vehicleNumber,
+      incidentDate: this.state.incidentDate,
+      otherDetails: this.state.otherDetails
     };
 
     console.log(grievance);
 
-    Axios.post("http://192.168.1.2:2567/server/grievance", {
+    Axios.post("http://localhost:2567/server/grievance", {
       clientNumber: grievance.clientNumber,
       clientName: grievance.clientName,
       IdNumber: grievance.IdNumber,
@@ -112,7 +118,9 @@ class TypeofCommunication extends Component {
       typeofIncident: grievance.typeofIncident,
       timeofIncident: grievance.timeofIncident,
       incidentArea: grievance.incidentArea,
-      vehicleNumber: grievance.vehicleNumber
+      vehicleNumber: grievance.vehicleNumber,
+      incidentDate: grievance.incidentDate,
+      otherDetails: grievance.otherDetails
     }).then(response => {
       console.log(response);
       console.log(response.data);
@@ -200,6 +208,16 @@ class TypeofCommunication extends Component {
   handleVehicleNumberChange(event) {
     console.log(event.target.value);
     this.setState({ vehicleNumber: event.target.value });
+  }
+
+  handleIncidentDateChange(date) {
+    console.log(date);
+    this.setState({ incidentDate: date });
+  }
+
+  handleOtherDetailsChange(event, { value }) {
+    console.log(event.target.value);
+    this.setState({ otherDetails: event.target.value });
   }
 
   render() {
@@ -414,7 +432,9 @@ class TypeofCommunication extends Component {
                         <label className="flabel">Incident Date:</label>
                       </Grid.Column>
                       <Grid.Column>
-                        <Pickerfordate />
+                        <Pickerfordate
+                          onChange={this.handleIncidentDateChange}
+                        />
                       </Grid.Column>
                     </Grid.Row>
                     <Grid.Row columns={1}>
@@ -423,7 +443,12 @@ class TypeofCommunication extends Component {
                         verticalAlign="middle"
                         textAlign="center"
                       >
-                        <TextArea rows={3} placeholder="Other Details*" fluid />
+                        <TextArea
+                          rows={3}
+                          placeholder="Other Details*"
+                          fluid
+                          onChange={this.handleOtherDetailsChange}
+                        />
                       </Grid.Column>
                     </Grid.Row>
                   </Grid>

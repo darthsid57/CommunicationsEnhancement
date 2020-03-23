@@ -19,7 +19,7 @@ class Example extends React.Component {
     return (
       <DatePicker
         selected={this.state.startDate}
-        onChange={this.handleChange}
+        onChange={this.props.onChange}
         className="finput"
       />
     );
