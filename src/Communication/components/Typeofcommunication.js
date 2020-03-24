@@ -23,6 +23,7 @@ import FooterComponent from "./Footer";
 import LabelDatepicker from "./DateButton";
 import Regions from "../Redux/data/Regions";
 import SubCategory from "../Redux/data/Subcategory";
+import CommunicationType from "../Redux/data/CommunicationType";
 
 class TypeofCommunication extends Component {
   constructor(props) {
@@ -63,7 +64,14 @@ class TypeofCommunication extends Component {
       commendationOfficeName: "",
       commendationDate: "",
       commendationReason: "",
-      errorMessage: "",
+      errorMessageClientNumber: "",
+      errorMessageClientName: "",
+      errorMessageIDNumber: "",
+      errorMessageIDType: "",
+      errorMessagePhoneContact: "",
+      errorMessageEmailAddress: "",
+      errorMessageRegion: "",
+      errorMessageOffice: "",
       error: false
     };
 
@@ -142,30 +150,16 @@ class TypeofCommunication extends Component {
 
     console.log(grievance);
 
-    if (grievance.clientNumber === "") {
-      console.log("Empty Client Number");
-      this.setState({ errorMessage: "Empty Client Number" });
-    } else {
-      if (isNaN(grievance.clientNumber)) {
-        console.log("Alphabets present in Client Number");
-        this.setState({ errorMessage: "Alphabets present in Client Number" });
-      } else {
-        console.log("all good");
-        this.setState({ errorMessage: "" });
-      }
-    }
-    if (grievance.phoneContact === "") {
-      console.log("Empty Phone Contact");
-      this.setState({ errorMessage: "Empty Phone Contact" });
-    } else {
-      if (isNaN(grievance.phoneContact)) {
-        console.log("Alphabets present in Phone Contact");
-        this.setState({ errorMessage: "Alphabets present in Phone Contact" });
-      } else {
-        console.log("all good");
-        this.setState({ errorMessage: "" });
-      }
-    }
+    this.validateClientNumber(grievance.clientNumber);
+    this.validateClientName(grievance.clientName);
+    this.validateIdNumber(grievance.IdNumber);
+    this.validateIdType(grievance.IdType);
+    this.validatePhoneContact(grievance.phoneContact);
+    this.validateEmailAddress(grievance.emailAddress);
+    this.validateRegion(grievance.region);
+    this.validateOffice(grievance.office);
+
+    // console.log(grv);
 
     // Axios.post("http://localhost:2567/server/grievance", {
     //   clientNumber: grievance.clientNumber,
@@ -189,6 +183,118 @@ class TypeofCommunication extends Component {
     //   console.log(response);
     //   console.log(response.data);
     // });
+  }
+
+  validateClientNumber(value) {
+    if (value === "") {
+      console.log("Empty Client Number");
+      this.setState({ errorMessageClientNumber: "Empty Client Number" });
+      return true;
+    } else {
+      if (isNaN(value)) {
+        console.log("Alphabets present in Client Number");
+        this.setState({
+          errorMessageClientNumber: "Alphabets present in Client Number"
+        });
+        return true;
+      } else {
+        console.log("all good");
+        this.setState({ errorMessageClientNumber: "" });
+        return false;
+      }
+    }
+  }
+
+  validatePhoneContact(value) {
+    if (value === "") {
+      console.log("Empty Phone Contact");
+      this.setState({ errorMessagePhoneContact: "Empty Phone Contact" });
+      return true;
+    } else {
+      if (isNaN(value)) {
+        console.log("Alphabets present in Phone Contact");
+        this.setState({
+          errorMessagePhoneContact: "Alphabets present in Phone Contact"
+        });
+        return true;
+      } else {
+        console.log("all good");
+        this.setState({ errorMessagePhoneContact: "" });
+        return false;
+      }
+    }
+  }
+
+  validateClientName(value) {
+    if (value === "") {
+      console.log("Empty Client Name");
+      this.setState({ errorMessageClientName: "Empty Client Name" });
+      return true;
+    } else {
+      console.log("all good");
+      this.setState({ errorMessageClientName: "" });
+      return false;
+    }
+  }
+
+  validateIdNumber(value) {
+    if (value === "") {
+      console.log("Empty ID Number");
+      this.setState({ errorMessageIDNumber: "Empty ID Number" });
+      return true;
+    } else {
+      console.log("all good");
+      this.setState({ errorMessageIDNumber: "" });
+      return false;
+    }
+  }
+
+  validateIdType(value) {
+    if (value === "") {
+      console.log("Empty ID Type");
+      this.setState({ errorMessageIDType: "Empty ID Type" });
+      return true;
+    } else {
+      console.log("all good");
+      this.setState({ errorMessageIDType: "" });
+      return false;
+    }
+  }
+
+  validateEmailAddress(value) {
+    if (value === "") {
+      console.log("Empty Email Address");
+      this.setState({ errorMessageEmailAddress: "Empty Email Address" });
+      return true;
+    } else {
+      console.log("all good");
+      this.setState({ errorMessageEmailAddress: "" });
+      return false;
+    }
+  }
+
+  validateRegion(value) {
+    if (value === "") {
+      console.log("Empty Region");
+      this.setState({ errorMessageRegion: "Empty Region" });
+      return true;
+    } else {
+      console.log("all good");
+      this.setState({ errorMessageRegion: "" });
+      return false;
+    }
+  }
+
+  validateOffice(value) {
+    if (value === "") {
+      console.log("Empty Office");
+      this.setState({ errorMessageOffice: "Empty Office" });
+      return true;
+    } else {
+      console.log("all good");
+      this.setState({ errorMessageOffice: "" });
+      return false;
+    }
   }
 
   handleSubmitEnquery(event) {
@@ -277,7 +383,7 @@ class TypeofCommunication extends Component {
     this.props.getNewUser();
 
     console.log(this.props.clientNumber);
-    this.handleStateUpdate(this.props.clientNumber);
+    //this.handleStateUpdate(this.props.clientNumber);
   }
 
   handleStateUpdate(value) {
@@ -457,7 +563,7 @@ class TypeofCommunication extends Component {
                       </Grid.Column>
                       <Grid.Column>
                         <Pickerfordate
-                          selected={this.state.enquiryDate}
+                          selected={this.state.dateOfEnquiry}
                           onChange={this.handleEnquiryDateChange}
                         />
                       </Grid.Column>
@@ -672,6 +778,20 @@ class TypeofCommunication extends Component {
       //Complain
       return (
         <Grid stackable columns={2} divided padded>
+          <label className="ferror">
+            {this.state.errorMessageClientNumber}
+          </label>
+          <label className="ferror">{this.state.errorMessageClientName}</label>
+          <label className="ferror">{this.state.errorMessageIDNumber}</label>
+          <label className="ferror">{this.state.errorMessageIDType}</label>
+          <label className="ferror">
+            {this.state.errorMessagePhoneContact}
+          </label>
+          <label className="ferror">
+            {this.state.errorMessageEmailAddress}
+          </label>
+          <label className="ferror">{this.state.errorMessageRegion}</label>
+          <label className="ferror">{this.state.errorMessageOffice}</label>
           <Grid.Row stackable>
             <Grid.Column stackable>
               {/* <Dropdown
@@ -687,7 +807,7 @@ class TypeofCommunication extends Component {
                 options={this.state.options}
                 onChange={this.handleTypeofCommChange}
               /> */}
-              <label className="ferror">{this.state.errorMessage}</label>
+
               <Dropdown
                 placeholder="Type of Communication"
                 selection
@@ -718,13 +838,11 @@ class TypeofCommunication extends Component {
                       verticalAlign="middle"
                       textAlign="center"
                     >
-                      <label className="flabel">
-                        Date and Time of Incident :
-                      </label>
+                      <label className="flabel">Time of Incident :</label>
                     </Grid.Column>
                     <Grid.Column padded fluid>
                       <DatePicker
-                        selected={this.state.currentTime}
+                        selected={this.state.timeofIncident}
                         showTimeSelect
                         showTimeSelectOnly
                         timeIntervals={1}
@@ -755,7 +873,7 @@ class TypeofCommunication extends Component {
                     <Grid.Row columns={3} padded stackable>
                       <Grid.Column>
                         <Regions
-                          placeholder="Location of Incident"
+                          placeholder="Location"
                           onChange={this.handleLocationOfIncidentChange}
                         />
                       </Grid.Column>
@@ -764,6 +882,7 @@ class TypeofCommunication extends Component {
                       </Grid.Column>
                       <Grid.Column>
                         <Pickerfordate
+                          selected={this.state.incidentDate}
                           onChange={this.handleIncidentDateChange}
                         />
                       </Grid.Column>
