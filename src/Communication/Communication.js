@@ -55,7 +55,9 @@ class Communication extends Component {
       activeIndex: 0,
       regionValue: "",
       officeValue: "",
-      IdTypeValue: ""
+      IdTypeValue: "",
+      errorMessage: "Please Complete All Fields",
+      clientNumberError: false
     };
 
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -78,9 +80,13 @@ class Communication extends Component {
   }
 
   handleClientNumberChange(event) {
-    console.log(event.target.value);
-    this.setState({ clientNumber: event.target.value });
-    console.log(this.state.clientNumber);
+    if (event.target.value === "") {
+      console.log("error");
+    }
+
+    // console.log(event.target.value);
+    // this.setState({ clientNumber: event.target.value });
+    // console.log(this.state.clientNumber);
   }
 
   handlePhoneContactChange(event) {

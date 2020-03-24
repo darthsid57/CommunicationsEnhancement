@@ -1,15 +1,75 @@
 import React, { Component } from "react";
-import { Table, Segment } from "semantic-ui-react";
+import { Table, Segment, Modal, Form } from "semantic-ui-react";
 import Axios from "axios";
 import "./comm.css";
+import FormInputReadOnly from "./components/FormInputReadOnly";
 
 class ViewPageInternal extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      grievances: []
+      grievances: [],
+      modalOpen: false,
+      CommunicationID: "",
+      CommunicationType: "",
+      clientNumber: "",
+      clientName: "",
+      IdNumber: "",
+      phoneContact: "",
+      emailAddress: "",
+      IdType: "",
+      region: "",
+      office: "",
+      SubCategory: "",
+      LocationOfIncident: "",
+      typeofIncident: "",
+      timeofIncident: "",
+      incidentArea: "",
+      vehicleNumber: "",
+      incidentDate: "",
+      otherDetails: "",
+      declaration: ""
     };
+
+    this.ModalClose = this.ModalClose.bind(this);
+    this.ModalOpen = this.ModalOpen.bind(this);
+    this.handleRowClick = this.handleRowClick.bind(this);
+  }
+
+  ModalClose() {
+    this.setState({ modalOpen: false });
+  }
+
+  ModalOpen() {
+    this.setState({ modalOpen: true });
+  }
+
+  handleRowClick(grievance) {
+    console.log(grievance);
+    this.setState({
+      CommunicationID: grievance.CommunicationID,
+      CommunicationType: grievance.CommunicationType,
+      clientNumber: grievance.CustomerNumber,
+      clientName: grievance.CustomerName,
+      IdNumber: grievance.IdNumber,
+      phoneContact: grievance.PhoneContact,
+      emailAddress: grievance.EmailAddress,
+      IdType: grievance.IDType,
+      region: grievance.Region,
+      office: grievance.OfficeName,
+      SubCategory: grievance.SubCategory,
+      LocationOfIncident: grievance.IncidentArea,
+      typeofIncident: grievance.IncidentType,
+      timeofIncident: grievance.IncidentTime,
+      incidentArea: grievance.incidentArea,
+      vehicleNumber: grievance.VehicleNumber,
+      incidentDate: grievance.IncidentDate,
+      otherDetails: grievance.OtherDetails,
+      declaration: grievance.declaration,
+      linkToFile: grievance.linkToFile
+    });
+    this.ModalOpen();
   }
 
   componentWillMount() {
@@ -58,7 +118,10 @@ class ViewPageInternal extends Component {
             </Table.Header>
             <Table.Body>
               {this.state.grievances.map(gr => (
-                <Table.Row key={gr.CommunicationID}>
+                <Table.Row
+                  key={gr.CommunicationID}
+                  onClick={this.handleRowClick.bind(this, gr)}
+                >
                   <Table.Cell>{gr.CommunicationID}</Table.Cell>
                   <Table.Cell>{gr.CustomerNumber}</Table.Cell>
                   <Table.Cell>{gr.CustomerName}</Table.Cell>
@@ -82,6 +145,70 @@ class ViewPageInternal extends Component {
               ))}
             </Table.Body>
           </Table>
+          <Modal
+            size="mini"
+            open={this.state.modalOpen}
+            onClose={this.ModalClose}
+            closeIcon
+          >
+            <Modal.Header>Update Details</Modal.Header>
+            <Modal.Content>
+              <Modal.Description>
+                <Form>
+                  <FormInputReadOnly
+                    label="Grievance ID"
+                    value={this.state.CommunicationID}
+                  />
+                  <FormInputReadOnly
+                    label="CustomerNumber"
+                    value={this.state.clientNumber}
+                  />
+                  <FormInputReadOnly
+                    label="PhoneContact"
+                    value={this.state.IdNumber}
+                  />
+                  <FormInputReadOnly
+                    label="EmailAddress"
+                    value={this.state.phoneContact}
+                  />
+                  <FormInputReadOnly
+                    label="Region"
+                    value={this.state.emailAddress}
+                  />
+                  <FormInputReadOnly
+                    label="OfficeName"
+                    value={this.state.IdType}
+                  />
+                  <FormInputReadOnly label="IDType" value={this.state.region} />
+                  <FormInputReadOnly
+                    label="IDNumber"
+                    value={this.state.office}
+                  />
+                  <FormInputReadOnly
+                    label="CommunicationType"
+                    value={this.state.SubCategory}
+                  />
+                  <FormInputReadOnly
+                    label="CommunicationType"
+                    value={this.state.LocationOfIncident}
+                  />
+                  <FormInputReadOnly
+                    label="IncidentType"
+                    value={this.state.IncidentType}
+                  />
+                  <FormInputReadOnly
+                    label="IncidentTime"
+                    value={this.state.IncidentTime}
+                  />
+                  <FormInputReadOnly
+                    label="Grievance ID"
+                    value={this.state.EmailAddress}
+                  />
+                </Form>
+              </Modal.Description>
+            </Modal.Content>
+            <Modal.Actions></Modal.Actions>
+          </Modal>
         </Segment>
       </div>
     );

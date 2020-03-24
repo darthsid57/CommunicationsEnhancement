@@ -49,6 +49,7 @@ class User extends Component {
     this.setState({ clientNumber: event.target.value });
 
     const inputValue = event.target.value;
+    console.log(inputValue);
     this.props.addClientNumber(inputValue);
 
     console.log(event.target.value);

@@ -58,7 +58,13 @@ class TypeofCommunication extends Component {
       isChecked: true,
       declaration: "",
       file: null,
-      enquiryDate: ""
+      enquiryDate: "",
+      commendationStaffName: "",
+      commendationOfficeName: "",
+      commendationDate: "",
+      commendationReason: "",
+      errorMessage: "",
+      error: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -86,6 +92,19 @@ class TypeofCommunication extends Component {
     this.handleEnquiryDateChange = this.handleEnquiryDateChange.bind(this);
     this.handleSubmitEnquery = this.handleSubmitEnquery.bind(this);
     this.handleOtherDetailsEnquiryChange = this.handleOtherDetailsEnquiryChange.bind(
+      this
+    );
+    this.handleCommendationSubmit = this.handleCommendationSubmit.bind(this);
+    this.handleCommendationStaffNameChange = this.handleCommendationStaffNameChange.bind(
+      this
+    );
+    this.handleCommendationOfficeNameChange = this.handleCommendationOfficeNameChange.bind(
+      this
+    );
+    this.handleCommendationDateChange = this.handleCommendationDateChange.bind(
+      this
+    );
+    this.handleCommendationReasonChange = this.handleCommendationReasonChange.bind(
       this
     );
   }
@@ -123,28 +142,53 @@ class TypeofCommunication extends Component {
 
     console.log(grievance);
 
-    Axios.post("http://localhost:2567/server/grievance", {
-      clientNumber: grievance.clientNumber,
-      clientName: grievance.clientName,
-      IdNumber: grievance.IdNumber,
-      phoneContact: grievance.phoneContact,
-      emailAddress: grievance.emailAddress,
-      IdType: grievance.IdType,
-      region: grievance.region,
-      office: grievance.office,
-      SubCategory: grievance.SubCategory,
-      LocationOfIncident: grievance.LocationOfIncident,
-      typeofIncident: grievance.typeofIncident,
-      timeofIncident: grievance.timeofIncident,
-      incidentArea: grievance.incidentArea,
-      vehicleNumber: grievance.vehicleNumber,
-      incidentDate: grievance.incidentDate,
-      otherDetails: grievance.otherDetails,
-      declaration: grievance.declaration
-    }).then(response => {
-      console.log(response);
-      console.log(response.data);
-    });
+    if (grievance.clientNumber === "") {
+      console.log("Empty Client Number");
+      this.setState({ errorMessage: "Empty Client Number" });
+    } else {
+      if (isNaN(grievance.clientNumber)) {
+        console.log("Alphabets present in Client Number");
+        this.setState({ errorMessage: "Alphabets present in Client Number" });
+      } else {
+        console.log("all good");
+        this.setState({ errorMessage: "" });
+      }
+    }
+    if (grievance.phoneContact === "") {
+      console.log("Empty Phone Contact");
+      this.setState({ errorMessage: "Empty Phone Contact" });
+    } else {
+      if (isNaN(grievance.phoneContact)) {
+        console.log("Alphabets present in Phone Contact");
+        this.setState({ errorMessage: "Alphabets present in Phone Contact" });
+      } else {
+        console.log("all good");
+        this.setState({ errorMessage: "" });
+      }
+    }
+
+    // Axios.post("http://localhost:2567/server/grievance", {
+    //   clientNumber: grievance.clientNumber,
+    //   clientName: grievance.clientName,
+    //   IdNumber: grievance.IdNumber,
+    //   phoneContact: grievance.phoneContact,
+    //   emailAddress: grievance.emailAddress,
+    //   IdType: grievance.IdType,
+    //   region: grievance.region,
+    //   office: grievance.office,
+    //   SubCategory: grievance.SubCategory,
+    //   LocationOfIncident: grievance.LocationOfIncident,
+    //   typeofIncident: grievance.typeofIncident,
+    //   timeofIncident: grievance.timeofIncident,
+    //   incidentArea: grievance.incidentArea,
+    //   vehicleNumber: grievance.vehicleNumber,
+    //   incidentDate: grievance.incidentDate,
+    //   otherDetails: grievance.otherDetails,
+    //   declaration: grievance.declaration
+    // }).then(response => {
+    //   console.log(response);
+    //   console.log(response.data);
+    // });
   }
 
   handleSubmitEnquery(event) {
@@ -182,6 +226,47 @@ class TypeofCommunication extends Component {
       console.log(response);
       console.log(response.data);
     });
+  }
+
+  handleCommendationSubmit(event) {
+    event.preventDefault();
+
+    const commendation = {
+      clientNumber: this.props.clientNumber,
+      clientName: this.props.clientName,
+      IdNumber: this.props.IdNumber,
+      phoneContact: this.props.phoneContact,
+      emailAddress: this.props.emailAddress,
+      IdType: this.props.IdType,
+      region: this.props.region,
+      office: this.props.office,
+      commendationStaffName: this.state.commendationStaffName,
+      commendationOfficeName: this.state.commendationOfficeName,
+      commendationDate: this.state.commendationDate,
+      commendationReason: this.state.commendationReason,
+      declaration: this.state.declaration
+    };
+
+    console.log(commendation);
+
+    // Axios.post("http://localhost:2567/server/commendation", {
+    //   clientNumber: commendation.clientNumber,
+    //   clientName: commendation.clientName,
+    //   IdNumber: commendation.IdNumber,
+    //   phoneContact: commendation.phoneContact,
+    //   emailAddress: commendation.emailAddress,
+    //   IdType: commendation.IdType,
+    //   region: commendation.region,
+    //   office: commendation.office,
+    //   commendationStaffName: commendation.commendationStaffName,
+    //   commendationOfficeName: commendation.commendationOfficeName,
+    //   commendationDate: commendation.commendationDate,
+    //   commendationReason: commendation.commendationReason,
+    //   declaration: commendation.declaration
+    // }).then(response => {
+    //   console.log(response);
+    //   console.log(response.data);
+    // });
   }
 
   handleChange(event, { value }) {
@@ -319,6 +404,28 @@ class TypeofCommunication extends Component {
         alert("The File is successfully uploaded");
       })
       .catch(error => {});
+  }
+
+  handleCommendationStaffNameChange(event) {
+    console.log(event.target.value);
+    this.setState({ commendationStaffName: event.target.value });
+  }
+
+  handleCommendationOfficeNameChange(event) {
+    console.log(event.target.value);
+    this.setState({ commendationOfficeName: event.target.value });
+  }
+
+  handleCommendationDateChange(date) {
+    console.log(date);
+    this.setState({ commendationDate: date });
+  }
+
+  handleCommendationReasonChange(event) {
+    console.log(event.target.value);
+    this.setState({
+      commendationReason: event.target.value
+    });
   }
 
   render() {
@@ -459,7 +566,10 @@ class TypeofCommunication extends Component {
               />
             </Grid.Column>
             <Grid.Column stackable>
-              <Pickerfordate stackable />
+              <Pickerfordate
+                stackable
+                onChange={this.handleCommendationDateChange}
+              />
             </Grid.Column>
           </Grid.Row>
           <Grid.Row stackable>
@@ -468,11 +578,13 @@ class TypeofCommunication extends Component {
                 <Labelinputfield
                   label="Staff Name :"
                   placeholder="Staff Name"
+                  onChange={this.handleCommendationStaffNameChange}
                 />
 
                 <Labelinputfield
                   label="Office Name/Area :*"
-                  placeholder="Time of Incident"
+                  placeholder="Office/Area"
+                  onChange={this.handleCommendationOfficeNameChange}
                 />
               </Grid>
             </Grid.Column>
@@ -490,6 +602,7 @@ class TypeofCommunication extends Component {
                         <TextArea
                           rows={5}
                           placeholder="Reason for the Commendation :*"
+                          onChange={this.handleCommendationReasonChange}
                         />
                       </Grid.Column>
                     </Grid.Row>
@@ -498,7 +611,60 @@ class TypeofCommunication extends Component {
               </Form>
             </Grid.Column>
           </Grid.Row>
-          <FooterComponent />
+          <Grid.Row padded>
+            <Grid.Column padded>
+              <Grid.Row padded>
+                <Checkbox
+                  label="I hereby declare that all the information provided is true . 
+                  The information you give us in relation to this communication may be given to the police , 
+                  law enforcement officers or any licensing body. "
+                  padded
+                  onChange={this.handleCheckBoxChange}
+                />
+              </Grid.Row>
+              <Form.Field padded>
+                <Label as="a" basic color="red" pointing="right">
+                  Note
+                </Label>
+                <span>
+                  Its Mandatory to fill in all the information that is required
+                  by the Land Transport Authority.
+                </span>
+              </Form.Field>
+              <Form.Field
+                onSubmit={this.handleUploadButtonGrievance}
+                padded
+                inline
+              >
+                {/* <Header as="h3">File Upload</Header> */}
+                <Input
+                  type="file"
+                  name="myImage"
+                  onChange={this.handleImageFileGrievanceChange}
+                />
+                <Button
+                  type="submit"
+                  color="google plus"
+                  onClick={this.handleUploadButtonGrievance}
+                >
+                  Upload
+                </Button>
+              </Form.Field>
+            </Grid.Column>
+            <Grid.Column>
+              <Button
+                color="orange"
+                type="submit"
+                padded
+                onClick={this.handleCommendationSubmit}
+              >
+                Submit
+              </Button>
+              <Button color="green" type="submit" padded>
+                Reset
+              </Button>
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
       );
     }
@@ -521,6 +687,7 @@ class TypeofCommunication extends Component {
                 options={this.state.options}
                 onChange={this.handleTypeofCommChange}
               /> */}
+              <label className="ferror">{this.state.errorMessage}</label>
               <Dropdown
                 placeholder="Type of Communication"
                 selection

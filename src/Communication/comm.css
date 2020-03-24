@@ -24,6 +24,11 @@
   vertical-align: middle;
 }
 
+.ferror {
+  font-weight: bold;
+  color: red;
+}
+
 .menupage {
   color: #343a32;
 }
