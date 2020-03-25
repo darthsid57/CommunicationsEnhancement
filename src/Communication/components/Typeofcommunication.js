@@ -355,24 +355,24 @@ class TypeofCommunication extends Component {
 
     console.log(commendation);
 
-    // Axios.post("http://localhost:2567/server/commendation", {
-    //   clientNumber: commendation.clientNumber,
-    //   clientName: commendation.clientName,
-    //   IdNumber: commendation.IdNumber,
-    //   phoneContact: commendation.phoneContact,
-    //   emailAddress: commendation.emailAddress,
-    //   IdType: commendation.IdType,
-    //   region: commendation.region,
-    //   office: commendation.office,
-    //   commendationStaffName: commendation.commendationStaffName,
-    //   commendationOfficeName: commendation.commendationOfficeName,
-    //   commendationDate: commendation.commendationDate,
-    //   commendationReason: commendation.commendationReason,
-    //   declaration: commendation.declaration
-    // }).then(response => {
-    //   console.log(response);
-    //   console.log(response.data);
-    // });
+    Axios.post("http://localhost:2567/server/commendation", {
+      clientNumber: commendation.clientNumber,
+      clientName: commendation.clientName,
+      IdNumber: commendation.IdNumber,
+      phoneContact: commendation.phoneContact,
+      emailAddress: commendation.emailAddress,
+      IdType: commendation.IdType,
+      region: commendation.region,
+      office: commendation.office,
+      commendationStaffName: commendation.commendationStaffName,
+      commendationOfficeName: commendation.commendationOfficeName,
+      commendationDate: commendation.commendationDate,
+      commendationReason: commendation.commendationReason,
+      declaration: commendation.declaration
+    }).then(response => {
+      console.log(response);
+      console.log(response.data);
+    });
   }
 
   handleChange(event, { value }) {
@@ -549,6 +549,7 @@ class TypeofCommunication extends Component {
                 fluid
                 options={this.state.options}
                 onChange={this.handleChange}
+                selected="Grievance"
               />
             </Grid.Column>
             <Grid.Column padded>
@@ -576,7 +577,7 @@ class TypeofCommunication extends Component {
                       >
                         <TextArea
                           rows={3}
-                          placeholder="Other Details*"
+                          placeholder="Enquiry Details"
                           fluid
                           onChange={this.handleOtherDetailsEnquiryChange}
                         />
@@ -592,9 +593,9 @@ class TypeofCommunication extends Component {
             <Grid.Column padded>
               <Grid.Row padded>
                 <Checkbox
-                  label="I hereby declare that all the information provided is true . 
-                  The information you give us in relation to this communication may be given to the police , 
-                  law enforcement officers or any licensing body. "
+                  label="I hereby declare that all the information provided is true .
+                    The information you give us in relation to this communication may be given to the police ,
+                    law enforcement officers or any licensing body. "
                   padded
                   onChange={this.handleCheckBoxChange}
                 />
@@ -637,7 +638,12 @@ class TypeofCommunication extends Component {
               >
                 Submit
               </Button>
-              <Button color="green" type="submit" padded>
+              <Button
+                color="green"
+                type="submit"
+                padded
+                onClick={() => window.location.reload()}
+              >
                 Reset
               </Button>
             </Grid.Column>
@@ -648,21 +654,21 @@ class TypeofCommunication extends Component {
     if (this.state.requestType === 2) {
       return (
         <Grid stackable columns={2} divided padded>
-          <Grid.Row stackable>
+          <Grid.Row columns={2} stackable>
             <Grid.Column stackable>
               {/* <Dropdown
-                  placeholder="Type of Communication"
-                  selection
-                  fluid
-                  options={this.state.options}
-                /> */}
+                    placeholder="Type of Communication"
+                    selection
+                    fluid
+                    options={this.state.options}
+                  /> */}
               {/* <Dropdown
-                  placeholder="Type of Communication"
-                  selection
-                  fluid
-                  options={this.state.options}
-                  onChange={this.handleTypeofCommChange}
-                /> */}
+                    placeholder="Type of Communication"
+                    selection
+                    fluid
+                    options={this.state.options}
+                    onChange={this.handleTypeofCommChange}
+                  /> */}
               <Dropdown
                 placeholder="Type of Communication"
                 selection
@@ -671,9 +677,13 @@ class TypeofCommunication extends Component {
                 onChange={this.handleChange}
               />
             </Grid.Column>
-            <Grid.Column stackable>
+            <Grid.Column>
+              <label size="big" className="flabel">
+                Commendation Date :
+              </label>
               <Pickerfordate
                 stackable
+                selected={this.state.commendationDate}
                 onChange={this.handleCommendationDateChange}
               />
             </Grid.Column>
@@ -707,7 +717,7 @@ class TypeofCommunication extends Component {
                       >
                         <TextArea
                           rows={5}
-                          placeholder="Reason for the Commendation :*"
+                          placeholder="Reason for the Commendation:*"
                           onChange={this.handleCommendationReasonChange}
                         />
                       </Grid.Column>
@@ -721,9 +731,9 @@ class TypeofCommunication extends Component {
             <Grid.Column padded>
               <Grid.Row padded>
                 <Checkbox
-                  label="I hereby declare that all the information provided is true . 
-                  The information you give us in relation to this communication may be given to the police , 
-                  law enforcement officers or any licensing body. "
+                  label="I hereby declare that all the information provided is true .
+                    The information you give us in relation to this communication may be given to the police ,
+                    law enforcement officers or any licensing body. "
                   padded
                   onChange={this.handleCheckBoxChange}
                 />
@@ -795,18 +805,18 @@ class TypeofCommunication extends Component {
           <Grid.Row stackable>
             <Grid.Column stackable>
               {/* <Dropdown
-                placeholder="Type of Communication"
-                selection
-                fluid
-                options={this.state.options}
-              /> */}
+                  placeholder="Type of Communication"
+                  selection
+                  fluid
+                  options={this.state.options}
+                /> */}
               {/* <Dropdown
-                placeholder="Type of Communication"
-                selection
-                fluid
-                options={this.state.options}
-                onChange={this.handleTypeofCommChange}
-              /> */}
+                  placeholder="Type of Communication"
+                  selection
+                  fluid
+                  options={this.state.options}
+                  onChange={this.handleTypeofCommChange}
+                /> */}
 
               <Dropdown
                 placeholder="Type of Communication"
@@ -910,9 +920,9 @@ class TypeofCommunication extends Component {
             <Grid.Column padded>
               <Grid.Row padded>
                 <Checkbox
-                  label="I hereby declare that all the information provided is true . 
-                  The information you give us in relation to this communication may be given to the police , 
-                  law enforcement officers or any licensing body. "
+                  label="I hereby declare that all the information provided is true .
+                    The information you give us in relation to this communication may be given to the police ,
+                    law enforcement officers or any licensing body. "
                   padded
                   onChange={this.handleCheckBoxChange}
                 />

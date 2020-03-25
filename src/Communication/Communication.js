@@ -22,7 +22,8 @@ import {
   TextArea,
   Responsive,
   Segment,
-  Accordion
+  Accordion,
+  Image
 } from "semantic-ui-react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import TypeofCommunication from "./components/Typeofcommunication";
@@ -30,6 +31,7 @@ import Regions from "../Communication/Redux/data/Regions";
 import Offices from "../Communication/Redux/data/offices";
 import IdTypes from "../Communication/Redux/data/IdType";
 import User from "../Communication/Redux/data/User";
+import logo from "../LTAFIJIlogo.png";
 
 class Communication extends Component {
   state = { activeItem: "home" };
@@ -225,6 +227,7 @@ class Communication extends Component {
       return (
         <Container className="mainpage">
           {/* <Showme /> */}
+          <img src={logo} width="150" height="50" />
           <Segment.Group>
             <Responsive as={Segment} maxWidth={767}>
               <Accordion as={Menu} vertical>
@@ -242,6 +245,7 @@ class Communication extends Component {
                 </Menu.Item>
               </Accordion>
             </Responsive>
+
             <Responsive as={Segment} minWidth={1125}>
               <Menu inverted widths={8} color="grey" stackable>
                 <Menu.Item
