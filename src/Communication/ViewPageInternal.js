@@ -24,47 +24,47 @@ class ViewPageInternal extends Component {
       commendations: [],
       enquiries: [],
       modalOpen: false,
-      CommunicationID: "",
-      CommunicationType: "",
-      clientNumber: "",
-      clientName: "",
-      IdNumber: "",
-      phoneContact: "",
-      emailAddress: "",
-      IdType: "",
-      region: "",
-      office: "",
-      SubCategory: "",
-      LocationOfIncident: "",
-      typeofIncident: "",
-      timeofIncident: "",
-      incidentArea: "",
-      vehicleNumber: "",
-      incidentDate: "",
-      otherDetails: "",
-      declaration: "",
-      CommendationID: "",
-      StaffName: "",
-      CommendationDate: "",
-      CommendationReason: "",
-      QueryID: "",
+
+      //Customer details
       CustomerNumber: "",
       CustomerName: "",
       PhoneContact: "",
       EmailAddress: "",
+      CommunicationType: "",
       Region: "",
       OfficeName: "",
       IDType: "",
       IDNumber: "",
+      declaration: "",
+      linkToFile: "",
+
+      //grievance
+      CommunicationID: "",
+      IncidentType: "",
+      IncidentTime: "",
+      IncidentArea: "",
+      IncidentDate: "",
+      SubCategory: "",
+      VehicleNumber: "",
+      OtherDetails: "",
+
+      //commendation
+      CommendationID: "",
+      StaffName: "",
+      CommendationDate: "",
+      CommendationReason: "",
+
+      //Enquiries
+      QueryID: "",
       QueryDetails: "",
       QueryDate: ""
     };
-
     this.ModalClose = this.ModalClose.bind(this);
     this.ModalOpen = this.ModalOpen.bind(this);
-    this.handleRowClick = this.handleRowClick.bind(this);
+
     this.timeExtract = this.timeExtract.bind(this);
     this.dateExtract = this.dateExtract.bind(this);
+    this.handleRowClick = this.handleRowClick.bind(this);
     this.handleRowCommendationClick = this.handleRowCommendationClick.bind(
       this
     );
@@ -94,22 +94,21 @@ class ViewPageInternal extends Component {
     this.setState({
       CommunicationID: grievance.CommunicationID,
       CommunicationType: grievance.CommunicationType,
-      clientNumber: grievance.CustomerNumber,
-      clientName: grievance.CustomerName,
-      IdNumber: grievance.IDNumber,
-      phoneContact: grievance.PhoneContact,
-      emailAddress: grievance.EmailAddress,
-      IdType: grievance.IDType,
-      region: grievance.Region,
-      office: grievance.OfficeName,
+      CustomerNumber: grievance.CustomerNumber,
+      CustomerName: grievance.CustomerName,
+      IDNumber: grievance.IDNumber,
+      PhoneContact: grievance.PhoneContact,
+      EmailAddress: grievance.EmailAddress,
+      IDType: grievance.IDType,
+      Region: grievance.Region,
+      OfficeName: grievance.OfficeName,
       SubCategory: grievance.SubCategory,
-      LocationOfIncident: grievance.IncidentArea,
-      typeofIncident: grievance.IncidentType,
-      timeofIncident: grievance.IncidentTime,
-      incidentArea: grievance.IncidentArea,
-      vehicleNumber: grievance.VehicleNumber,
-      incidentDate: grievance.IncidentDate,
-      otherDetails: grievance.OtherDetails,
+      IncidentType: grievance.IncidentType,
+      IncidentTime: grievance.IncidentTime,
+      IncidentArea: grievance.IncidentArea,
+      VehicleNumber: grievance.VehicleNumber,
+      IncidentDate: grievance.IncidentDate,
+      OtherDetails: grievance.OtherDetails,
       declaration: grievance.declaration,
       linkToFile: grievance.linkToFile
     });
@@ -119,16 +118,19 @@ class ViewPageInternal extends Component {
   handleRowCommendationClick(commendation) {
     console.log(commendation);
     this.setState({
-      CommunicationID: commendation.CommendationID,
+      CommendationID: commendation.CommendationID,
       CommunicationType: commendation.CommunicationType,
-      clientNumber: commendation.CustomerNumber,
-      clientName: commendation.CustomerName,
-      IdNumber: commendation.IDNumber,
-      phoneContact: commendation.PhoneContact,
-      emailAddress: commendation.EmailAddress,
-      IdType: commendation.IDType,
-      region: commendation.Region,
-      office: commendation.OfficeName
+      CustomerNumber: commendation.CustomerNumber,
+      CustomerName: commendation.CustomerName,
+      IDNumber: commendation.IDNumber,
+      PhoneContact: commendation.PhoneContact,
+      EmailAddress: commendation.EmailAddress,
+      IDType: commendation.IDType,
+      Region: commendation.Region,
+      OfficeName: commendation.OfficeName,
+      StaffName: commendation.StaffName,
+      CommendationDate: commendation.CommendationDate,
+      CommendationReason: commendation.CommendationReason
     });
     this.ModalOpen();
   }
@@ -207,7 +209,7 @@ class ViewPageInternal extends Component {
               />
             </Menu>
           </Segment> */}
-          <Segment compact textAlign="center">
+          <Segment textAlign="center">
             <Table celled color="orange" key="orange" size="small">
               <Table.Header fullWidth>
                 <Table.Row>
@@ -258,69 +260,69 @@ class ViewPageInternal extends Component {
                       value={this.state.CommunicationID}
                     />
                     <FormInputReadOnly
+                      label="Communication Type"
+                      value={this.state.CommunicationType}
+                    />
+                    <FormInputReadOnly
                       label="Customer Number"
-                      value={this.state.clientNumber}
+                      value={this.state.CustomerNumber}
                     />
                     <FormInputReadOnly
                       label="Customer Name"
-                      value={this.state.clientName}
+                      value={this.state.CustomerName}
                     />
                     <FormInputReadOnly
                       label="Customer ID Number"
-                      value={this.state.IdNumber}
+                      value={this.state.IDNumber}
                     />
                     <FormInputReadOnly
                       label="IDType"
-                      value={this.state.IdType}
+                      value={this.state.IDType}
                     />
                     <FormInputReadOnly
                       label="Phone Contact"
-                      value={this.state.phoneContact}
+                      value={this.state.PhoneContact}
                     />
                     <FormInputReadOnly
                       label="Email Address"
-                      value={this.state.emailAddress}
+                      value={this.state.EmailAddress}
                     />
 
                     <FormInputReadOnly
                       label="Region"
-                      value={this.state.region}
+                      value={this.state.Region}
                     />
                     <FormInputReadOnly
                       label="Office"
-                      value={this.state.office}
+                      value={this.state.OfficeName}
                     />
                     <FormInputReadOnly
                       label="Sub Category"
                       value={this.state.SubCategory}
                     />
                     <FormInputReadOnly
-                      label="Location"
-                      value={this.state.LocationOfIncident}
-                    />
-                    <FormInputReadOnly
                       label="Type of Incident"
-                      value={this.state.typeofIncident}
+                      value={this.state.IncidentType}
                     />
                     <FormInputReadOnly
                       label="Time of Incident"
-                      value={this.state.timeofIncident}
+                      value={this.state.IncidentTime}
                     />
                     <FormInputReadOnly
                       label="Incident Area"
-                      value={this.state.incidentArea}
+                      value={this.state.IncidentArea}
                     />
                     <FormInputReadOnly
                       label="Vehicle Number"
-                      value={this.state.vehicleNumber}
+                      value={this.state.VehicleNumber}
                     />
                     <FormInputReadOnly
                       label="Incident Date"
-                      value={this.state.incidentDate}
+                      value={this.state.IncidentDate}
                     />
                     <FormInputReadOnly
                       label="Other Details"
-                      value={this.state.otherDetails}
+                      value={this.state.OtherDetails}
                     />
                   </Form>
                 </Modal.Description>
@@ -353,7 +355,7 @@ class ViewPageInternal extends Component {
               />
             </Menu>
           </Segment> */}
-          <Segment compact textAlign="center">
+          <Segment textAlign="center">
             <Table celled color="orange" key="orange" size="small">
               <Table.Header fullWidth>
                 <Table.Row>
@@ -394,73 +396,57 @@ class ViewPageInternal extends Component {
                 <Modal.Description>
                   <Form>
                     <FormInputReadOnly
-                      label="Grievance ID"
-                      value={this.state.CommunicationID}
+                      label="Commendation ID"
+                      value={this.state.CommendationID}
+                    />
+                    <FormInputReadOnly
+                      label="Communication Type"
+                      value={this.state.CommunicationType}
                     />
                     <FormInputReadOnly
                       label="Customer Number"
-                      value={this.state.clientNumber}
+                      value={this.state.CustomerNumber}
                     />
                     <FormInputReadOnly
                       label="Customer Name"
-                      value={this.state.clientName}
+                      value={this.state.CustomerName}
                     />
                     <FormInputReadOnly
                       label="Customer ID Number"
-                      value={this.state.IdNumber}
+                      value={this.state.IDNumber}
                     />
                     <FormInputReadOnly
                       label="IDType"
-                      value={this.state.IdType}
+                      value={this.state.IDType}
                     />
                     <FormInputReadOnly
                       label="Phone Contact"
-                      value={this.state.phoneContact}
+                      value={this.state.PhoneContact}
                     />
                     <FormInputReadOnly
                       label="Email Address"
-                      value={this.state.emailAddress}
+                      value={this.state.EmailAddress}
                     />
 
                     <FormInputReadOnly
                       label="Region"
-                      value={this.state.region}
+                      value={this.state.Region}
                     />
                     <FormInputReadOnly
                       label="Office"
-                      value={this.state.office}
+                      value={this.state.OfficeName}
                     />
                     <FormInputReadOnly
-                      label="Sub Category"
-                      value={this.state.SubCategory}
+                      label="Commended Staff"
+                      value={this.state.StaffName}
                     />
                     <FormInputReadOnly
-                      label="Location"
-                      value={this.state.LocationOfIncident}
+                      label="Date of Commendation"
+                      value={this.state.CommendationDate}
                     />
                     <FormInputReadOnly
-                      label="Type of Incident"
-                      value={this.state.typeofIncident}
-                    />
-                    <FormInputReadOnly
-                      label="Time of Incident"
-                      value={this.state.timeofIncident}
-                    />
-                    <FormInputReadOnly
-                      label="Incident Area"
-                      value={this.state.incidentArea}
-                    />
-                    <FormInputReadOnly
-                      label="Vehicle Number"
-                      value={this.state.vehicleNumber}
-                    />
-                    <FormInputReadOnly
-                      label="Incident Date"
-                      value={this.state.incidentDate}
-                    />
-                    <FormInputReadOnly
-                      label="Other Details"
-                      value={this.state.otherDetails}
+                      label="Reason for Commendation"
+                      value={this.state.CommendationReason}
                     />
                   </Form>
                 </Modal.Description>
@@ -493,7 +479,7 @@ class ViewPageInternal extends Component {
               />
             </Menu>
           </Segment> */}
-          <Segment compact textAlign="center">
+          <Segment textAlign="center">
             <Table celled color="orange" key="orange" size="small">
               <Table.Header fullWidth>
                 <Table.Row>
@@ -534,73 +520,53 @@ class ViewPageInternal extends Component {
                 <Modal.Description>
                   <Form>
                     <FormInputReadOnly
-                      label="Grievance ID"
-                      value={this.state.CommunicationID}
+                      label="Enquiry ID"
+                      value={this.state.QueryID}
+                    />
+                    <FormInputReadOnly
+                      label="Communication Type"
+                      value={this.state.CommunicationType}
                     />
                     <FormInputReadOnly
                       label="Customer Number"
-                      value={this.state.clientNumber}
+                      value={this.state.CustomerNumber}
                     />
                     <FormInputReadOnly
                       label="Customer Name"
-                      value={this.state.clientName}
+                      value={this.state.CustomerName}
                     />
                     <FormInputReadOnly
                       label="Customer ID Number"
-                      value={this.state.IdNumber}
+                      value={this.state.IDNumber}
                     />
                     <FormInputReadOnly
                       label="IDType"
-                      value={this.state.IdType}
+                      value={this.state.IDType}
                     />
                     <FormInputReadOnly
                       label="Phone Contact"
-                      value={this.state.phoneContact}
+                      value={this.state.PhoneContact}
                     />
                     <FormInputReadOnly
                       label="Email Address"
-                      value={this.state.emailAddress}
+                      value={this.state.EmailAddress}
                     />
 
                     <FormInputReadOnly
                       label="Region"
-                      value={this.state.region}
+                      value={this.state.Region}
                     />
                     <FormInputReadOnly
                       label="Office"
-                      value={this.state.office}
+                      value={this.state.OfficeName}
                     />
                     <FormInputReadOnly
-                      label="Sub Category"
-                      value={this.state.SubCategory}
+                      label="Enquiry Details"
+                      value={this.state.QueryDetails}
                     />
                     <FormInputReadOnly
-                      label="Location"
-                      value={this.state.LocationOfIncident}
-                    />
-                    <FormInputReadOnly
-                      label="Type of Incident"
-                      value={this.state.typeofIncident}
-                    />
-                    <FormInputReadOnly
-                      label="Time of Incident"
-                      value={this.state.timeofIncident}
-                    />
-                    <FormInputReadOnly
-                      label="Incident Area"
-                      value={this.state.incidentArea}
-                    />
-                    <FormInputReadOnly
-                      label="Vehicle Number"
-                      value={this.state.vehicleNumber}
-                    />
-                    <FormInputReadOnly
-                      label="Incident Date"
-                      value={this.state.incidentDate}
-                    />
-                    <FormInputReadOnly
-                      label="Other Details"
-                      value={this.state.otherDetails}
+                      label="Enquiry Date"
+                      value={this.state.QueryDate}
                     />
                   </Form>
                 </Modal.Description>

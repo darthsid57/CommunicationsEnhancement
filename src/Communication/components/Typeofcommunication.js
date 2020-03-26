@@ -58,7 +58,7 @@ class TypeofCommunication extends Component {
       otherDetailsEnquiry: "",
       isChecked: true,
       declaration: "",
-      file: null,
+      file: "",
       enquiryDate: "",
       commendationStaffName: "",
       commendationOfficeName: "",
@@ -150,14 +150,50 @@ class TypeofCommunication extends Component {
 
     console.log(grievance);
 
-    this.validateClientNumber(grievance.clientNumber);
-    this.validateClientName(grievance.clientName);
-    this.validateIdNumber(grievance.IdNumber);
-    this.validateIdType(grievance.IdType);
-    this.validatePhoneContact(grievance.phoneContact);
-    this.validateEmailAddress(grievance.emailAddress);
-    this.validateRegion(grievance.region);
-    this.validateOffice(grievance.office);
+    var a, b, c, d, e, f, g, h;
+
+    a = this.validateClientNumber(grievance.clientNumber);
+    b = this.validateClientName(grievance.clientName);
+    c = this.validateIdNumber(grievance.IdNumber);
+    d = this.validateIdType(grievance.IdType);
+    e = this.validatePhoneContact(grievance.phoneContact);
+    f = this.validateEmailAddress(grievance.emailAddress);
+    g = this.validateRegion(grievance.region);
+    h = this.validateOffice(grievance.office);
+
+    if (!a && !b && !c && !d && !e && !f && !g && !h) {
+      console.log("a : " + a);
+      console.log("b : " + b);
+      console.log("c : " + c);
+      console.log("d : " + d);
+      console.log("e : " + e);
+      console.log("f : " + f);
+      console.log("g : " + g);
+      console.log("h : " + h);
+
+      Axios.post("http://localhost:2567/server/grievance", {
+        clientNumber: grievance.clientNumber,
+        clientName: grievance.clientName,
+        IdNumber: grievance.IdNumber,
+        phoneContact: grievance.phoneContact,
+        emailAddress: grievance.emailAddress,
+        IdType: grievance.IdType,
+        region: grievance.region,
+        office: grievance.office,
+        SubCategory: grievance.SubCategory,
+        LocationOfIncident: grievance.LocationOfIncident,
+        typeofIncident: grievance.typeofIncident,
+        timeofIncident: grievance.timeofIncident,
+        incidentArea: grievance.incidentArea,
+        vehicleNumber: grievance.vehicleNumber,
+        incidentDate: grievance.incidentDate,
+        otherDetails: grievance.otherDetails,
+        declaration: grievance.declaration
+      }).then(response => {
+        console.log(response);
+        console.log(response.data);
+      });
+    }
 
     // console.log(grv);
 
@@ -183,18 +219,22 @@ class TypeofCommunication extends Component {
     //   console.log(response);
     //   console.log(response.data);
     // });
+
+    this.setState({ requestType: 3 });
+    // window.location.reload();
   }
 
   validateClientNumber(value) {
     if (value === "") {
-      console.log("Empty Client Number");
+      console.log("Empty Client Number" + value);
       this.setState({ errorMessageClientNumber: "Empty Client Number" });
       return true;
     } else {
       if (isNaN(value)) {
-        console.log("Alphabets present in Client Number");
+        console.log("Alphabets present in Client Number" + value);
         this.setState({
-          errorMessageClientNumber: "Alphabets present in Client Number"
+          errorMessageClientNumber: "Alphabets present in Client Number",
+          clientNumber: ""
         });
         return true;
       } else {
@@ -207,12 +247,15 @@ class TypeofCommunication extends Component {
 
   validatePhoneContact(value) {
     if (value === "") {
-      console.log("Empty Phone Contact");
-      this.setState({ errorMessagePhoneContact: "Empty Phone Contact" });
+      console.log("Empty Phone Contact" + value);
+      this.setState({
+        errorMessagePhoneContact: "Empty Phone Contact",
+        phoneContact: ""
+      });
       return true;
     } else {
       if (isNaN(value)) {
-        console.log("Alphabets present in Phone Contact");
+        console.log("Alphabets present in Phone Contact" + value);
         this.setState({
           errorMessagePhoneContact: "Alphabets present in Phone Contact"
         });
@@ -372,7 +415,10 @@ class TypeofCommunication extends Component {
     }).then(response => {
       console.log(response);
       console.log(response.data);
+      alert("Commendation Submitted Successfully");
     });
+
+    this.handleUploadButtonGrievance();
   }
 
   handleChange(event, { value }) {
@@ -491,13 +537,13 @@ class TypeofCommunication extends Component {
   }
 
   handleImageFileGrievanceChange(event) {
+    console.log(event.target.files[0]);
     this.setState({ file: event.target.files[0] });
   }
 
-  handleUploadButtonGrievance(event) {
-    event.preventDefault();
-
+  handleUploadButtonGrievance() {
     const formData = new FormData();
+    console.log(this.state.file);
     formData.append("myImage", this.state.file);
     const config = {
       headers: {
@@ -505,11 +551,15 @@ class TypeofCommunication extends Component {
       }
     };
 
-    Axios.post("http://localhost:2567/upload/upload", formData, config)
-      .then(response => {
-        alert("The File is successfully uploaded");
-      })
-      .catch(error => {});
+    if (this.state.file === "") {
+      console.log("No Need to upload");
+    } else {
+      Axios.post("http://localhost:2567/server/upload", formData, config)
+        .then(response => {
+          alert("The File is successfully uploaded");
+        })
+        .catch(error => {});
+    }
   }
 
   handleCommendationStaffNameChange(event) {
