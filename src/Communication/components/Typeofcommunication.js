@@ -604,7 +604,7 @@ class TypeofCommunication extends Component {
     } else {
       Axios.post("http://localhost:2567/server/upload", formData, config)
         .then(response => {
-          alert("The File is successfully uploaded");
+          // alert("The File is successfully uploaded");
         })
         .catch(error => {});
     }
@@ -639,6 +639,20 @@ class TypeofCommunication extends Component {
     if (this.state.requestType === 1) {
       return (
         <Grid columns={2} divided padded stackable>
+          <label className="ferror">
+            {this.state.errorMessageClientNumber}
+          </label>
+          <label className="ferror">{this.state.errorMessageClientName}</label>
+          <label className="ferror">{this.state.errorMessageIDNumber}</label>
+          <label className="ferror">{this.state.errorMessageIDType}</label>
+          <label className="ferror">
+            {this.state.errorMessagePhoneContact}
+          </label>
+          <label className="ferror">
+            {this.state.errorMessageEmailAddress}
+          </label>
+          <label className="ferror">{this.state.errorMessageRegion}</label>
+          <label className="ferror">{this.state.errorMessageOffice}</label>
           <Grid.Row stackable>
             <Grid.Column>
               <Dropdown
@@ -752,6 +766,20 @@ class TypeofCommunication extends Component {
     if (this.state.requestType === 2) {
       return (
         <Grid stackable columns={2} divided padded>
+          <label className="ferror">
+            {this.state.errorMessageClientNumber}
+          </label>
+          <label className="ferror">{this.state.errorMessageClientName}</label>
+          <label className="ferror">{this.state.errorMessageIDNumber}</label>
+          <label className="ferror">{this.state.errorMessageIDType}</label>
+          <label className="ferror">
+            {this.state.errorMessagePhoneContact}
+          </label>
+          <label className="ferror">
+            {this.state.errorMessageEmailAddress}
+          </label>
+          <label className="ferror">{this.state.errorMessageRegion}</label>
+          <label className="ferror">{this.state.errorMessageOffice}</label>
           <Grid.Row columns={2} stackable>
             <Grid.Column stackable>
               {/* <Dropdown
