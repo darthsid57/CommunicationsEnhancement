@@ -220,6 +220,7 @@ class TypeofCommunication extends Component {
     //   console.log(response.data);
     // });
 
+    this.handleUploadButtonGrievance();
     this.setState({ requestType: 3 });
     // window.location.reload();
   }
@@ -359,22 +360,46 @@ class TypeofCommunication extends Component {
 
     console.log(enquiry);
 
-    Axios.post("http://localhost:2567/server/enquiry", {
-      clientNumber: enquiry.clientNumber,
-      clientName: enquiry.clientName,
-      IdNumber: enquiry.IdNumber,
-      phoneContact: enquiry.phoneContact,
-      emailAddress: enquiry.emailAddress,
-      IdType: enquiry.IdType,
-      region: enquiry.region,
-      office: enquiry.office,
-      dateOfEnquiry: enquiry.dateOfEnquiry,
-      otherDetailsEnquiry: enquiry.otherDetailsEnquiry,
-      declaration: enquiry.declaration
-    }).then(response => {
-      console.log(response);
-      console.log(response.data);
-    });
+    var a, b, c, d, e, f, g, h;
+
+    a = this.validateClientNumber(enquiry.clientNumber);
+    b = this.validateClientName(enquiry.clientName);
+    c = this.validateIdNumber(enquiry.IdNumber);
+    d = this.validateIdType(enquiry.IdType);
+    e = this.validatePhoneContact(enquiry.phoneContact);
+    f = this.validateEmailAddress(enquiry.emailAddress);
+    g = this.validateRegion(enquiry.region);
+    h = this.validateOffice(enquiry.office);
+
+    if (!a && !b && !c && !d && !e && !f && !g && !h) {
+      console.log("a : " + a);
+      console.log("b : " + b);
+      console.log("c : " + c);
+      console.log("d : " + d);
+      console.log("e : " + e);
+      console.log("f : " + f);
+      console.log("g : " + g);
+      console.log("h : " + h);
+
+      Axios.post("http://localhost:2567/server/enquiry", {
+        clientNumber: enquiry.clientNumber,
+        clientName: enquiry.clientName,
+        IdNumber: enquiry.IdNumber,
+        phoneContact: enquiry.phoneContact,
+        emailAddress: enquiry.emailAddress,
+        IdType: enquiry.IdType,
+        region: enquiry.region,
+        office: enquiry.office,
+        dateOfEnquiry: enquiry.dateOfEnquiry,
+        otherDetailsEnquiry: enquiry.otherDetailsEnquiry,
+        declaration: enquiry.declaration
+      }).then(response => {
+        console.log(response);
+        console.log(response.data);
+      });
+    }
+    this.handleUploadButtonGrievance();
+    this.setState({ requestType: 1 });
   }
 
   handleCommendationSubmit(event) {
@@ -398,27 +423,50 @@ class TypeofCommunication extends Component {
 
     console.log(commendation);
 
-    Axios.post("http://localhost:2567/server/commendation", {
-      clientNumber: commendation.clientNumber,
-      clientName: commendation.clientName,
-      IdNumber: commendation.IdNumber,
-      phoneContact: commendation.phoneContact,
-      emailAddress: commendation.emailAddress,
-      IdType: commendation.IdType,
-      region: commendation.region,
-      office: commendation.office,
-      commendationStaffName: commendation.commendationStaffName,
-      commendationOfficeName: commendation.commendationOfficeName,
-      commendationDate: commendation.commendationDate,
-      commendationReason: commendation.commendationReason,
-      declaration: commendation.declaration
-    }).then(response => {
-      console.log(response);
-      console.log(response.data);
-      alert("Commendation Submitted Successfully");
-    });
+    var a, b, c, d, e, f, g, h;
+
+    a = this.validateClientNumber(commendation.clientNumber);
+    b = this.validateClientName(commendation.clientName);
+    c = this.validateIdNumber(commendation.IdNumber);
+    d = this.validateIdType(commendation.IdType);
+    e = this.validatePhoneContact(commendation.phoneContact);
+    f = this.validateEmailAddress(commendation.emailAddress);
+    g = this.validateRegion(commendation.region);
+    h = this.validateOffice(commendation.office);
+
+    if (!a && !b && !c && !d && !e && !f && !g && !h) {
+      console.log("a : " + a);
+      console.log("b : " + b);
+      console.log("c : " + c);
+      console.log("d : " + d);
+      console.log("e : " + e);
+      console.log("f : " + f);
+      console.log("g : " + g);
+      console.log("h : " + h);
+
+      Axios.post("http://localhost:2567/server/commendation", {
+        clientNumber: commendation.clientNumber,
+        clientName: commendation.clientName,
+        IdNumber: commendation.IdNumber,
+        phoneContact: commendation.phoneContact,
+        emailAddress: commendation.emailAddress,
+        IdType: commendation.IdType,
+        region: commendation.region,
+        office: commendation.office,
+        commendationStaffName: commendation.commendationStaffName,
+        commendationOfficeName: commendation.commendationOfficeName,
+        commendationDate: commendation.commendationDate,
+        commendationReason: commendation.commendationReason,
+        declaration: commendation.declaration
+      }).then(response => {
+        console.log(response);
+        console.log(response.data);
+        alert("Commendation Submitted Successfully");
+      });
+    }
 
     this.handleUploadButtonGrievance();
+    this.setState({ requestType: 2 });
   }
 
   handleChange(event, { value }) {
@@ -670,13 +718,13 @@ class TypeofCommunication extends Component {
                   name="myImage"
                   onChange={this.handleImageFileGrievanceChange}
                 />
-                <Button
+                {/* <Button
                   type="submit"
                   color="google plus"
                   onClick={this.handleUploadButtonGrievance}
                 >
                   Upload
-                </Button>
+                </Button> */}
               </Form.Field>
             </Grid.Column>
             <Grid.Column>
@@ -808,13 +856,13 @@ class TypeofCommunication extends Component {
                   name="myImage"
                   onChange={this.handleImageFileGrievanceChange}
                 />
-                <Button
+                {/* <Button
                   type="submit"
                   color="google plus"
                   onClick={this.handleUploadButtonGrievance}
                 >
                   Upload
-                </Button>
+                </Button> */}
               </Form.Field>
             </Grid.Column>
             <Grid.Column>
@@ -826,7 +874,12 @@ class TypeofCommunication extends Component {
               >
                 Submit
               </Button>
-              <Button color="green" type="submit" padded>
+              <Button
+                color="green"
+                type="submit"
+                padded
+                onClick={() => window.location.reload()}
+              >
                 Reset
               </Button>
             </Grid.Column>
@@ -997,13 +1050,13 @@ class TypeofCommunication extends Component {
                   name="myImage"
                   onChange={this.handleImageFileGrievanceChange}
                 />
-                <Button
+                {/* <Button
                   type="submit"
                   color="google plus"
                   onClick={this.handleUploadButtonGrievance}
                 >
                   Upload
-                </Button>
+                </Button> */}
               </Form.Field>
             </Grid.Column>
             <Grid.Column>
@@ -1015,7 +1068,12 @@ class TypeofCommunication extends Component {
               >
                 Submit
               </Button>
-              <Button color="green" type="submit" padded>
+              <Button
+                color="green"
+                type="submit"
+                padded
+                onClick={() => window.location.reload()}
+              >
                 Reset
               </Button>
             </Grid.Column>
