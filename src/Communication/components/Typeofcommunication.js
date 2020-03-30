@@ -192,6 +192,7 @@ class TypeofCommunication extends Component {
       }).then(response => {
         console.log(response);
         console.log(response.data);
+        alert("Grievance Submitted Successfully");
       });
     }
 
@@ -396,6 +397,7 @@ class TypeofCommunication extends Component {
       }).then(response => {
         console.log(response);
         console.log(response.data);
+        alert("Enquiry Submitted Successfully");
       });
     }
     this.handleUploadButtonGrievance();

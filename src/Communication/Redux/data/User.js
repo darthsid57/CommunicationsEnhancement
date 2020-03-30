@@ -90,13 +90,14 @@ class User extends Component {
   }
 
   handleRegionChange(event, { value }) {
-    const inputValue = value;
+    const inputValue = 1;
     this.props.addRegion(inputValue);
   }
 
   handleOfficeChange(event, { value }) {
     const inputValue = value;
     this.props.addOffice(inputValue);
+    this.props.addRegion(inputValue);
   }
 
   render() {
@@ -178,11 +179,11 @@ class User extends Component {
                   onChange={this.handleEmailAddressChange}
                 />
                 <Grid.Row>
-                  <Regions
+                  {/* <Regions
                     label="Region"
                     placeholder="Region"
                     onChange={this.handleRegionChange}
-                  />
+                  /> */}
                   <Offices
                     label="Office"
                     placeholder="Office"
