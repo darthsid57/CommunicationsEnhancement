@@ -9,6 +9,7 @@ import LoginPage from "../src/Communication/components/loginPage";
 import ViewPageInternal from "../src/Communication/ViewPageInternal";
 import { Provider } from "react-redux";
 import store from "./Communication/Redux/store";
+import { ProtectedRoute } from "./Communication/components/protected.route";
 
 class App extends Component {
   state = {
@@ -37,7 +38,12 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Communication} />
               <Route path="/login" component={LoginPage} />
-              <Route path="/ViewPageInternal" component={ViewPageInternal} />
+              <ProtectedRoute
+                exact
+                path="/ViewPageInternal"
+                component={ViewPageInternal}
+              />
+              {/* <Route path="/ViewPageInternal" component={ViewPageInternal} /> */}
               <Route path="*" component={() => "404 NOT FOUND"} />
             </Switch>
           </BrowserRouter>

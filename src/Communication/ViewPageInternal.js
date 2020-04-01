@@ -5,13 +5,15 @@ import {
   Modal,
   Form,
   Container,
-  Menu
+  Menu,
+  Button
 } from "semantic-ui-react";
 import Axios from "axios";
 import "./comm.css";
 import FormInputReadOnly from "./components/FormInputReadOnly";
 import Moment from "react-moment";
 import logo from "../LTAFIJIlogo.png";
+import auth from "./components/auth";
 
 class ViewPageInternal extends Component {
   state = { activeItem: "Grievance" };
@@ -586,7 +588,17 @@ class ViewPageInternal extends Component {
     return (
       <Container className="viewpage">
         <img src={logo} width="150" height="50" />
-
+        <Button
+          floated="right"
+          color="orange"
+          onClick={() => {
+            auth.logout(() => {
+              this.props.history.push("/");
+            });
+          }}
+        >
+          Logout
+        </Button>
         <Segment>
           <Menu inverted widths={3} color="grey" stackable>
             <Menu.Item

@@ -8,6 +8,7 @@ import {
   Message,
   Segment
 } from "semantic-ui-react";
+import auth from "./auth";
 
 class LoginPage extends Component {
   constructor(props) {
@@ -41,6 +42,9 @@ class LoginPage extends Component {
   handleSubmitLoginDetails() {
     // console.log(this.state.username + this.state.password);
     //This will submit details to server and verify user login detail.
+    auth.login(() => {
+      this.props.history.push("/ViewPageInternal");
+    });
   }
 
   render() {
@@ -51,7 +55,7 @@ class LoginPage extends Component {
         verticalAlign="middle"
       >
         <Grid.Column style={{ maxWidth: 450 }}>
-          <Header as="h2" color="teal" textAlign="center">
+          <Header as="h2" color="orange" textAlign="center">
             <Image src="/logo.png" /> Log-in to your account
           </Header>
           <Form size="large">
@@ -73,7 +77,7 @@ class LoginPage extends Component {
               />
 
               <Button
-                color="teal"
+                color="orange"
                 fluid
                 size="large"
                 onClick={this.handleSubmitLoginDetails}
