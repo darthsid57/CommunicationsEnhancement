@@ -59,7 +59,12 @@ class ViewPageInternal extends Component {
       //Enquiries
       QueryID: "",
       QueryDetails: "",
-      QueryDate: ""
+      QueryDate: "",
+
+      //Case
+      caseOpen: [],
+      statusID: "",
+      openedBy: "5"
     };
     this.ModalClose = this.ModalClose.bind(this);
     this.ModalOpen = this.ModalOpen.bind(this);
@@ -71,6 +76,25 @@ class ViewPageInternal extends Component {
       this
     );
     this.handleRowEnquiryClick = this.handleRowEnquiryClick.bind(this);
+    this.handleCaseStatus = this.handleCaseStatus.bind(this);
+    this.isOpen = this.isOpen.bind(this);
+  }
+
+  handleCaseStatus(statusID) {
+    switch (statusID) {
+      case 1:
+        return <Table.Cell className="tab_cell_green">New</Table.Cell>;
+      case 2:
+        return <Table.Cell className="tab_cell_orange">Open</Table.Cell>;
+      case 3:
+        return <Table.Cell className="tab_cell_teal">Pending</Table.Cell>;
+      case 4:
+        return <Table.Cell className="tab_cell_grey">Closed</Table.Cell>;
+      case 5:
+        return <Table.Cell className="tab_cell_red">Overdue</Table.Cell>;
+      default:
+        return <Table.Cell></Table.Cell>;
+    }
   }
 
   timeExtract(time) {
@@ -87,8 +111,40 @@ class ViewPageInternal extends Component {
     this.setState({ modalOpen: false });
   }
 
-  ModalOpen() {
+  async ModalOpen(caseID) {
     this.setState({ modalOpen: true });
+
+    this.isOpen(caseID);
+  }
+
+  isOpen(caseID) {
+    Axios.get(`http://localhost:2567/server/status/isopen/${caseID}`)
+      .then(response => {
+        this.setState({ caseOpen: response.data });
+        console.log(response.data);
+        console.log(response);
+        this.state.caseOpen.map(x => {
+          if (x.isOpen !== 1) {
+            Axios.put(`http://localhost:2567/server/status/isopen/${caseID}`, {
+              openedBy: this.state.openedBy
+            })
+              .then(response => {
+                // this.ModalClose();
+                this.componentWillMount();
+                this.render();
+                console.log(response);
+              })
+              .catch(error => {
+                console.log(error);
+              });
+          } else {
+            console.log("Already Opened");
+          }
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   handleRowClick(grievance) {
@@ -114,7 +170,7 @@ class ViewPageInternal extends Component {
       declaration: grievance.declaration,
       linkToFile: grievance.linkToFile
     });
-    this.ModalOpen();
+    this.ModalOpen(grievance.caseID);
   }
 
   handleRowCommendationClick(commendation) {
@@ -226,6 +282,7 @@ class ViewPageInternal extends Component {
                   <Table.HeaderCell>IncidentDate</Table.HeaderCell>
                   <Table.HeaderCell>SubCategory</Table.HeaderCell>
                   <Table.HeaderCell>Vehicle</Table.HeaderCell>
+                  <Table.HeaderCell>Status</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
               <Table.Body>
@@ -243,6 +300,7 @@ class ViewPageInternal extends Component {
                     <Table.Cell>{gr.IncidentDate}</Table.Cell>
                     <Table.Cell>{gr.SubCategory}</Table.Cell>
                     <Table.Cell>{gr.VehicleNumber}</Table.Cell>
+                    {this.handleCaseStatus(gr.statusID)}
                   </Table.Row>
                 ))}
               </Table.Body>
@@ -593,7 +651,7 @@ class ViewPageInternal extends Component {
           color="orange"
           onClick={() => {
             auth.logout(() => {
-              this.props.history.push("/");
+              this.props.history.push("/login");
             });
           }}
         >

@@ -43,7 +43,8 @@ class LoginPage extends Component {
     // console.log(this.state.username + this.state.password);
     //This will submit details to server and verify user login detail.
     auth.login(() => {
-      this.props.history.push("/ViewPageInternal");
+      // this.props.history.push(`/ViewPageInternal/${this.state.username}`);
+      this.props.history.push(`/ViewPageInternal`);
     });
   }
 

@@ -42,3 +42,23 @@
 .menupage {
   color: #343a32;
 }
+
+.tab_cell_green {
+  background-color: #00ff00;
+}
+
+.tab_cell_orange {
+  background-color: orange;
+}
+
+.tab_cell_teal {
+  background-color: teal;
+}
+
+.tab_cell_grey {
+  background-color: gray;
+}
+
+.tab_cell_red {
+  background-color: red;
+}

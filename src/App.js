@@ -12,24 +12,6 @@ import store from "./Communication/Redux/store";
 import { ProtectedRoute } from "./Communication/components/protected.route";
 
 class App extends Component {
-  state = {
-    products: [
-      { id: "p1", title: "Gaming Mouse", price: 29.99 },
-      { id: "p2", title: "Xbox Controller", price: 9.99 },
-      { id: "p3", title: "G502 Mouse", price: 0.99 },
-      { id: "p4", title: "HS50 Corsair", price: 2.99 }
-    ],
-    cart: []
-  };
-
-  addProductToCart = product => {
-    console.log("Adding Product to Cart", product);
-  };
-
-  removeProductFromCart = productId => {
-    console.log("Removing Product from Cart " + productId);
-  };
-
   render() {
     return (
       <div>
@@ -38,12 +20,12 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Communication} />
               <Route path="/login" component={LoginPage} />
-              <ProtectedRoute
+              {/* <ProtectedRoute
                 exact
-                path="/ViewPageInternal"
+                path="/ViewPageInternal/:userid"
                 component={ViewPageInternal}
-              />
-              {/* <Route path="/ViewPageInternal" component={ViewPageInternal} /> */}
+              /> */}
+              <Route path="/ViewPageInternal" component={ViewPageInternal} />
               <Route path="*" component={() => "404 NOT FOUND"} />
             </Switch>
           </BrowserRouter>
