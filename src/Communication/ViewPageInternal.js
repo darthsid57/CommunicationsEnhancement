@@ -62,9 +62,13 @@ class ViewPageInternal extends Component {
       QueryDate: "",
 
       //Case
+      caseID: "",
       caseOpen: [],
+      caseClosed: [],
       statusID: "",
-      openedBy: "5"
+      openedBy: "5",
+      closedBy: "6",
+      isTrue: false
     };
     this.ModalClose = this.ModalClose.bind(this);
     this.ModalOpen = this.ModalOpen.bind(this);
@@ -78,6 +82,8 @@ class ViewPageInternal extends Component {
     this.handleRowEnquiryClick = this.handleRowEnquiryClick.bind(this);
     this.handleCaseStatus = this.handleCaseStatus.bind(this);
     this.isOpen = this.isOpen.bind(this);
+    this.isClose = this.isClose.bind(this);
+    this.closeButton = this.closeButton.bind(this);
   }
 
   handleCaseStatus(statusID) {
@@ -107,6 +113,11 @@ class ViewPageInternal extends Component {
     return <Table.Cell>{date}</Table.Cell>;
   }
 
+  closeButton() {
+    this.isClose(this.state.caseID);
+    this.setState({ isTrue: true });
+  }
+
   ModalClose() {
     this.setState({ modalOpen: false });
   }
@@ -115,6 +126,39 @@ class ViewPageInternal extends Component {
     this.setState({ modalOpen: true });
 
     this.isOpen(caseID);
+  }
+
+  isClose(caseID) {
+    Axios.get(`http://localhost:2567/server/status/isclose/${caseID}`)
+      .then(response => {
+        this.setState({ caseClosed: response.data });
+        console.log(response.data);
+        console.log(response);
+        this.state.caseClosed.map(x => {
+          if (x.isClosed !== 1) {
+            Axios.put(`http://localhost:2567/server/status/isclose/${caseID}`, {
+              closedBy: this.state.closedBy
+            })
+              .then(response => {
+                // this.ModalClose();
+                this.componentWillMount();
+                this.render();
+                console.log(response);
+              })
+              .catch(error => {
+                console.log(error);
+              });
+          } else {
+            console.log("Already Closed");
+          }
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+    console.log("why loop");
+    // this.ModalClose();
   }
 
   isOpen(caseID) {
@@ -168,7 +212,8 @@ class ViewPageInternal extends Component {
       IncidentDate: grievance.IncidentDate,
       OtherDetails: grievance.OtherDetails,
       declaration: grievance.declaration,
-      linkToFile: grievance.linkToFile
+      linkToFile: grievance.linkToFile,
+      caseID: grievance.caseID
     });
     this.ModalOpen(grievance.caseID);
   }
@@ -190,7 +235,7 @@ class ViewPageInternal extends Component {
       CommendationDate: commendation.CommendationDate,
       CommendationReason: commendation.CommendationReason
     });
-    this.ModalOpen();
+    this.ModalOpen(commendation.caseID);
   }
 
   handleRowEnquiryClick(enquiry) {
@@ -209,7 +254,7 @@ class ViewPageInternal extends Component {
       QueryDetails: enquiry.QueryDetails,
       QueryDate: enquiry.QueryDate
     });
-    this.ModalOpen();
+    this.ModalOpen(enquiry.caseID);
   }
 
   componentWillMount() {
@@ -300,96 +345,99 @@ class ViewPageInternal extends Component {
                     <Table.Cell>{gr.IncidentDate}</Table.Cell>
                     <Table.Cell>{gr.SubCategory}</Table.Cell>
                     <Table.Cell>{gr.VehicleNumber}</Table.Cell>
+
                     {this.handleCaseStatus(gr.statusID)}
                   </Table.Row>
                 ))}
               </Table.Body>
             </Table>
-            <Modal
-              size="mini"
-              open={this.state.modalOpen}
-              onClose={this.ModalClose}
-              closeIcon
-            >
-              <Modal.Header>Details</Modal.Header>
-              <Modal.Content>
-                <Modal.Description>
-                  <Form>
-                    <FormInputReadOnly
-                      label="Grievance ID"
-                      value={this.state.CommunicationID}
-                    />
-                    <FormInputReadOnly
-                      label="Communication Type"
-                      value={this.state.CommunicationType}
-                    />
-                    <FormInputReadOnly
-                      label="Customer Number"
-                      value={this.state.CustomerNumber}
-                    />
-                    <FormInputReadOnly
-                      label="Customer Name"
-                      value={this.state.CustomerName}
-                    />
-                    <FormInputReadOnly
-                      label="Customer ID Number"
-                      value={this.state.IDNumber}
-                    />
-                    <FormInputReadOnly
-                      label="IDType"
-                      value={this.state.IDType}
-                    />
-                    <FormInputReadOnly
-                      label="Phone Contact"
-                      value={this.state.PhoneContact}
-                    />
-                    <FormInputReadOnly
-                      label="Email Address"
-                      value={this.state.EmailAddress}
-                    />
-
-                    <FormInputReadOnly
-                      label="Region"
-                      value={this.state.Region}
-                    />
-                    <FormInputReadOnly
-                      label="Office"
-                      value={this.state.OfficeName}
-                    />
-                    <FormInputReadOnly
-                      label="Sub Category"
-                      value={this.state.SubCategory}
-                    />
-                    <FormInputReadOnly
-                      label="Type of Incident"
-                      value={this.state.IncidentType}
-                    />
-                    <FormInputReadOnly
-                      label="Time of Incident"
-                      value={this.state.IncidentTime}
-                    />
-                    <FormInputReadOnly
-                      label="Incident Area"
-                      value={this.state.IncidentArea}
-                    />
-                    <FormInputReadOnly
-                      label="Vehicle Number"
-                      value={this.state.VehicleNumber}
-                    />
-                    <FormInputReadOnly
-                      label="Incident Date"
-                      value={this.state.IncidentDate}
-                    />
-                    <FormInputReadOnly
-                      label="Other Details"
-                      value={this.state.OtherDetails}
-                    />
-                  </Form>
-                </Modal.Description>
-              </Modal.Content>
-              <Modal.Actions></Modal.Actions>
-            </Modal>
           </Segment>
+          <Modal
+            size="mini"
+            open={this.state.modalOpen}
+            onClose={this.ModalClose}
+            closeIcon
+          >
+            <Modal.Header>Details</Modal.Header>
+            <Modal.Content>
+              <Modal.Description>
+                <Form>
+                  <FormInputReadOnly
+                    label="Grievance ID"
+                    value={this.state.CommunicationID}
+                  />
+                  <FormInputReadOnly
+                    label="Communication Type"
+                    value={this.state.CommunicationType}
+                  />
+                  <FormInputReadOnly
+                    label="Customer Number"
+                    value={this.state.CustomerNumber}
+                  />
+                  <FormInputReadOnly
+                    label="Customer Name"
+                    value={this.state.CustomerName}
+                  />
+                  <FormInputReadOnly
+                    label="Customer ID Number"
+                    value={this.state.IDNumber}
+                  />
+                  <FormInputReadOnly label="IDType" value={this.state.IDType} />
+                  <FormInputReadOnly
+                    label="Phone Contact"
+                    value={this.state.PhoneContact}
+                  />
+                  <FormInputReadOnly
+                    label="Email Address"
+                    value={this.state.EmailAddress}
+                  />
+
+                  <FormInputReadOnly label="Region" value={this.state.Region} />
+                  <FormInputReadOnly
+                    label="Office"
+                    value={this.state.OfficeName}
+                  />
+                  <FormInputReadOnly
+                    label="Sub Category"
+                    value={this.state.SubCategory}
+                  />
+                  <FormInputReadOnly
+                    label="Type of Incident"
+                    value={this.state.IncidentType}
+                  />
+                  <FormInputReadOnly
+                    label="Time of Incident"
+                    value={this.state.IncidentTime}
+                  />
+                  <FormInputReadOnly
+                    label="Incident Area"
+                    value={this.state.IncidentArea}
+                  />
+                  <FormInputReadOnly
+                    label="Vehicle Number"
+                    value={this.state.VehicleNumber}
+                  />
+                  <FormInputReadOnly
+                    label="Incident Date"
+                    value={this.state.IncidentDate}
+                  />
+                  <FormInputReadOnly
+                    label="Other Details"
+                    value={this.state.OtherDetails}
+                  />
+                </Form>
+              </Modal.Description>
+            </Modal.Content>
+            <Modal.Actions>
+              <Button
+                disabled={this.state.isTrue}
+                onClick={this.closeButton}
+                color="red"
+              >
+                Close Case
+              </Button>
+            </Modal.Actions>
+          </Modal>
         </div>
       );
     }
@@ -427,6 +475,7 @@ class ViewPageInternal extends Component {
                   <Table.HeaderCell>Communication Type</Table.HeaderCell>
                   <Table.HeaderCell>Commendation Date</Table.HeaderCell>
                   <Table.HeaderCell>Commendation Reason</Table.HeaderCell>
+                  <Table.HeaderCell>Status</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
               <Table.Body>
@@ -441,6 +490,7 @@ class ViewPageInternal extends Component {
                     <Table.Cell>{gr.CommunicationType}</Table.Cell>
                     <Table.Cell>{gr.CommendationDate}</Table.Cell>
                     <Table.Cell>{gr.CommendationReason}</Table.Cell>
+                    {this.handleCaseStatus(gr.statusID)}
                   </Table.Row>
                 ))}
               </Table.Body>
@@ -551,6 +601,7 @@ class ViewPageInternal extends Component {
                   <Table.HeaderCell>Communication Type</Table.HeaderCell>
                   <Table.HeaderCell>Enquiry Date</Table.HeaderCell>
                   <Table.HeaderCell>Enquiry Reason</Table.HeaderCell>
+                  <Table.HeaderCell>Status</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
               <Table.Body>
@@ -565,6 +616,7 @@ class ViewPageInternal extends Component {
                     <Table.Cell>{gr.CommunicationType}</Table.Cell>
                     <Table.Cell>{gr.QueryDate}</Table.Cell>
                     <Table.Cell>{gr.QueryDetails}</Table.Cell>
+                    {this.handleCaseStatus(gr.statusID)}
                   </Table.Row>
                 ))}
               </Table.Body>
