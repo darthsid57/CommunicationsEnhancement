@@ -6,6 +6,7 @@ import idTypeReducer from "./idTypeReducer";
 import userReducer from "./userReducer";
 import SubCategoryReducer from "./SubCategoryReducer";
 import communicationTypeReducer from "./communicationTypeReducer";
+import officersReducer from "./officersReducer";
 
 const allReducers = combineReducers({
   Regions: regionReducer,
@@ -14,7 +15,8 @@ const allReducers = combineReducers({
   IdTypes: idTypeReducer,
   CustomerDetail: userReducer,
   SubCategory: SubCategoryReducer,
-  CommunicationType: communicationTypeReducer
+  CommunicationType: communicationTypeReducer,
+  Officers: officersReducer
 });
 
 export default allReducers;

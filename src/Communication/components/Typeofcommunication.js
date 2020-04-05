@@ -72,7 +72,8 @@ class TypeofCommunication extends Component {
       errorMessageEmailAddress: "",
       errorMessageRegion: "",
       errorMessageOffice: "",
-      error: false
+      error: false,
+      postResponse: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -127,6 +128,7 @@ class TypeofCommunication extends Component {
 
   handleSubmitGrievance(event) {
     event.preventDefault();
+    var value = 0;
 
     const grievance = {
       clientNumber: this.props.clientNumber,
@@ -190,12 +192,16 @@ class TypeofCommunication extends Component {
         otherDetails: grievance.otherDetails,
         declaration: grievance.declaration
       }).then(response => {
-        console.log(response);
+        console.log("grievance ");
         console.log(response.data);
-        alert("Grievance Submitted Successfully");
+        this.setState({ postResponse: response.data });
+        console.log(this.state.postResponse.map(x => x.customerDetailID));
+        value = this.state.postResponse.map(x => x.customerDetailID);
+        this.handleUploadButtonGrievance(value);
+        alert("Grievance Submitted Successfully " + value);
       });
     }
-
+    //----------------------------------------------------------------
     // console.log(grv);
 
     // Axios.post("http://localhost:2567/server/grievance", {
@@ -221,7 +227,7 @@ class TypeofCommunication extends Component {
     //   console.log(response.data);
     // });
 
-    this.handleUploadButtonGrievance();
+    this.handleUploadButtonGrievance(value);
     this.setState({ requestType: 3 });
     // window.location.reload();
   }
@@ -591,9 +597,12 @@ class TypeofCommunication extends Component {
     this.setState({ file: event.target.files[0] });
   }
 
-  handleUploadButtonGrievance() {
+  handleUploadButtonGrievance(id) {
+    var value = id;
+    console.log(value);
     const formData = new FormData();
     console.log(this.state.file);
+
     formData.append("myImage", this.state.file);
     const config = {
       headers: {
@@ -603,8 +612,19 @@ class TypeofCommunication extends Component {
 
     if (this.state.file === "") {
       console.log("No Need to upload");
+      // } else {
+      //   Axios.post(
+      //     `http://localhost:2567/server/upload/${value}`,
+      //     formData,
+      //     config
+      //   )
+      //     .then(response => {
+      //       // alert("The File is successfully uploaded");
+      //     })
+      //     .catch(error => {});
+      // }
     } else {
-      Axios.post("http://localhost:2567/server/upload", formData, config)
+      Axios.post(`http://localhost:2567/server/upload/${value}`, formData, {})
         .then(response => {
           // alert("The File is successfully uploaded");
         })

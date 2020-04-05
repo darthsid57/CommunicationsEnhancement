@@ -6,7 +6,9 @@ import {
   Form,
   Container,
   Menu,
-  Button
+  Button,
+  Image,
+  Grid
 } from "semantic-ui-react";
 import Axios from "axios";
 import "./comm.css";
@@ -14,6 +16,7 @@ import FormInputReadOnly from "./components/FormInputReadOnly";
 import Moment from "react-moment";
 import logo from "../LTAFIJIlogo.png";
 import auth from "./components/auth";
+import Officers from "./Redux/data/officers";
 
 class ViewPageInternal extends Component {
   state = { activeItem: "Grievance" };
@@ -68,7 +71,9 @@ class ViewPageInternal extends Component {
       statusID: "",
       openedBy: "5",
       closedBy: "6",
-      isTrue: false
+      isTrue: false,
+      assignOfficer: "",
+      officerAssigned: ""
     };
     this.ModalClose = this.ModalClose.bind(this);
     this.ModalOpen = this.ModalOpen.bind(this);
@@ -84,6 +89,50 @@ class ViewPageInternal extends Component {
     this.isOpen = this.isOpen.bind(this);
     this.isClose = this.isClose.bind(this);
     this.closeButton = this.closeButton.bind(this);
+    this.assignOfficerGrievance = this.assignOfficerGrievance.bind(this);
+    this.handleAssignButtonOnClick = this.handleAssignButtonOnClick.bind(this);
+  }
+
+  assignOfficerGrievance() {
+    return (
+      <Grid stackable>
+        <Grid.Row columns={2}>
+          <Grid.Column>
+            <Officers
+              onChange={(event, { value }) => {
+                console.log(value);
+                this.setState({ assignOfficer: value });
+              }}
+              placeholder="Officers"
+            />
+          </Grid.Column>
+          <Grid.Column>
+            <Button
+              onClick={this.handleAssignButtonOnClick}
+              floated="right"
+              color="orange"
+            >
+              Assign
+            </Button>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    );
+  }
+
+  handleAssignButtonOnClick() {
+    console.log("Assign this Officer: " + this.state.caseID);
+    Axios.put(`http://localhost:2567/server/assignedTo/${this.state.caseID}`, {
+      assignedTo: this.state.assignOfficer
+    })
+      .then(res => {
+        this.componentWillMount();
+        this.render();
+        console.log(res);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   handleCaseStatus(statusID) {
@@ -326,7 +375,7 @@ class ViewPageInternal extends Component {
                   <Table.HeaderCell>IncidentArea</Table.HeaderCell>
                   <Table.HeaderCell>IncidentDate</Table.HeaderCell>
                   <Table.HeaderCell>SubCategory</Table.HeaderCell>
-                  <Table.HeaderCell>Vehicle</Table.HeaderCell>
+                  <Table.HeaderCell>Officer Assigned</Table.HeaderCell>
                   <Table.HeaderCell>Status</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
@@ -344,7 +393,7 @@ class ViewPageInternal extends Component {
                     <Table.Cell>{gr.IncidentArea}</Table.Cell>
                     <Table.Cell>{gr.IncidentDate}</Table.Cell>
                     <Table.Cell>{gr.SubCategory}</Table.Cell>
-                    <Table.Cell>{gr.VehicleNumber}</Table.Cell>
+                    <Table.Cell>{gr.officerAssigned}</Table.Cell>
 
                     {this.handleCaseStatus(gr.statusID)}
                   </Table.Row>
@@ -425,15 +474,30 @@ class ViewPageInternal extends Component {
                     label="Other Details"
                     value={this.state.OtherDetails}
                   />
+
+                  {/* <img
+                    src="https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
+                    height="200"
+                    width="200"
+                  /> */}
+                  {this.assignOfficerGrievance()}
+                  <Image
+                    src="http://localhost:2567/images/images/test.jpg"
+                    fluid
+                  />
+                  <Image fluid />
                 </Form>
               </Modal.Description>
             </Modal.Content>
             <Modal.Actions>
-              <Button
+              {/* <Button
                 disabled={this.state.isTrue}
                 onClick={this.closeButton}
                 color="red"
               >
+                Close Case
+              </Button> */}
+              <Button onClick={this.closeButton} color="red">
                 Close Case
               </Button>
             </Modal.Actions>
