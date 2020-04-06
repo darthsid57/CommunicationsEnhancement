@@ -8,13 +8,14 @@ import {
   addEmailAddress,
   addIdType,
   addRegion,
-  addOffice
+  addOffice,
 } from "../Actions/UserAction";
 import { Input, Label, Grid, Form } from "semantic-ui-react";
 import Regions from "../../Redux/data/Regions";
 import Offices from "../../Redux/data/offices";
 import IdTypes from "../../Redux/data/IdType";
 import Labelinputfield from "../../components/labelinputfield";
+import * as EmailValidator from "email-validator";
 
 class User extends Component {
   constructor(props) {
@@ -29,8 +30,12 @@ class User extends Component {
         emailAddress: "",
         IdType: "",
         region: "",
-        office: ""
-      }
+        office: "",
+      },
+      emailError: true,
+      clientNumberError: true,
+      idNumberError: true,
+      phoneContactError: true,
     };
 
     this.handleClientNumberChange = this.handleClientNumberChange.bind(this);
@@ -41,16 +46,100 @@ class User extends Component {
     this.handleIdTypeChange = this.handleIdTypeChange.bind(this);
     this.handleRegionChange = this.handleRegionChange.bind(this);
     this.handleOfficeChange = this.handleOfficeChange.bind(this);
+    this.clientNumber = this.clientNumber.bind(this);
+    this.emailAddress = this.emailAddress.bind(this);
+    this.idNumber = this.idNumber.bind(this);
+    this.phoneContact = this.phoneContact.bind(this);
   }
 
   // state = { clientNumber: "" };
+
+  emailAddress() {
+    if (this.state.emailError === true) {
+      return (
+        <Labelinputfield
+          label="Email Address :*"
+          placeholder="Email Address"
+          onChange={this.handleEmailAddressChange}
+        />
+      );
+    } else {
+      return (
+        <Labelinputfield
+          label="Email Address :*"
+          placeholder="Email Address"
+          onChange={this.handleEmailAddressChange}
+          error={true}
+          errorValue="Invalid Email Address"
+        />
+      );
+    }
+  }
+
+  handleEmailAddressChange(event) {
+    const inputValue = event.target.value;
+    var isEmail = EmailValidator.validate(inputValue);
+    console.log("IsEmail: " + isEmail);
+    this.setState({ emailError: isEmail });
+    var emailError = this.state.emailError;
+    console.log("IsEmail: " + emailError);
+    this.props.addEmailAddress(inputValue);
+  }
+
+  clientNumber() {
+    if (this.state.clientNumberError === true) {
+      return (
+        <Grid.Row>
+          <Grid.Column padded verticalAlign="middle" textAlign="center">
+            <label className="flabel">Client Number</label>
+            <br />
+            <label>(Licence Number)</label>
+          </Grid.Column>
+          <Grid.Column padded verticalAlign="middle" textAlign="center">
+            <Input
+              fluid
+              placeholder="Client Number"
+              onChange={this.handleClientNumberChange}
+            />
+          </Grid.Column>
+        </Grid.Row>
+      );
+    } else {
+      return (
+        <Grid.Row>
+          <Grid.Column padded verticalAlign="middle" textAlign="center">
+            <label className="flabel">Client Number</label>
+            <br />
+            <label>(Licence Number)</label>
+          </Grid.Column>
+          <Grid.Column padded verticalAlign="middle" textAlign="center">
+            <Input
+              fluid
+              placeholder="Client Number"
+              onChange={this.handleClientNumberChange}
+            />
+            <Label basic pointing color="red">
+              Numbers only
+            </Label>
+          </Grid.Column>
+        </Grid.Row>
+      );
+    }
+  }
 
   handleClientNumberChange(event) {
     this.setState({ clientNumber: event.target.value });
 
     const inputValue = event.target.value;
-    console.log(inputValue);
-    this.props.addClientNumber(inputValue);
+
+    if (isNaN(inputValue)) {
+      console.log("Alphabets present in Client Number" + inputValue);
+      this.setState({ clientNumberError: false });
+    } else {
+      this.setState({ clientNumberError: true });
+      console.log(inputValue);
+      this.props.addClientNumber(inputValue);
+    }
 
     console.log(event.target.value);
   }
@@ -64,23 +153,87 @@ class User extends Component {
     console.log(event.target.value);
   }
 
+  idNumber() {
+    if (this.state.idNumberError === true) {
+      return (
+        <Grid.Row columns={3}>
+          <Grid.Column padded verticalAlign="middle" textAlign="center">
+            <label className="flabel">ID Number :*</label>
+          </Grid.Column>
+          <Grid.Column padded>
+            <input
+              placeholder="ID Number"
+              className="finput"
+              onChange={this.handleIdNumberChange}
+            />
+          </Grid.Column>
+          <Grid.Column padded>
+            <IdTypes
+              label="ID Type"
+              placeholder="ID Type"
+              onChange={this.handleIdTypeChange}
+            />
+          </Grid.Column>
+        </Grid.Row>
+      );
+    } else {
+      return (
+        <Grid.Row columns={3}>
+          <Grid.Column padded verticalAlign="middle" textAlign="center">
+            <label className="flabel">ID Number :*</label>
+          </Grid.Column>
+          <Grid.Column padded>
+            <input
+              placeholder="ID Number"
+              className="finput"
+              onChange={this.handleIdNumberChange}
+            />
+            <Label basic pointing color="red">
+              Numbers only
+            </Label>
+          </Grid.Column>
+          <Grid.Column padded>
+            <IdTypes
+              label="ID Type"
+              placeholder="ID Type"
+              onChange={this.handleIdTypeChange}
+            />
+          </Grid.Column>
+        </Grid.Row>
+      );
+    }
+  }
+
   handleIdNumberChange(event) {
     this.setState({ IdNumber: event.target.value });
 
     const inputValue = event.target.value;
-    this.props.addIdNumber(inputValue);
+
+    if (isNaN(inputValue)) {
+      console.log("Alphabets present in Client Number" + inputValue);
+      this.setState({ idNumberError: false });
+    } else {
+      this.setState({ idNumberError: true });
+      console.log(inputValue);
+      this.props.addIdNumber(inputValue);
+    }
 
     console.log(event.target.value);
   }
 
+  phoneContact() {}
+
   handlePhoneContactChange(event) {
     const inputValue = event.target.value;
-    this.props.addPhoneContact(inputValue);
-  }
 
-  handleEmailAddressChange(event) {
-    const inputValue = event.target.value;
-    this.props.addEmailAddress(inputValue);
+    if (isNaN(inputValue)) {
+      console.log("Alphabets present in Client Number" + inputValue);
+      this.setState({ phoneContactError: false });
+    } else {
+      this.setState({ phoneContactError: true });
+      console.log(inputValue);
+      this.props.addPhoneContact(inputValue);
+    }
   }
 
   handleIdTypeChange(event, { value }) {
@@ -107,7 +260,7 @@ class User extends Component {
           <Form>
             <Form.Field>
               <Grid columns={2} divided stackable>
-                <Grid.Row>
+                {/* <Grid.Row>
                   <Grid.Column padded verticalAlign="middle" textAlign="center">
                     <label className="flabel">Client Number</label>
                     <br />
@@ -120,7 +273,8 @@ class User extends Component {
                       onChange={this.handleClientNumberChange}
                     />
                   </Grid.Column>
-                </Grid.Row>
+                </Grid.Row> */}
+                {this.clientNumber()}
                 <Grid.Row>
                   <Grid.Column padded verticalAlign="middle" textAlign="center">
                     <label className="flabel">Client Name :*</label>
@@ -133,7 +287,8 @@ class User extends Component {
                     />
                   </Grid.Column>
                 </Grid.Row>
-                <Grid.Row columns={3}>
+                {this.idNumber()}
+                {/* <Grid.Row columns={3}>
                   <Grid.Column padded verticalAlign="middle" textAlign="center">
                     <label className="flabel">ID Number :*</label>
                   </Grid.Column>
@@ -151,7 +306,7 @@ class User extends Component {
                       onChange={this.handleIdTypeChange}
                     />
                   </Grid.Column>
-                </Grid.Row>
+                </Grid.Row> */}
               </Grid>
             </Form.Field>
           </Form>
@@ -173,11 +328,14 @@ class User extends Component {
                     />
                   </Grid.Column>
                 </Grid.Row>
-                <Labelinputfield
+                {/* <Labelinputfield
                   label="Email Address :*"
                   placeholder="Email Address"
                   onChange={this.handleEmailAddressChange}
-                />
+                  error="true"
+                  errorValue="Invalid"
+                /> */}
+                {this.emailAddress()}
                 <Grid.Row>
                   {/* <Regions
                     label="Region"
@@ -208,7 +366,7 @@ function mapStateToProps(state) {
     emailAddress: state.CustomerDetail.emailAddress,
     IdType: state.CustomerDetail.IdType,
     region: state.CustomerDetail.region,
-    office: state.CustomerDetail.office
+    office: state.CustomerDetail.office,
   };
 }
 
@@ -220,7 +378,7 @@ const mapDispatchToProps = {
   addEmailAddress,
   addIdType,
   addRegion,
-  addOffice
+  addOffice,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(User);

@@ -8,7 +8,7 @@ import {
   Menu,
   Button,
   Image,
-  Grid
+  Grid,
 } from "semantic-ui-react";
 import Axios from "axios";
 import "./comm.css";
@@ -73,7 +73,7 @@ class ViewPageInternal extends Component {
       closedBy: "6",
       isTrue: false,
       assignOfficer: "",
-      officerAssigned: ""
+      officerAssigned: "",
     };
     this.ModalClose = this.ModalClose.bind(this);
     this.ModalOpen = this.ModalOpen.bind(this);
@@ -123,14 +123,14 @@ class ViewPageInternal extends Component {
   handleAssignButtonOnClick() {
     console.log("Assign this Officer: " + this.state.caseID);
     Axios.put(`http://localhost:2567/server/assignedTo/${this.state.caseID}`, {
-      assignedTo: this.state.assignOfficer
+      assignedTo: this.state.assignOfficer,
     })
-      .then(res => {
+      .then((res) => {
         this.componentWillMount();
         this.render();
         console.log(res);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -179,22 +179,22 @@ class ViewPageInternal extends Component {
 
   isClose(caseID) {
     Axios.get(`http://localhost:2567/server/status/isclose/${caseID}`)
-      .then(response => {
+      .then((response) => {
         this.setState({ caseClosed: response.data });
         console.log(response.data);
         console.log(response);
-        this.state.caseClosed.map(x => {
+        this.state.caseClosed.map((x) => {
           if (x.isClosed !== 1) {
             Axios.put(`http://localhost:2567/server/status/isclose/${caseID}`, {
-              closedBy: this.state.closedBy
+              closedBy: this.state.closedBy,
             })
-              .then(response => {
+              .then((response) => {
                 // this.ModalClose();
                 this.componentWillMount();
                 this.render();
                 console.log(response);
               })
-              .catch(error => {
+              .catch((error) => {
                 console.log(error);
               });
           } else {
@@ -202,7 +202,7 @@ class ViewPageInternal extends Component {
           }
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
 
@@ -212,22 +212,22 @@ class ViewPageInternal extends Component {
 
   isOpen(caseID) {
     Axios.get(`http://localhost:2567/server/status/isopen/${caseID}`)
-      .then(response => {
+      .then((response) => {
         this.setState({ caseOpen: response.data });
         console.log(response.data);
         console.log(response);
-        this.state.caseOpen.map(x => {
+        this.state.caseOpen.map((x) => {
           if (x.isOpen !== 1) {
             Axios.put(`http://localhost:2567/server/status/isopen/${caseID}`, {
-              openedBy: this.state.openedBy
+              openedBy: this.state.openedBy,
             })
-              .then(response => {
+              .then((response) => {
                 // this.ModalClose();
                 this.componentWillMount();
                 this.render();
                 console.log(response);
               })
-              .catch(error => {
+              .catch((error) => {
                 console.log(error);
               });
           } else {
@@ -235,7 +235,7 @@ class ViewPageInternal extends Component {
           }
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
@@ -262,7 +262,7 @@ class ViewPageInternal extends Component {
       OtherDetails: grievance.OtherDetails,
       declaration: grievance.declaration,
       linkToFile: grievance.linkToFile,
-      caseID: grievance.caseID
+      caseID: grievance.caseID,
     });
     this.ModalOpen(grievance.caseID);
   }
@@ -282,7 +282,8 @@ class ViewPageInternal extends Component {
       OfficeName: commendation.OfficeName,
       StaffName: commendation.StaffName,
       CommendationDate: commendation.CommendationDate,
-      CommendationReason: commendation.CommendationReason
+      CommendationReason: commendation.CommendationReason,
+      caseID: commendation.caseID,
     });
     this.ModalOpen(commendation.caseID);
   }
@@ -301,39 +302,40 @@ class ViewPageInternal extends Component {
       IDNumber: enquiry.IDNumber,
       CommunicationType: enquiry.CommunicationType,
       QueryDetails: enquiry.QueryDetails,
-      QueryDate: enquiry.QueryDate
+      QueryDate: enquiry.QueryDate,
+      caseID: enquiry.caseID,
     });
     this.ModalOpen(enquiry.caseID);
   }
 
   componentWillMount() {
     Axios.get("/server/grievances")
-      .then(response => {
+      .then((response) => {
         this.setState({ grievances: response.data });
         console.log(response.data);
         console.log(response);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
 
     Axios.get("/server/commendation")
-      .then(response => {
+      .then((response) => {
         this.setState({ commendations: response.data });
         console.log(response.data);
         console.log(response);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
 
     Axios.get("/server/enquiries")
-      .then(response => {
+      .then((response) => {
         this.setState({ enquiries: response.data });
         console.log(response.data);
         console.log(response);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
@@ -368,19 +370,19 @@ class ViewPageInternal extends Component {
                   <Table.HeaderCell sorted="descending">
                     Grievance ID
                   </Table.HeaderCell>
-                  <Table.HeaderCell>CustomerNumber</Table.HeaderCell>
-                  <Table.HeaderCell>CustomerName</Table.HeaderCell>
-                  <Table.HeaderCell>CommunicationType</Table.HeaderCell>
-                  <Table.HeaderCell>IncidentTime</Table.HeaderCell>
-                  <Table.HeaderCell>IncidentArea</Table.HeaderCell>
-                  <Table.HeaderCell>IncidentDate</Table.HeaderCell>
-                  <Table.HeaderCell>SubCategory</Table.HeaderCell>
+                  <Table.HeaderCell>Customer Number</Table.HeaderCell>
+                  <Table.HeaderCell>Customer Name</Table.HeaderCell>
+                  <Table.HeaderCell>Communication Type</Table.HeaderCell>
+                  <Table.HeaderCell>Incident Time</Table.HeaderCell>
+                  <Table.HeaderCell>Incident Area</Table.HeaderCell>
+                  <Table.HeaderCell>Incident Date</Table.HeaderCell>
+                  <Table.HeaderCell>Sub Category</Table.HeaderCell>
                   <Table.HeaderCell>Officer Assigned</Table.HeaderCell>
                   <Table.HeaderCell>Status</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
               <Table.Body>
-                {this.state.grievances.map(gr => (
+                {this.state.grievances.map((gr) => (
                   <Table.Row
                     key={gr.CommunicationID}
                     onClick={this.handleRowClick.bind(this, gr)}
@@ -539,11 +541,12 @@ class ViewPageInternal extends Component {
                   <Table.HeaderCell>Communication Type</Table.HeaderCell>
                   <Table.HeaderCell>Commendation Date</Table.HeaderCell>
                   <Table.HeaderCell>Commendation Reason</Table.HeaderCell>
+                  <Table.HeaderCell>Officer Assigned</Table.HeaderCell>
                   <Table.HeaderCell>Status</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
               <Table.Body>
-                {this.state.commendations.map(gr => (
+                {this.state.commendations.map((gr) => (
                   <Table.Row
                     key={gr.CommendationID}
                     onClick={this.handleRowCommendationClick.bind(this, gr)}
@@ -554,6 +557,7 @@ class ViewPageInternal extends Component {
                     <Table.Cell>{gr.CommunicationType}</Table.Cell>
                     <Table.Cell>{gr.CommendationDate}</Table.Cell>
                     <Table.Cell>{gr.CommendationReason}</Table.Cell>
+                    <Table.Cell>{gr.officerAssigned}</Table.Cell>
                     {this.handleCaseStatus(gr.statusID)}
                   </Table.Row>
                 ))}
@@ -622,10 +626,15 @@ class ViewPageInternal extends Component {
                       label="Reason for Commendation"
                       value={this.state.CommendationReason}
                     />
+                    {this.assignOfficerGrievance()}
                   </Form>
                 </Modal.Description>
               </Modal.Content>
-              <Modal.Actions></Modal.Actions>
+              <Modal.Actions>
+                <Button onClick={this.closeButton} color="red">
+                  Close Case
+                </Button>
+              </Modal.Actions>
             </Modal>
           </Segment>
         </div>
@@ -665,11 +674,12 @@ class ViewPageInternal extends Component {
                   <Table.HeaderCell>Communication Type</Table.HeaderCell>
                   <Table.HeaderCell>Enquiry Date</Table.HeaderCell>
                   <Table.HeaderCell>Enquiry Reason</Table.HeaderCell>
+                  <Table.HeaderCell>Officer Assigned</Table.HeaderCell>
                   <Table.HeaderCell>Status</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
               <Table.Body>
-                {this.state.enquiries.map(gr => (
+                {this.state.enquiries.map((gr) => (
                   <Table.Row
                     key={gr.QueryID}
                     onClick={this.handleRowEnquiryClick.bind(this, gr)}
@@ -680,6 +690,7 @@ class ViewPageInternal extends Component {
                     <Table.Cell>{gr.CommunicationType}</Table.Cell>
                     <Table.Cell>{gr.QueryDate}</Table.Cell>
                     <Table.Cell>{gr.QueryDetails}</Table.Cell>
+                    <Table.Cell>{gr.officerAssigned}</Table.Cell>
                     {this.handleCaseStatus(gr.statusID)}
                   </Table.Row>
                 ))}

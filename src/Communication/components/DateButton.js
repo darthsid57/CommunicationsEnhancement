@@ -1,16 +1,19 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
+import { addDays } from "date-fns";
+import { registerLocale } from "react-datepicker";
+import { enAU } from "date-fns/esm/locale";
 import { Grid } from "semantic-ui-react";
 import "react-datepicker/dist/react-datepicker.css";
 
 class Example extends React.Component {
   state = {
-    startDate: new Date()
+    startDate: new Date(),
   };
 
-  handleChange = date => {
+  handleChange = (date) => {
     this.setState({
-      startDate: date
+      startDate: date,
     });
     console.log(this.state.startDate);
   };
@@ -21,6 +24,8 @@ class Example extends React.Component {
         selected={this.props.selected}
         onChange={this.props.onChange}
         className="finput"
+        dateFormat="dd/MM/yyyy"
+        maxDate={addDays(new Date(), 0)}
       />
     );
   }

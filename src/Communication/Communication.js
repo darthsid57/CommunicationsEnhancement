@@ -23,7 +23,7 @@ import {
   Responsive,
   Segment,
   Accordion,
-  Image
+  Image,
 } from "semantic-ui-react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import TypeofCommunication from "./components/Typeofcommunication";
@@ -43,7 +43,7 @@ class Communication extends Component {
       options: [
         { key: 1, text: "Choice 1", value: 1 },
         { key: 2, text: "Choice 2", value: 2 },
-        { key: 3, text: "Choice 3", value: 3 }
+        { key: 3, text: "Choice 3", value: 3 },
       ],
       typeofcategory: "",
       clientNumber: "",
@@ -59,7 +59,7 @@ class Communication extends Component {
       officeValue: "",
       IdTypeValue: "",
       errorMessage: "Please Complete All Fields",
-      clientNumberError: false
+      clientNumberError: false,
     };
 
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -97,7 +97,7 @@ class Communication extends Component {
 
   handleTypeofCommChange(event, { value }) {
     this.setState({
-      typeofcategory: value
+      typeofcategory: value,
     });
     console.log(value);
   }
@@ -108,15 +108,15 @@ class Communication extends Component {
     formData.append("myImage", this.state.file);
     const config = {
       headers: {
-        "content-type": "multipart/form-data"
-      }
+        "content-type": "multipart/form-data",
+      },
     };
     axios
       .post("/upload", formData, config)
-      .then(response => {
+      .then((response) => {
         alert("The file is successfully uploaded");
       })
-      .catch(error => {});
+      .catch((error) => {});
   }
   onChange(e) {
     this.setState({ file: e.target.files[0] });
@@ -139,21 +139,21 @@ class Communication extends Component {
   handleRegionChange(event, { value }) {
     console.log(value);
     this.setState({
-      regionValue: value
+      regionValue: value,
     });
   }
 
   handleOfficeChange(event, { value }) {
     console.log(value);
     this.setState({
-      officeValue: value
+      officeValue: value,
     });
   }
 
   handleIdTypeChange(event, { value }) {
     console.log(value);
     this.setState({
-      IdTypeValue: value
+      IdTypeValue: value,
     });
   }
 
@@ -311,7 +311,7 @@ class Communication extends Component {
           <Header as="h1">Communication Management</Header>
           <Divider inverted />
           <Header as="h2">Customer Details</Header>
-          <Grid columns={2} divided padded fluid stackable>
+          <Grid columns={2} divided padded fluid="true" stackable>
             <User />
             {/* <Grid.Row>
               <Grid.Column>
