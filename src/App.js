@@ -20,12 +20,12 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Communication} />
               <Route path="/login" component={LoginPage} />
-              {/* <ProtectedRoute
+              <ProtectedRoute
                 exact
-                path="/ViewPageInternal/:userid"
+                path="/ViewPageInternal/:id"
                 component={ViewPageInternal}
-              /> */}
-              <Route path="/ViewPageInternal" component={ViewPageInternal} />
+              />
+              {/* <Route path="/ViewPageInternal" component={ViewPageInternal} /> */}
               <Route path="*" component={() => "404 NOT FOUND"} />
             </Switch>
           </BrowserRouter>

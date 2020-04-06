@@ -42,6 +42,7 @@ class ViewPageInternal extends Component {
       IDNumber: "",
       declaration: "",
       linkToFile: "",
+      CustomerDetailID: "",
 
       //grievance
       CommunicationID: "",
@@ -69,8 +70,8 @@ class ViewPageInternal extends Component {
       caseOpen: [],
       caseClosed: [],
       statusID: "",
-      openedBy: "5",
-      closedBy: "6",
+      openedBy: this.props.match.params.id,
+      closedBy: this.props.match.params.id,
       isTrue: false,
       assignOfficer: "",
       officerAssigned: "",
@@ -93,9 +94,18 @@ class ViewPageInternal extends Component {
     this.handleAssignButtonOnClick = this.handleAssignButtonOnClick.bind(this);
   }
 
+  getImageByCustomerDetailID(CustomerDetailID) {
+    const srcValue = `http://localhost:2567/images/images/${CustomerDetailID}`;
+    return (
+      <Form.Field>
+        <Image src={srcValue} fluid />
+      </Form.Field>
+    );
+  }
+
   assignOfficerGrievance() {
     return (
-      <Grid stackable>
+      <Grid stackable padded>
         <Grid.Row columns={2}>
           <Grid.Column>
             <Officers
@@ -263,6 +273,7 @@ class ViewPageInternal extends Component {
       declaration: grievance.declaration,
       linkToFile: grievance.linkToFile,
       caseID: grievance.caseID,
+      CustomerDetailID: grievance.CustomerDetailID,
     });
     this.ModalOpen(grievance.caseID);
   }
@@ -309,6 +320,7 @@ class ViewPageInternal extends Component {
   }
 
   componentWillMount() {
+    console.log(this.props.match.params.id);
     Axios.get("/server/grievances")
       .then((response) => {
         this.setState({ grievances: response.data });
@@ -483,11 +495,13 @@ class ViewPageInternal extends Component {
                     width="200"
                   /> */}
                   {this.assignOfficerGrievance()}
-                  <Image
-                    src="http://localhost:2567/images/images/test.jpg"
-                    fluid
-                  />
-                  <Image fluid />
+                  {this.getImageByCustomerDetailID(this.state.CustomerDetailID)}
+                  {/* <Form.Field>
+                    <Image
+                      src="http://localhost:2567/images/images/test.jpg"
+                      fluid
+                    />
+                  </Form.Field> */}
                 </Form>
               </Modal.Description>
             </Modal.Content>
@@ -758,7 +772,11 @@ class ViewPageInternal extends Component {
                   </Form>
                 </Modal.Description>
               </Modal.Content>
-              <Modal.Actions></Modal.Actions>
+              <Modal.Actions>
+                <Button onClick={this.closeButton} color="red">
+                  Close Case
+                </Button>
+              </Modal.Actions>
             </Modal>
           </Segment>
         </div>

@@ -221,7 +221,44 @@ class User extends Component {
     console.log(event.target.value);
   }
 
-  phoneContact() {}
+  phoneContact() {
+    if (this.state.phoneContactError === true) {
+      return (
+        <Grid.Row>
+          <Grid.Column padded textAlign="center" verticalAlign="middle">
+            <label className="flabel">Phone Contact :*</label>
+          </Grid.Column>
+          <Grid.Column padded textAlign="center">
+            {/* <label>(Please provide a valid Contact Number)</label> */}
+            <input
+              placeholder="Phone Contact"
+              className="finput"
+              onChange={this.handlePhoneContactChange}
+            />
+          </Grid.Column>
+        </Grid.Row>
+      );
+    } else {
+      return (
+        <Grid.Row>
+          <Grid.Column padded textAlign="center" verticalAlign="middle">
+            <label className="flabel">Phone Contact :*</label>
+          </Grid.Column>
+          <Grid.Column padded textAlign="center">
+            {/* <label>(Please provide a valid Contact Number)</label> */}
+            <input
+              placeholder="Phone Contact"
+              className="finput"
+              onChange={this.handlePhoneContactChange}
+            />
+            <Label basic pointing color="red">
+              Numbers only
+            </Label>
+          </Grid.Column>
+        </Grid.Row>
+      );
+    }
+  }
 
   handlePhoneContactChange(event) {
     const inputValue = event.target.value;
@@ -315,19 +352,22 @@ class User extends Component {
           <Form>
             <Form.Field>
               <Grid columns={2} divided stackable>
-                <Grid.Row>
+                {this.phoneContact()}
+                {/* <Grid.Row>
                   <Grid.Column padded textAlign="center" verticalAlign="middle">
                     <label className="flabel">Phone Contact :*</label>
                   </Grid.Column>
                   <Grid.Column padded textAlign="center">
                     {/* <label>(Please provide a valid Contact Number)</label> */}
-                    <input
+                {/* <input
                       placeholder="Phone Contact"
                       className="finput"
                       onChange={this.handlePhoneContactChange}
                     />
                   </Grid.Column>
-                </Grid.Row>
+                </Grid.Row> 
+                */}
+
                 {/* <Labelinputfield
                   label="Email Address :*"
                   placeholder="Email Address"
