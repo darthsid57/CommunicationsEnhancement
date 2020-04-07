@@ -75,6 +75,12 @@ class ViewPageInternal extends Component {
       isTrue: false,
       assignOfficer: "",
       officerAssigned: "",
+      dateReceived: "",
+      dateopened: "",
+      dateAssigned: "",
+      dateClosed: "",
+      openedByOfficer: "",
+      closedByOfficer: "",
     };
     this.ModalClose = this.ModalClose.bind(this);
     this.ModalOpen = this.ModalOpen.bind(this);
@@ -92,6 +98,21 @@ class ViewPageInternal extends Component {
     this.closeButton = this.closeButton.bind(this);
     this.assignOfficerGrievance = this.assignOfficerGrievance.bind(this);
     this.handleAssignButtonOnClick = this.handleAssignButtonOnClick.bind(this);
+    this.formatDate = this.formatDate.bind(this);
+    this.ifNull = this.ifNull.bind(this);
+  }
+
+  ifNull(value) {
+    console.log(value);
+
+    if (value === null) {
+      console.log("is Null", null);
+    }
+  }
+
+  formatDate(string) {
+    var options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(string).toLocaleDateString("en-AU", options);
   }
 
   getImageByCustomerDetailID(CustomerDetailID) {
@@ -173,6 +194,7 @@ class ViewPageInternal extends Component {
   }
 
   closeButton() {
+    console.log(this.state.caseID);
     this.isClose(this.state.caseID);
     this.setState({ isTrue: true });
   }
@@ -274,6 +296,13 @@ class ViewPageInternal extends Component {
       linkToFile: grievance.linkToFile,
       caseID: grievance.caseID,
       CustomerDetailID: grievance.CustomerDetailID,
+      officerAssigned: grievance.officerAssigned,
+      dateReceived: grievance.dateReceived,
+      dateopened: grievance.dateopened,
+      dateAssigned: grievance.dateAssigned,
+      dateClosed: grievance.dateClosed,
+      openedByOfficer: grievance.openedBy,
+      closedByOfficer: grievance.closedBy,
     });
     this.ModalOpen(grievance.caseID);
   }
@@ -295,6 +324,13 @@ class ViewPageInternal extends Component {
       CommendationDate: commendation.CommendationDate,
       CommendationReason: commendation.CommendationReason,
       caseID: commendation.caseID,
+      officerAssigned: commendation.officerAssigned,
+      dateReceived: commendation.dateReceived,
+      dateopened: commendation.dateopened,
+      dateAssigned: commendation.dateAssigned,
+      dateClosed: commendation.dateClosed,
+      openedByOfficer: commendation.openedBy,
+      closedByOfficer: commendation.closedBy,
     });
     this.ModalOpen(commendation.caseID);
   }
@@ -315,6 +351,13 @@ class ViewPageInternal extends Component {
       QueryDetails: enquiry.QueryDetails,
       QueryDate: enquiry.QueryDate,
       caseID: enquiry.caseID,
+      officerAssigned: enquiry.officerAssigned,
+      dateReceived: enquiry.dateReceived,
+      dateopened: enquiry.dateopened,
+      dateAssigned: enquiry.dateAssigned,
+      dateClosed: enquiry.dateClosed,
+      openedByOfficer: enquiry.openedBy,
+      closedByOfficer: enquiry.closedBy,
     });
     this.ModalOpen(enquiry.caseID);
   }
@@ -485,6 +528,34 @@ class ViewPageInternal extends Component {
                     value={this.state.IncidentDate}
                   />
                   <FormInputReadOnly
+                    label="Officer Assigned"
+                    value={this.state.officerAssigned}
+                  />
+                  <FormInputReadOnly
+                    label="Date Received"
+                    value={this.state.dateReceived}
+                  />
+                  <FormInputReadOnly
+                    label="Date Opened"
+                    value={this.state.dateopened}
+                  />
+                  <FormInputReadOnly
+                    label="Date Assigned"
+                    value={this.state.dateAssigned}
+                  />
+                  <FormInputReadOnly
+                    label="Date Closed"
+                    value={this.state.dateClosed}
+                  />
+                  <FormInputReadOnly
+                    label="Opened By"
+                    value={this.state.openedByOfficer}
+                  />
+                  <FormInputReadOnly
+                    label="Closed By"
+                    value={this.state.closedByOfficer}
+                  />
+                  <FormInputReadOnly
                     label="Other Details"
                     value={this.state.OtherDetails}
                   />
@@ -640,6 +711,38 @@ class ViewPageInternal extends Component {
                       label="Reason for Commendation"
                       value={this.state.CommendationReason}
                     />
+                    <FormInputReadOnly
+                      label="Officer Assigned"
+                      value={this.state.officerAssigned}
+                    />
+                    <FormInputReadOnly
+                      label="Date Received"
+                      value={this.state.dateReceived}
+                    />
+                    <FormInputReadOnly
+                      label="Date Opened"
+                      value={this.state.dateopened}
+                    />
+                    <FormInputReadOnly
+                      label="Date Assigned"
+                      value={this.state.dateAssigned}
+                    />
+                    <FormInputReadOnly
+                      label="Date Closed"
+                      value={this.state.dateClosed}
+                    />
+                    <FormInputReadOnly
+                      label="Opened By"
+                      value={this.state.openedByOfficer}
+                    />
+                    <FormInputReadOnly
+                      label="Closed By"
+                      value={this.state.closedByOfficer}
+                    />
+                    <FormInputReadOnly
+                      label="Other Details"
+                      value={this.state.OtherDetails}
+                    />
                     {this.assignOfficerGrievance()}
                   </Form>
                 </Modal.Description>
@@ -768,6 +871,38 @@ class ViewPageInternal extends Component {
                     <FormInputReadOnly
                       label="Enquiry Date"
                       value={this.state.QueryDate}
+                    />
+                    <FormInputReadOnly
+                      label="Officer Assigned"
+                      value={this.state.officerAssigned}
+                    />
+                    <FormInputReadOnly
+                      label="Date Received"
+                      value={this.state.dateReceived}
+                    />
+                    <FormInputReadOnly
+                      label="Date Opened"
+                      value={this.state.dateopened}
+                    />
+                    <FormInputReadOnly
+                      label="Date Assigned"
+                      value={this.state.dateAssigned}
+                    />
+                    <FormInputReadOnly
+                      label="Date Closed"
+                      value={this.state.dateClosed}
+                    />
+                    <FormInputReadOnly
+                      label="Opened By"
+                      value={this.state.openedByOfficer}
+                    />
+                    <FormInputReadOnly
+                      label="Closed By"
+                      value={this.state.closedByOfficer}
+                    />
+                    <FormInputReadOnly
+                      label="Other Details"
+                      value={this.state.OtherDetails}
                     />
                   </Form>
                 </Modal.Description>

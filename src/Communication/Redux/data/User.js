@@ -148,6 +148,15 @@ class User extends Component {
     this.setState({ clientName: event.target.value });
 
     const inputValue = event.target.value;
+
+    if (!inputValue) {
+      console.log("Client Name Empty");
+    } else {
+      this.props.addClientName(inputValue);
+
+      console.log(event.target.value);
+    }
+
     this.props.addClientName(inputValue);
 
     console.log(event.target.value);

@@ -13,7 +13,7 @@ import {
   Input,
   Checkbox,
   Button,
-  Responsive
+  Responsive,
 } from "semantic-ui-react";
 import Labelinputfield from "./labelinputfield";
 import DropdownOptions from "./Dropdownoptions";
@@ -32,7 +32,7 @@ class TypeofCommunication extends Component {
       options: [
         { key: 1, text: "Enquiry", value: 1 },
         { key: 2, text: "Commendation", value: 2 },
-        { key: 3, text: "Grievance", value: 3 }
+        { key: 3, text: "Grievance", value: 3 },
       ],
       requestType: 3,
       regionValue: "",
@@ -54,12 +54,12 @@ class TypeofCommunication extends Component {
       vehicleNumber: "",
       incidentDate: "",
       otherDetails: "",
-      dateOfEnquiry: "",
+      dateOfEnquiry: new Date(),
       otherDetailsEnquiry: "",
       isChecked: true,
       declaration: "",
       file: "",
-      enquiryDate: "",
+      enquiryDate: new Date(),
       commendationStaffName: "",
       commendationOfficeName: "",
       commendationDate: "",
@@ -73,7 +73,7 @@ class TypeofCommunication extends Component {
       errorMessageRegion: "",
       errorMessageOffice: "",
       error: false,
-      postResponse: []
+      postResponse: [],
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -147,7 +147,7 @@ class TypeofCommunication extends Component {
       vehicleNumber: this.state.vehicleNumber,
       incidentDate: this.state.incidentDate,
       otherDetails: this.state.otherDetails,
-      declaration: this.state.declaration
+      declaration: this.state.declaration,
     };
 
     console.log(grievance);
@@ -190,13 +190,13 @@ class TypeofCommunication extends Component {
         vehicleNumber: grievance.vehicleNumber,
         incidentDate: grievance.incidentDate,
         otherDetails: grievance.otherDetails,
-        declaration: grievance.declaration
-      }).then(response => {
+        declaration: grievance.declaration,
+      }).then((response) => {
         console.log("grievance ");
         console.log(response.data);
         this.setState({ postResponse: response.data });
-        console.log(this.state.postResponse.map(x => x.customerDetailID));
-        value = this.state.postResponse.map(x => x.customerDetailID);
+        console.log(this.state.postResponse.map((x) => x.customerDetailID));
+        value = this.state.postResponse.map((x) => x.customerDetailID);
         this.handleUploadButtonGrievance(value);
         alert("Grievance Submitted Successfully " + value);
       });
@@ -238,18 +238,9 @@ class TypeofCommunication extends Component {
       this.setState({ errorMessageClientNumber: "Empty Client Number" });
       return true;
     } else {
-      if (isNaN(value)) {
-        console.log("Alphabets present in Client Number" + value);
-        this.setState({
-          errorMessageClientNumber: "Alphabets present in Client Number",
-          clientNumber: ""
-        });
-        return true;
-      } else {
-        console.log("all good");
-        this.setState({ errorMessageClientNumber: "" });
-        return false;
-      }
+      console.log("all good");
+      this.setState({ errorMessageClientNumber: "" });
+      return false;
     }
   }
 
@@ -258,28 +249,20 @@ class TypeofCommunication extends Component {
       console.log("Empty Phone Contact" + value);
       this.setState({
         errorMessagePhoneContact: "Empty Phone Contact",
-        phoneContact: ""
+        phoneContact: "",
       });
       return true;
     } else {
-      if (isNaN(value)) {
-        console.log("Alphabets present in Phone Contact" + value);
-        this.setState({
-          errorMessagePhoneContact: "Alphabets present in Phone Contact"
-        });
-        return true;
-      } else {
-        console.log("all good");
-        this.setState({ errorMessagePhoneContact: "" });
-        return false;
-      }
+      console.log("all good");
+      this.setState({ errorMessagePhoneContact: "" });
+      return false;
     }
   }
 
   validateClientName(value) {
     if (value === "") {
       console.log("Empty Client Name");
-      this.setState({ errorMessageClientName: "Empty Client Name" });
+      this.setState({ errorMessageClientName: "" });
       return true;
     } else {
       console.log("all good");
@@ -362,7 +345,7 @@ class TypeofCommunication extends Component {
       office: this.props.office,
       dateOfEnquiry: this.state.dateOfEnquiry,
       otherDetailsEnquiry: this.state.otherDetailsEnquiry,
-      declaration: this.state.declaration
+      declaration: this.state.declaration,
     };
 
     console.log(enquiry);
@@ -399,8 +382,8 @@ class TypeofCommunication extends Component {
         office: enquiry.office,
         dateOfEnquiry: enquiry.dateOfEnquiry,
         otherDetailsEnquiry: enquiry.otherDetailsEnquiry,
-        declaration: enquiry.declaration
-      }).then(response => {
+        declaration: enquiry.declaration,
+      }).then((response) => {
         console.log(response);
         console.log(response.data);
         alert("Enquiry Submitted Successfully");
@@ -426,7 +409,7 @@ class TypeofCommunication extends Component {
       commendationOfficeName: this.state.commendationOfficeName,
       commendationDate: this.state.commendationDate,
       commendationReason: this.state.commendationReason,
-      declaration: this.state.declaration
+      declaration: this.state.declaration,
     };
 
     console.log(commendation);
@@ -465,8 +448,8 @@ class TypeofCommunication extends Component {
         commendationOfficeName: commendation.commendationOfficeName,
         commendationDate: commendation.commendationDate,
         commendationReason: commendation.commendationReason,
-        declaration: commendation.declaration
-      }).then(response => {
+        declaration: commendation.declaration,
+      }).then((response) => {
         console.log(response);
         console.log(response.data);
         alert("Commendation Submitted Successfully");
@@ -479,7 +462,7 @@ class TypeofCommunication extends Component {
 
   handleChange(event, { value }) {
     this.setState({
-      requestType: value
+      requestType: value,
     });
     console.log(value);
     this.props.getNewUser();
@@ -522,21 +505,21 @@ class TypeofCommunication extends Component {
   handleRegionChange(event, { value }) {
     console.log(value);
     this.setState({
-      regionValue: value
+      regionValue: value,
     });
   }
 
   handleSubCategoryChange(event, { value }) {
     console.log(value);
     this.setState({
-      SubCategory: value
+      SubCategory: value,
     });
   }
 
   handleLocationOfIncidentChange(event, { value }) {
     console.log(value);
     this.setState({
-      LocationOfIncident: value
+      LocationOfIncident: value,
     });
   }
 
@@ -577,6 +560,7 @@ class TypeofCommunication extends Component {
 
   handleEnquiryDateChange(date) {
     console.log(date);
+    date = this.state.currentTime;
     this.setState({ dateOfEnquiry: date });
   }
 
@@ -606,8 +590,8 @@ class TypeofCommunication extends Component {
     formData.append("myImage", this.state.file);
     const config = {
       headers: {
-        "content-type": "multipart/form-data"
-      }
+        "content-type": "multipart/form-data",
+      },
     };
 
     if (this.state.file === "") {
@@ -625,10 +609,10 @@ class TypeofCommunication extends Component {
       // }
     } else {
       Axios.post(`http://localhost:2567/server/upload/${value}`, formData, {})
-        .then(response => {
+        .then((response) => {
           // alert("The File is successfully uploaded");
         })
-        .catch(error => {});
+        .catch((error) => {});
     }
   }
 
@@ -650,7 +634,7 @@ class TypeofCommunication extends Component {
   handleCommendationReasonChange(event) {
     console.log(event.target.value);
     this.setState({
-      commendationReason: event.target.value
+      commendationReason: event.target.value,
     });
   }
 
@@ -698,7 +682,7 @@ class TypeofCommunication extends Component {
                       </Grid.Column>
                       <Grid.Column>
                         <Pickerfordate
-                          selected={this.state.dateOfEnquiry}
+                          selected={this.state.currentTime}
                           onChange={this.handleEnquiryDateChange}
                         />
                       </Grid.Column>
@@ -1011,7 +995,7 @@ class TypeofCommunication extends Component {
                         timeIntervals={1}
                         timeCaption="Time"
                         dateFormat="h:mm aa"
-                        onChange={date => this.handleTimeofIncident(date)}
+                        onChange={(date) => this.handleTimeofIncident(date)}
                       />
                     </Grid.Column>
                   </Grid.Row>
@@ -1143,7 +1127,7 @@ function mapStateToProps(state) {
     emailAddress: state.CustomerDetail.emailAddress,
     IdType: state.CustomerDetail.IdType,
     region: state.CustomerDetail.region,
-    office: state.CustomerDetail.office
+    office: state.CustomerDetail.office,
   };
 }
 
