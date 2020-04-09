@@ -10,12 +10,22 @@ import {
   addRegion,
   addOffice,
 } from "../Actions/UserAction";
-import { Input, Label, Grid, Form } from "semantic-ui-react";
+import {
+  Input,
+  Label,
+  Grid,
+  Form,
+  Header,
+  Divider,
+  Button,
+  Message,
+} from "semantic-ui-react";
 import Regions from "../../Redux/data/Regions";
 import Offices from "../../Redux/data/offices";
 import IdTypes from "../../Redux/data/IdType";
 import Labelinputfield from "../../components/labelinputfield";
 import * as EmailValidator from "email-validator";
+import TypeofCommunication from "../../components/Typeofcommunication";
 
 class User extends Component {
   constructor(props) {
@@ -36,6 +46,8 @@ class User extends Component {
       clientNumberError: true,
       idNumberError: true,
       phoneContactError: true,
+      showNow: false,
+      isRerror: false,
     };
 
     this.handleClientNumberChange = this.handleClientNumberChange.bind(this);
@@ -50,6 +62,9 @@ class User extends Component {
     this.emailAddress = this.emailAddress.bind(this);
     this.idNumber = this.idNumber.bind(this);
     this.phoneContact = this.phoneContact.bind(this);
+    this.submitButtonClicked = this.submitButtonClicked.bind(this);
+    this.returnComponent = this.returnComponent.bind(this);
+    this.returnErrorMessage = this.returnErrorMessage.bind(this);
   }
 
   // state = { clientNumber: "" };
@@ -83,15 +98,16 @@ class User extends Component {
     this.setState({ emailError: isEmail });
     var emailError = this.state.emailError;
     console.log("IsEmail: " + emailError);
-    this.props.addEmailAddress(inputValue);
+    this.setState({ emailAddress: inputValue });
+    // this.props.addEmailAddress(inputValue);
   }
 
   clientNumber() {
     if (this.state.clientNumberError === true) {
       return (
-        <Grid.Row>
+        <Grid.Row columns={2} divided padded>
           <Grid.Column padded verticalAlign="middle" textAlign="center">
-            <label className="flabel">Client Number</label>
+            <label className="flabel">Client Number1</label>
             <br />
             <label>(Licence Number)</label>
           </Grid.Column>
@@ -106,14 +122,14 @@ class User extends Component {
       );
     } else {
       return (
-        <Grid.Row>
+        <Grid.Row columns={2} divided padded>
           <Grid.Column padded verticalAlign="middle" textAlign="center">
             <label className="flabel">Client Number</label>
             <br />
             <label>(Licence Number)</label>
           </Grid.Column>
           <Grid.Column padded verticalAlign="middle" textAlign="center">
-            <Input
+            <input
               fluid
               placeholder="Client Number"
               onChange={this.handleClientNumberChange}
@@ -128,8 +144,6 @@ class User extends Component {
   }
 
   handleClientNumberChange(event) {
-    this.setState({ clientNumber: event.target.value });
-
     const inputValue = event.target.value;
 
     if (isNaN(inputValue)) {
@@ -138,26 +152,26 @@ class User extends Component {
     } else {
       this.setState({ clientNumberError: true });
       console.log(inputValue);
-      this.props.addClientNumber(inputValue);
+      // this.props.addClientNumber(inputValue);
+      this.setState({ clientNumber: inputValue });
     }
 
     console.log(event.target.value);
   }
 
   handleClientNameChange(event) {
-    this.setState({ clientName: event.target.value });
-
     const inputValue = event.target.value;
 
     if (!inputValue) {
       console.log("Client Name Empty");
     } else {
-      this.props.addClientName(inputValue);
+      // this.props.addClientName(inputValue);
 
       console.log(event.target.value);
     }
 
-    this.props.addClientName(inputValue);
+    // this.props.addClientName(inputValue);
+    this.setState({ clientName: inputValue });
 
     console.log(event.target.value);
   }
@@ -214,8 +228,6 @@ class User extends Component {
   }
 
   handleIdNumberChange(event) {
-    this.setState({ IdNumber: event.target.value });
-
     const inputValue = event.target.value;
 
     if (isNaN(inputValue)) {
@@ -224,7 +236,8 @@ class User extends Component {
     } else {
       this.setState({ idNumberError: true });
       console.log(inputValue);
-      this.props.addIdNumber(inputValue);
+      // this.props.addIdNumber(inputValue);
+      this.setState({ IdNumber: inputValue });
     }
 
     console.log(event.target.value);
@@ -278,35 +291,117 @@ class User extends Component {
     } else {
       this.setState({ phoneContactError: true });
       console.log(inputValue);
-      this.props.addPhoneContact(inputValue);
+      // this.props.addPhoneContact(inputValue);
+      this.setState({ phoneContact: inputValue });
     }
   }
 
   handleIdTypeChange(event, { value }) {
     console.log(value);
     const inputValue = value;
-    this.props.addIdType(inputValue);
+    this.setState({ IdType: inputValue });
+    // this.props.addIdType(inputValue);
   }
 
   handleRegionChange(event, { value }) {
     const inputValue = 1;
-    this.props.addRegion(inputValue);
+    // this.props.addRegion(inputValue);
   }
 
   handleOfficeChange(event, { value }) {
     const inputValue = value;
-    this.props.addOffice(inputValue);
-    this.props.addRegion(inputValue);
+    // this.props.addOffice(inputValue);
+    // this.props.addRegion(inputValue);
+    this.setState({ office: inputValue });
+    this.setState({ region: inputValue });
+  }
+
+  submitButtonClicked() {
+    console.log(this.state.emailAddress);
+    console.log(this.state.clientNumber);
+    console.log(this.state.clientName);
+    console.log(this.state.IdNumber);
+    console.log(this.state.phoneContact);
+    console.log(this.state.office);
+    console.log(this.state.region);
+    console.log(this.state.IdType);
+
+    if (
+      this.state.emailAddress === undefined ||
+      this.state.clientName === undefined ||
+      this.state.IdNumber === undefined ||
+      this.state.phoneContact === undefined ||
+      this.state.office === undefined ||
+      this.state.region === undefined ||
+      this.state.IdType === undefined
+    ) {
+      console.log("undefined field");
+      this.setState({ isRerror: true });
+      this.setState({ showNow: false });
+    } else if (
+      this.state.emailAddress === "" ||
+      this.state.clientName === "" ||
+      this.state.IdNumber === "" ||
+      this.state.phoneContact === "" ||
+      this.state.office === "" ||
+      this.state.region === "" ||
+      this.state.IdType === ""
+    ) {
+      console.log("empty field");
+      this.setState({ isRerror: true });
+      this.setState({ showNow: false });
+    } else {
+      console.log("Good to go");
+      this.props.addEmailAddress(this.state.emailAddress);
+      this.props.addClientNumber(this.state.clientNumber);
+      this.props.addClientName(this.state.clientName);
+      this.props.addIdNumber(this.state.IdNumber);
+      this.props.addPhoneContact(this.state.phoneContact);
+      this.props.addIdType(this.state.IdType);
+      this.props.addRegion(this.state.office);
+      this.props.addOffice(this.state.office);
+      this.setState({ showNow: true });
+      this.setState({ isRerror: false });
+    }
+  }
+
+  returnComponent() {
+    if (this.state.showNow) {
+      return (
+        <div>
+          <Header as="h1">Communication Details</Header>
+          <Divider inverted />
+          <TypeofCommunication />
+        </div>
+      );
+    } else {
+      return <div></div>;
+    }
+  }
+
+  returnErrorMessage() {
+    if (this.state.isRerror) {
+      return (
+        <Message
+          error
+          header="Missing Fields"
+          content="Please enter all mandatory Data"
+        />
+      );
+    } else {
+      return <div></div>;
+    }
   }
 
   render() {
     return (
-      <Grid.Row>
-        <Grid.Column>
-          <Form>
-            <Form.Field>
-              <Grid columns={2} divided stackable>
-                {/* <Grid.Row>
+      <Grid columns={2} divided padded fluid="true" stackable>
+        <Grid.Row>
+          <Grid.Column>
+            <Form>
+              <Form.Field>
+                <Grid columns={2} divided stackable>
+                  {/* <Grid.Row>
                   <Grid.Column padded verticalAlign="middle" textAlign="center">
                     <label className="flabel">Client Number</label>
                     <br />
@@ -320,21 +415,29 @@ class User extends Component {
                     />
                   </Grid.Column>
                 </Grid.Row> */}
-                {this.clientNumber()}
-                <Grid.Row>
-                  <Grid.Column padded verticalAlign="middle" textAlign="center">
-                    <label className="flabel">Client Name :*</label>
-                  </Grid.Column>
-                  <Grid.Column padded verticalAlign="middle" textAlign="center">
-                    <input
-                      placeholder="Client Name"
-                      className="finput"
-                      onChange={this.handleClientNameChange}
-                    />
-                  </Grid.Column>
-                </Grid.Row>
-                {this.idNumber()}
-                {/* <Grid.Row columns={3}>
+                  {this.clientNumber()}
+                  <Grid.Row>
+                    <Grid.Column
+                      padded
+                      verticalAlign="middle"
+                      textAlign="center"
+                    >
+                      <label className="flabel">Client Name :*</label>
+                    </Grid.Column>
+                    <Grid.Column
+                      padded
+                      verticalAlign="middle"
+                      textAlign="center"
+                    >
+                      <input
+                        placeholder="Client Name"
+                        className="finput"
+                        onChange={this.handleClientNameChange}
+                      />
+                    </Grid.Column>
+                  </Grid.Row>
+                  {this.idNumber()}
+                  {/* <Grid.Row columns={3}>
                   <Grid.Column padded verticalAlign="middle" textAlign="center">
                     <label className="flabel">ID Number :*</label>
                   </Grid.Column>
@@ -353,22 +456,22 @@ class User extends Component {
                     />
                   </Grid.Column>
                 </Grid.Row> */}
-              </Grid>
-            </Form.Field>
-          </Form>
-        </Grid.Column>
-        <Grid.Column>
-          <Form>
-            <Form.Field>
-              <Grid columns={2} divided stackable>
-                {this.phoneContact()}
-                {/* <Grid.Row>
+                </Grid>
+              </Form.Field>
+            </Form>
+          </Grid.Column>
+          <Grid.Column>
+            <Form>
+              <Form.Field>
+                <Grid columns={2} divided stackable>
+                  {this.phoneContact()}
+                  {/* <Grid.Row>
                   <Grid.Column padded textAlign="center" verticalAlign="middle">
                     <label className="flabel">Phone Contact :*</label>
                   </Grid.Column>
                   <Grid.Column padded textAlign="center">
                     {/* <label>(Please provide a valid Contact Number)</label> */}
-                {/* <input
+                  {/* <input
                       placeholder="Phone Contact"
                       className="finput"
                       onChange={this.handlePhoneContactChange}
@@ -377,31 +480,44 @@ class User extends Component {
                 </Grid.Row> 
                 */}
 
-                {/* <Labelinputfield
+                  {/* <Labelinputfield
                   label="Email Address :*"
                   placeholder="Email Address"
                   onChange={this.handleEmailAddressChange}
                   error="true"
                   errorValue="Invalid"
                 /> */}
-                {this.emailAddress()}
-                <Grid.Row>
-                  {/* <Regions
+                  {this.emailAddress()}
+                  <Grid.Row>
+                    {/* <Regions
                     label="Region"
                     placeholder="Region"
                     onChange={this.handleRegionChange}
                   /> */}
-                  <Offices
-                    label="Office"
-                    placeholder="Office"
-                    onChange={this.handleOfficeChange}
-                  />
-                </Grid.Row>
-              </Grid>
-            </Form.Field>
-          </Form>
-        </Grid.Column>
-      </Grid.Row>
+                    <Offices
+                      label="Office"
+                      placeholder="Office"
+                      onChange={this.handleOfficeChange}
+                    />
+                    <Grid.Column>
+                      <Form.Button
+                        floated="right"
+                        fluid
+                        color="orange"
+                        onClick={this.submitButtonClicked}
+                      >
+                        Submit Details
+                      </Form.Button>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              </Form.Field>
+            </Form>
+          </Grid.Column>
+        </Grid.Row>
+        {this.returnErrorMessage()}
+        {this.returnComponent()}
+      </Grid>
     );
   }
 }

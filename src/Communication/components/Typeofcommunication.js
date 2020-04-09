@@ -34,11 +34,11 @@ class TypeofCommunication extends Component {
         { key: 2, text: "Commendation", value: 2 },
         { key: 3, text: "Grievance", value: 3 },
       ],
-      requestType: 3,
+      requestType: 0,
       regionValue: "",
-      clientNumber: "",
-      clientName: "",
-      IdNumber: "",
+      clientNumber: this.props.clientNumber,
+      clientName: this.props.clientName,
+      IdNumber: this.props.IdNumber,
       phoneContact: "",
       emailAddress: "",
       IdType: "",
@@ -152,6 +152,39 @@ class TypeofCommunication extends Component {
 
     console.log(grievance);
 
+    var isValid = true;
+
+    // if (grievance.clientName === "") {
+    //   console.log("client name empty");
+    // } else {
+    //   console.log(grievance.IdNumber);
+    //   if (grievance.IdNumber === undefined) {
+    //     console.log("idNumber empty");
+    //   } else {
+    //     if (grievance.phoneContact === undefined) {
+    //       console.log("phoneContact empty");
+    //     } else {
+    //       if (grievance.emailAddress === undefined) {
+    //         console.log("emailAddress empty");
+    //       } else {
+    //         if (grievance.IdType === undefined) {
+    //           console.log("IdType empty");
+    //         } else {
+    //           if (grievance.region === undefined) {
+    //             console.log("region empty");
+    //           } else {
+    //             if (grievance.office === undefined) {
+    //               console.log("office empty");
+    //             } else {
+    //               console.log("All good");
+    //               isValid = false;
+    //             }
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
     var a, b, c, d, e, f, g, h;
 
     a = this.validateClientNumber(grievance.clientNumber);
@@ -200,6 +233,8 @@ class TypeofCommunication extends Component {
         this.handleUploadButtonGrievance(value);
         alert("Grievance Submitted Successfully " + value);
       });
+    } else {
+      this.setState({ requestType: 0 });
     }
     //----------------------------------------------------------------
     // console.log(grv);
@@ -233,15 +268,15 @@ class TypeofCommunication extends Component {
   }
 
   validateClientNumber(value) {
-    if (value === "") {
-      console.log("Empty Client Number" + value);
-      this.setState({ errorMessageClientNumber: "Empty Client Number" });
-      return true;
-    } else {
-      console.log("all good");
-      this.setState({ errorMessageClientNumber: "" });
-      return false;
-    }
+    // if (value === "") {
+    //   console.log("Empty Client Number" + value);
+    //   this.setState({ errorMessageClientNumber: "Empty Client Number" });
+    //   return true;
+    // } else {
+    //   console.log("all good");
+    //   this.setState({ errorMessageClientNumber: "" });
+    //   return false;
+    // }
   }
 
   validatePhoneContact(value) {
@@ -263,6 +298,8 @@ class TypeofCommunication extends Component {
     if (value === "") {
       console.log("Empty Client Name");
       this.setState({ errorMessageClientName: "" });
+      this.setState({ requestType: 0 });
+      this.render();
       return true;
     } else {
       console.log("all good");
@@ -668,6 +705,7 @@ class TypeofCommunication extends Component {
                 options={this.state.options}
                 onChange={this.handleChange}
                 selected="Grievance"
+                defaultValue={1}
               />
             </Grid.Column>
             <Grid.Column padded>
@@ -807,6 +845,7 @@ class TypeofCommunication extends Component {
                 fluid
                 options={this.state.options}
                 onChange={this.handleChange}
+                defaultValue={2}
               />
             </Grid.Column>
             <Grid.Column>
@@ -922,7 +961,6 @@ class TypeofCommunication extends Component {
       );
     }
     if (this.state.requestType === 3) {
-      //Complain
       return (
         <Grid stackable columns={2} divided padded>
           <label className="ferror">
@@ -961,6 +999,7 @@ class TypeofCommunication extends Component {
                 fluid
                 options={this.state.options}
                 onChange={this.handleChange}
+                defaultValue={3}
               />
             </Grid.Column>
             <Grid.Column stackable>
@@ -1113,6 +1152,32 @@ class TypeofCommunication extends Component {
             </Grid.Column>
           </Grid.Row>
         </Grid>
+      );
+    }
+    if (this.state.requestType === 0) {
+      return (
+        <div>
+          <Grid.Row stackable>
+            <Grid.Column>
+              <Dropdown
+                placeholder="Select Type of Communication"
+                selection
+                fluid
+                options={this.state.options}
+                onChange={this.handleChange}
+              />
+            </Grid.Column>
+          </Grid.Row>
+          {/* <Button
+            onClick={() => {
+              this.setState({ requestType: 3 });
+              this.render();
+              this.setState({ requestType: 3 });
+            }}
+          >
+            Test
+          </Button> */}
+        </div>
       );
     }
   }

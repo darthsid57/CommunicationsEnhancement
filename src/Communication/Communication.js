@@ -311,9 +311,9 @@ class Communication extends Component {
           <Header as="h1">Communication Management</Header>
           <Divider inverted />
           <Header as="h2">Customer Details</Header>
-          <Grid columns={2} divided padded fluid="true" stackable>
-            <User />
-            {/* <Grid.Row>
+          {/* <Grid columns={2} divided padded fluid="true" stackable> */}
+          <User />
+          {/* <Grid.Row>
               <Grid.Column>
                 <Form>
                   <Form.Field>
@@ -394,7 +394,7 @@ class Communication extends Component {
                         </Grid.Column>
                         <Grid.Column padded textAlign="center">
                           {/* <label>(Please provide a valid Contact Number)</label> */}
-            {/* <input
+          {/* <input
                             placeholder="Phone Contact"
                             className="finput"
                           />
@@ -421,10 +421,10 @@ class Communication extends Component {
                 </Form>
               </Grid.Column>
             </Grid.Row> */}
-          </Grid>
-          <Header as="h1">Communication Details</Header>
-          <Divider inverted />
-          <TypeofCommunication ClientNumber={this.state.clientNumber} />
+          {/* </Grid> */}
+          {/* <Header as="h1">Communication Details</Header>
+          <Divider inverted /> */}
+          {/* <TypeofCommunication /> */}
 
           {/* <Grid columns={2} divided>
             <Grid.Row padded>

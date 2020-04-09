@@ -29,6 +29,8 @@ class ViewPageInternal extends Component {
       commendations: [],
       enquiries: [],
       modalOpen: false,
+      modal2Open: false,
+      showImage: false,
 
       //Customer details
       CustomerNumber: "",
@@ -84,6 +86,8 @@ class ViewPageInternal extends Component {
     };
     this.ModalClose = this.ModalClose.bind(this);
     this.ModalOpen = this.ModalOpen.bind(this);
+    this.Modal2Close = this.Modal2Close.bind(this);
+    this.Modal2Open = this.Modal2Open.bind(this);
 
     this.timeExtract = this.timeExtract.bind(this);
     this.dateExtract = this.dateExtract.bind(this);
@@ -100,6 +104,7 @@ class ViewPageInternal extends Component {
     this.handleAssignButtonOnClick = this.handleAssignButtonOnClick.bind(this);
     this.formatDate = this.formatDate.bind(this);
     this.ifNull = this.ifNull.bind(this);
+    this.showImageButtonClicked = this.showImageButtonClicked.bind(this);
   }
 
   ifNull(value) {
@@ -115,13 +120,22 @@ class ViewPageInternal extends Component {
     return new Date(string).toLocaleDateString("en-AU", options);
   }
 
-  getImageByCustomerDetailID(CustomerDetailID) {
-    const srcValue = `http://localhost:2567/images/images/${CustomerDetailID}`;
-    return (
-      <Form.Field>
-        <Image src={srcValue} fluid />
-      </Form.Field>
-    );
+  showImageButtonClicked() {
+    this.setState({ showImage: true });
+  }
+
+  getImageByCustomerDetailID() {
+    const srcValue = `http://localhost:2567/images/images/${this.state.CustomerDetailID}`;
+    console.log(srcValue);
+    if (this.state.showImage) {
+      return (
+        <Form.Field>
+          <Image src={srcValue} fluid />
+        </Form.Field>
+      );
+    } else {
+      return <div></div>;
+    }
   }
 
   assignOfficerGrievance() {
@@ -207,6 +221,14 @@ class ViewPageInternal extends Component {
     this.setState({ modalOpen: true });
 
     this.isOpen(caseID);
+  }
+
+  Modal2Close() {
+    this.setState({ modal2Open: false });
+  }
+
+  async Modal2Open() {
+    this.setState({ modal2Open: true });
   }
 
   isClose(caseID) {
@@ -331,6 +353,7 @@ class ViewPageInternal extends Component {
       dateClosed: commendation.dateClosed,
       openedByOfficer: commendation.openedBy,
       closedByOfficer: commendation.closedBy,
+      CustomerDetailID: commendation.CustomerDetailID,
     });
     this.ModalOpen(commendation.caseID);
   }
@@ -358,13 +381,14 @@ class ViewPageInternal extends Component {
       dateClosed: enquiry.dateClosed,
       openedByOfficer: enquiry.openedBy,
       closedByOfficer: enquiry.closedBy,
+      CustomerDetailID: enquiry.CustomerDetailID,
     });
     this.ModalOpen(enquiry.caseID);
   }
 
   componentWillMount() {
     console.log(this.props.match.params.id);
-    Axios.get("/server/grievances")
+    Axios.get("http://localhost:2567/server/grievances")
       .then((response) => {
         this.setState({ grievances: response.data });
         console.log(response.data);
@@ -374,7 +398,7 @@ class ViewPageInternal extends Component {
         console.log(err);
       });
 
-    Axios.get("/server/commendation")
+    Axios.get("http://localhost:2567/server/commendation")
       .then((response) => {
         this.setState({ commendations: response.data });
         console.log(response.data);
@@ -384,7 +408,7 @@ class ViewPageInternal extends Component {
         console.log(err);
       });
 
-    Axios.get("/server/enquiries")
+    Axios.get("http://localhost:2567/server/enquiries")
       .then((response) => {
         this.setState({ enquiries: response.data });
         console.log(response.data);
@@ -451,6 +475,7 @@ class ViewPageInternal extends Component {
                     <Table.Cell>{gr.IncidentDate}</Table.Cell>
                     <Table.Cell>{gr.SubCategory}</Table.Cell>
                     <Table.Cell>{gr.officerAssigned}</Table.Cell>
+                    <Table.Cell>{gr.CustomerDetailID}</Table.Cell>
 
                     {this.handleCaseStatus(gr.statusID)}
                   </Table.Row>
@@ -566,7 +591,7 @@ class ViewPageInternal extends Component {
                     width="200"
                   /> */}
                   {this.assignOfficerGrievance()}
-                  {this.getImageByCustomerDetailID(this.state.CustomerDetailID)}
+                  {this.getImageByCustomerDetailID()}
                   {/* <Form.Field>
                     <Image
                       src="http://localhost:2567/images/images/test.jpg"
@@ -587,6 +612,7 @@ class ViewPageInternal extends Component {
               <Button onClick={this.closeButton} color="red">
                 Close Case
               </Button>
+              <Button onClick={this.showImageButtonClicked}>Open Image</Button>
             </Modal.Actions>
           </Modal>
         </div>
@@ -643,6 +669,7 @@ class ViewPageInternal extends Component {
                     <Table.Cell>{gr.CommendationDate}</Table.Cell>
                     <Table.Cell>{gr.CommendationReason}</Table.Cell>
                     <Table.Cell>{gr.officerAssigned}</Table.Cell>
+                    <Table.Cell>{gr.CustomerDetailID}</Table.Cell>
                     {this.handleCaseStatus(gr.statusID)}
                   </Table.Row>
                 ))}
@@ -744,12 +771,16 @@ class ViewPageInternal extends Component {
                       value={this.state.OtherDetails}
                     />
                     {this.assignOfficerGrievance()}
+                    {this.getImageByCustomerDetailID()}
                   </Form>
                 </Modal.Description>
               </Modal.Content>
               <Modal.Actions>
                 <Button onClick={this.closeButton} color="red">
                   Close Case
+                </Button>
+                <Button onClick={this.showImageButtonClicked}>
+                  Open Image
                 </Button>
               </Modal.Actions>
             </Modal>
@@ -808,6 +839,7 @@ class ViewPageInternal extends Component {
                     <Table.Cell>{gr.QueryDate}</Table.Cell>
                     <Table.Cell>{gr.QueryDetails}</Table.Cell>
                     <Table.Cell>{gr.officerAssigned}</Table.Cell>
+                    <Table.Cell>{gr.CustomerDetailID}</Table.Cell>
                     {this.handleCaseStatus(gr.statusID)}
                   </Table.Row>
                 ))}
@@ -904,12 +936,17 @@ class ViewPageInternal extends Component {
                       label="Other Details"
                       value={this.state.OtherDetails}
                     />
+                    {this.assignOfficerGrievance()}
+                    {this.getImageByCustomerDetailID()}
                   </Form>
                 </Modal.Description>
               </Modal.Content>
               <Modal.Actions>
                 <Button onClick={this.closeButton} color="red">
                   Close Case
+                </Button>
+                <Button onClick={this.showImageButtonClicked}>
+                  Open Image
                 </Button>
               </Modal.Actions>
             </Modal>
