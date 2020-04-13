@@ -14,6 +14,7 @@ import {
   Checkbox,
   Button,
   Responsive,
+  Modal,
 } from "semantic-ui-react";
 import Labelinputfield from "./labelinputfield";
 import DropdownOptions from "./Dropdownoptions";
@@ -74,6 +75,7 @@ class TypeofCommunication extends Component {
       errorMessageOffice: "",
       error: false,
       postResponse: [],
+      open: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -116,6 +118,8 @@ class TypeofCommunication extends Component {
     this.handleCommendationReasonChange = this.handleCommendationReasonChange.bind(
       this
     );
+    this.ModalClose = this.ModalClose.bind(this);
+    this.ModalOpen = this.ModalOpen.bind(this);
   }
 
   //   handleChange(event) {
@@ -125,6 +129,14 @@ class TypeofCommunication extends Component {
 
   //     console.log(event.target.value);
   //   }
+
+  ModalClose() {
+    this.setState({ open: false });
+  }
+
+  ModalOpen() {
+    this.setState({ open: true });
+  }
 
   handleSubmitGrievance(event) {
     event.preventDefault();
@@ -231,7 +243,7 @@ class TypeofCommunication extends Component {
         console.log(this.state.postResponse.map((x) => x.customerDetailID));
         value = this.state.postResponse.map((x) => x.customerDetailID);
         this.handleUploadButtonGrievance(value);
-        alert("Grievance Submitted Successfully " + value);
+        // alert("Grievance Submitted Successfully " + value);
       });
     } else {
       this.setState({ requestType: 0 });
@@ -265,6 +277,7 @@ class TypeofCommunication extends Component {
     this.handleUploadButtonGrievance(value);
     this.setState({ requestType: 3 });
     // window.location.reload();
+    this.ModalOpen();
   }
 
   validateClientNumber(value) {
@@ -370,6 +383,7 @@ class TypeofCommunication extends Component {
 
   handleSubmitEnquery(event) {
     event.preventDefault();
+    var value = 0;
 
     const enquiry = {
       clientNumber: this.props.clientNumber,
@@ -423,15 +437,21 @@ class TypeofCommunication extends Component {
       }).then((response) => {
         console.log(response);
         console.log(response.data);
-        alert("Enquiry Submitted Successfully");
+        this.setState({ postResponse: response.data });
+        console.log(this.state.postResponse.map((x) => x.customerDetailID));
+        value = this.state.postResponse.map((x) => x.customerDetailID);
+        this.handleUploadButtonGrievance(value);
+        // alert("Enquiry Submitted Successfully");
       });
     }
-    this.handleUploadButtonGrievance();
+    this.handleUploadButtonGrievance(value);
     this.setState({ requestType: 1 });
+    this.ModalOpen();
   }
 
   handleCommendationSubmit(event) {
     event.preventDefault();
+    var value = 0;
 
     const commendation = {
       clientNumber: this.props.clientNumber,
@@ -489,12 +509,17 @@ class TypeofCommunication extends Component {
       }).then((response) => {
         console.log(response);
         console.log(response.data);
-        alert("Commendation Submitted Successfully");
+        this.setState({ postResponse: response.data });
+        console.log(this.state.postResponse.map((x) => x.customerDetailID));
+        value = this.state.postResponse.map((x) => x.customerDetailID);
+        this.handleUploadButtonGrievance(value);
+        // alert("Commendation Submitted Successfully");
       });
     }
 
-    this.handleUploadButtonGrievance();
+    this.handleUploadButtonGrievance(value);
     this.setState({ requestType: 2 });
+    this.ModalOpen();
   }
 
   handleChange(event, { value }) {
@@ -804,6 +829,18 @@ class TypeofCommunication extends Component {
               </Button>
             </Grid.Column>
           </Grid.Row>
+          <Modal
+            size="tiny"
+            open={this.state.open}
+            onClose={this.ModalClose}
+            closeIcon
+          >
+            <Modal.Content>
+              <Modal.Description>
+                <h1>Submitted Successfuly</h1>
+              </Modal.Description>
+            </Modal.Content>
+          </Modal>
         </Grid>
       );
     }
