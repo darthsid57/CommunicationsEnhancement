@@ -112,7 +112,7 @@ class Communication extends Component {
       },
     };
     axios
-      .post("/upload", formData, config)
+      .post("http://10.2.112.80:2567/upload", formData, config)
       .then((response) => {
         alert("The file is successfully uploaded");
       })

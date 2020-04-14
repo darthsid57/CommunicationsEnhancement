@@ -125,7 +125,7 @@ class ViewPageInternal extends Component {
   }
 
   getImageByCustomerDetailID() {
-    const srcValue = `http://localhost:2567/images/images/${this.state.CustomerDetailID}`;
+    const srcValue = `http://10.2.112.80:2567/images/images/${this.state.CustomerDetailID}`;
     console.log(srcValue);
     if (this.state.showImage) {
       return (
@@ -167,7 +167,7 @@ class ViewPageInternal extends Component {
 
   handleAssignButtonOnClick() {
     console.log("Assign this Officer: " + this.state.caseID);
-    Axios.put(`http://localhost:2567/server/assignedTo/${this.state.caseID}`, {
+    Axios.put(`http://10.2.112.80:2567/server/assignedTo/${this.state.caseID}`, {
       assignedTo: this.state.assignOfficer,
     })
       .then((res) => {
@@ -232,14 +232,14 @@ class ViewPageInternal extends Component {
   }
 
   isClose(caseID) {
-    Axios.get(`http://localhost:2567/server/status/isclose/${caseID}`)
+    Axios.get(`http://10.2.112.80:2567/server/status/isclose/${caseID}`)
       .then((response) => {
         this.setState({ caseClosed: response.data });
         console.log(response.data);
         console.log(response);
         this.state.caseClosed.map((x) => {
           if (x.isClosed !== 1) {
-            Axios.put(`http://localhost:2567/server/status/isclose/${caseID}`, {
+            Axios.put(`http://10.2.112.80:2567/server/status/isclose/${caseID}`, {
               closedBy: this.state.closedBy,
             })
               .then((response) => {
@@ -265,14 +265,14 @@ class ViewPageInternal extends Component {
   }
 
   isOpen(caseID) {
-    Axios.get(`http://localhost:2567/server/status/isopen/${caseID}`)
+    Axios.get(`http://10.2.112.80:2567/server/status/isopen/${caseID}`)
       .then((response) => {
         this.setState({ caseOpen: response.data });
         console.log(response.data);
         console.log(response);
         this.state.caseOpen.map((x) => {
           if (x.isOpen !== 1) {
-            Axios.put(`http://localhost:2567/server/status/isopen/${caseID}`, {
+            Axios.put(`http://10.2.112.80:2567/server/status/isopen/${caseID}`, {
               openedBy: this.state.openedBy,
             })
               .then((response) => {
@@ -388,7 +388,7 @@ class ViewPageInternal extends Component {
 
   componentWillMount() {
     console.log(this.props.match.params.id);
-    Axios.get("http://localhost:2567/server/grievances")
+    Axios.get("http://10.2.112.80:2567/server/grievances")
       .then((response) => {
         this.setState({ grievances: response.data });
         console.log(response.data);
@@ -398,7 +398,7 @@ class ViewPageInternal extends Component {
         console.log(err);
       });
 
-    Axios.get("http://localhost:2567/server/commendation")
+    Axios.get("http://10.2.112.80:2567/server/commendation")
       .then((response) => {
         this.setState({ commendations: response.data });
         console.log(response.data);
@@ -408,7 +408,7 @@ class ViewPageInternal extends Component {
         console.log(err);
       });
 
-    Axios.get("http://localhost:2567/server/enquiries")
+    Axios.get("http://10.2.112.80:2567/server/enquiries")
       .then((response) => {
         this.setState({ enquiries: response.data });
         console.log(response.data);
@@ -457,6 +457,7 @@ class ViewPageInternal extends Component {
                   <Table.HeaderCell>Incident Date</Table.HeaderCell>
                   <Table.HeaderCell>Sub Category</Table.HeaderCell>
                   <Table.HeaderCell>Officer Assigned</Table.HeaderCell>
+                  <Table.HeaderCell>Customer Number</Table.HeaderCell>
                   <Table.HeaderCell>Status</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
@@ -653,6 +654,7 @@ class ViewPageInternal extends Component {
                   <Table.HeaderCell>Commendation Date</Table.HeaderCell>
                   <Table.HeaderCell>Commendation Reason</Table.HeaderCell>
                   <Table.HeaderCell>Officer Assigned</Table.HeaderCell>
+                  <Table.HeaderCell>Customer Number</Table.HeaderCell>
                   <Table.HeaderCell>Status</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
@@ -823,6 +825,7 @@ class ViewPageInternal extends Component {
                   <Table.HeaderCell>Enquiry Date</Table.HeaderCell>
                   <Table.HeaderCell>Enquiry Reason</Table.HeaderCell>
                   <Table.HeaderCell>Officer Assigned</Table.HeaderCell>
+                  <Table.HeaderCell>Customer Number</Table.HeaderCell>
                   <Table.HeaderCell>Status</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>

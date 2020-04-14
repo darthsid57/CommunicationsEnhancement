@@ -218,7 +218,7 @@ class TypeofCommunication extends Component {
       console.log("g : " + g);
       console.log("h : " + h);
 
-      Axios.post("http://localhost:2567/server/grievance", {
+      Axios.post("http://10.2.112.80:2567/server/grievance", {
         clientNumber: grievance.clientNumber,
         clientName: grievance.clientName,
         IdNumber: grievance.IdNumber,
@@ -422,7 +422,7 @@ class TypeofCommunication extends Component {
       console.log("g : " + g);
       console.log("h : " + h);
 
-      Axios.post("http://localhost:2567/server/enquiry", {
+      Axios.post("http://10.2.112.80:2567/server/enquiry", {
         clientNumber: enquiry.clientNumber,
         clientName: enquiry.clientName,
         IdNumber: enquiry.IdNumber,
@@ -492,7 +492,7 @@ class TypeofCommunication extends Component {
       console.log("g : " + g);
       console.log("h : " + h);
 
-      Axios.post("http://localhost:2567/server/commendation", {
+      Axios.post("http://10.2.112.80:2567/server/commendation", {
         clientNumber: commendation.clientNumber,
         clientName: commendation.clientName,
         IdNumber: commendation.IdNumber,
@@ -670,7 +670,7 @@ class TypeofCommunication extends Component {
       //     .catch(error => {});
       // }
     } else {
-      Axios.post(`http://localhost:2567/server/upload/${value}`, formData, {})
+      Axios.post(`http://10.2.112.80:2567/server/upload/${value}`, formData, {})
         .then((response) => {
           // alert("The File is successfully uploaded");
         })
@@ -994,6 +994,18 @@ class TypeofCommunication extends Component {
               </Button>
             </Grid.Column>
           </Grid.Row>
+          <Modal
+            size="tiny"
+            open={this.state.open}
+            onClose={this.ModalClose}
+            closeIcon
+          >
+            <Modal.Content>
+              <Modal.Description>
+                <h1>Submitted Successfuly</h1>
+              </Modal.Description>
+            </Modal.Content>
+          </Modal>
         </Grid>
       );
     }
@@ -1188,6 +1200,18 @@ class TypeofCommunication extends Component {
               </Button>
             </Grid.Column>
           </Grid.Row>
+          <Modal
+            size="tiny"
+            open={this.state.open}
+            onClose={this.ModalClose}
+            closeIcon
+          >
+            <Modal.Content>
+              <Modal.Description>
+                <h1>Submitted Successfuly</h1>
+              </Modal.Description>
+            </Modal.Content>
+          </Modal>
         </Grid>
       );
     }

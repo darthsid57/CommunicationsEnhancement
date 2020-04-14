@@ -91,7 +91,7 @@ class LoginPage extends Component {
       console.log(users);
 
       await axios
-        .post("http://localhost:2567/verify/api/signin", {
+        .post("http://10.2.112.80:2567/verify/api/signin", {
           username: users.username,
           password: users.password,
         })
@@ -117,7 +117,7 @@ class LoginPage extends Component {
         console.log(authorization);
 
         axios
-          .get("http://localhost:2567/verify/user/getTokenData", {
+          .get("http://10.2.112.80:2567/verify/user/getTokenData", {
             headers: { authorization: authorization },
           })
           .then((response) => {

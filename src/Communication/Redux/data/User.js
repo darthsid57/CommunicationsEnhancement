@@ -107,7 +107,7 @@ class User extends Component {
       return (
         <Grid.Row columns={2} divided padded>
           <Grid.Column padded verticalAlign="middle" textAlign="center">
-            <label className="flabel">Client Number1</label>
+            <label className="flabel">Client Number</label>
             <br />
             <label>(Licence Number)</label>
           </Grid.Column>

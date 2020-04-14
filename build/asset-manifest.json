@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/static/css/main.d6f52f21.chunk.css",
+    "main.js": "/static/js/main.4fa90623.chunk.js",
+    "runtime-main.js": "/static/js/runtime-main.59e25771.js",
+    "static/css/2.3932ead9.chunk.css": "/static/css/2.3932ead9.chunk.css",
+    "static/js/2.971befb0.chunk.js": "/static/js/2.971befb0.chunk.js",
+    "index.html": "/index.html",
+    "precache-manifest.26ec3cfefc544d892026b7e9695d7e79.js": "/precache-manifest.26ec3cfefc544d892026b7e9695d7e79.js",
+    "service-worker.js": "/service-worker.js",
+    "static/js/2.971befb0.chunk.js.LICENSE.txt": "/static/js/2.971befb0.chunk.js.LICENSE.txt",
+    "static/media/LTAFIJIlogo.png": "/static/media/LTAFIJIlogo.88b8a2aa.png",
+    "static/media/logo.svg": "/static/media/logo.ee7cd8ed.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.59e25771.js",
+    "static/css/2.3932ead9.chunk.css",
+    "static/js/2.971befb0.chunk.js",
+    "static/css/main.d6f52f21.chunk.css",
+    "static/js/main.4fa90623.chunk.js"
+  ]
+}
