@@ -218,7 +218,7 @@ class TypeofCommunication extends Component {
       console.log("g : " + g);
       console.log("h : " + h);
 
-      Axios.post("http://10.2.112.80:2567/server/grievance", {
+      Axios.post("https://commform.lta.com.fj/server/grievance", {
         clientNumber: grievance.clientNumber,
         clientName: grievance.clientName,
         IdNumber: grievance.IdNumber,
@@ -251,7 +251,7 @@ class TypeofCommunication extends Component {
     //----------------------------------------------------------------
     // console.log(grv);
 
-    // Axios.post("http://localhost:2567/server/grievance", {
+    // Axios.post("https://commform.lta.com.fj/server/grievance", {
     //   clientNumber: grievance.clientNumber,
     //   clientName: grievance.clientName,
     //   IdNumber: grievance.IdNumber,
@@ -422,7 +422,7 @@ class TypeofCommunication extends Component {
       console.log("g : " + g);
       console.log("h : " + h);
 
-      Axios.post("http://10.2.112.80:2567/server/enquiry", {
+      Axios.post("https://commform.lta.com.fj/server/enquiry", {
         clientNumber: enquiry.clientNumber,
         clientName: enquiry.clientName,
         IdNumber: enquiry.IdNumber,
@@ -492,7 +492,7 @@ class TypeofCommunication extends Component {
       console.log("g : " + g);
       console.log("h : " + h);
 
-      Axios.post("http://10.2.112.80:2567/server/commendation", {
+      Axios.post("https://commform.lta.com.fj/server/commendation", {
         clientNumber: commendation.clientNumber,
         clientName: commendation.clientName,
         IdNumber: commendation.IdNumber,
@@ -670,7 +670,7 @@ class TypeofCommunication extends Component {
       //     .catch(error => {});
       // }
     } else {
-      Axios.post(`http://10.2.112.80:2567/server/upload/${value}`, formData, {})
+      Axios.post(`https://commform.lta.com.fj/server/upload/${value}`, formData, {})
         .then((response) => {
           // alert("The File is successfully uploaded");
         })
@@ -778,6 +778,7 @@ class TypeofCommunication extends Component {
                     The information you give us in relation to this communication may be given to the police ,
                     law enforcement officers or any licensing body. "
                   padded
+                  checked
                   onChange={this.handleCheckBoxChange}
                 />
               </Grid.Row>
@@ -943,6 +944,7 @@ class TypeofCommunication extends Component {
                     The information you give us in relation to this communication may be given to the police ,
                     law enforcement officers or any licensing body. "
                   padded
+                  checked
                   onChange={this.handleCheckBoxChange}
                 />
               </Grid.Row>
@@ -1149,6 +1151,7 @@ class TypeofCommunication extends Component {
                     The information you give us in relation to this communication may be given to the police ,
                     law enforcement officers or any licensing body. "
                   padded
+                  checked
                   onChange={this.handleCheckBoxChange}
                 />
               </Grid.Row>

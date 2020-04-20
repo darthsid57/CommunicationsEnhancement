@@ -4,7 +4,7 @@ import Axios from "axios";
 export const getCommunicationType = () => (dispatch) => {
   console.log("GET Communicat");
 
-  Axios.get("http://10.2.112.80:2567/server/communicationtype").then(
+  Axios.get("https://commform.lta.com.fj/server/communicationtype").then(
     (communicationtypes) =>
       dispatch({
         type: GET_COMMUNICATIONTYPE_DATA,

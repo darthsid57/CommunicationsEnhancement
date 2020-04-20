@@ -488,15 +488,18 @@ class User extends Component {
                   errorValue="Invalid"
                 /> */}
                   {this.emailAddress()}
-                  <Grid.Row>
+                  <Grid.Row columns={3}>
                     {/* <Regions
                     label="Region"
                     placeholder="Region"
                     onChange={this.handleRegionChange}
                   /> */}
+                    <Grid.Column>
+                    <label className="flabel">Location</label>
+                    </Grid.Column>
                     <Offices
-                      label="Office"
-                      placeholder="Office"
+                      label="Location"
+                      placeholder="Location"
                       onChange={this.handleOfficeChange}
                     />
                     <Grid.Column>

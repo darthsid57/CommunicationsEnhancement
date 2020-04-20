@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getOffice } from "../Actions/officeAction";
-import { Dropdown, Grid } from "semantic-ui-react";
+import { Dropdown, Grid, Label } from "semantic-ui-react";
 
 class Offices extends Component {
   componentWillMount() {

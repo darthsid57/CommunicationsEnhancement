@@ -112,7 +112,7 @@ class Communication extends Component {
       },
     };
     axios
-      .post("http://10.2.112.80:2567/upload", formData, config)
+      .post("https://commform.lta.com.fj/upload", formData, config)
       .then((response) => {
         alert("The file is successfully uploaded");
       })
@@ -229,9 +229,9 @@ class Communication extends Component {
           {/* <Showme /> */}
           <img src={logo} width="150" height="50" />
           <Segment.Group>
-            <Responsive as={Segment} maxWidth={767}>
+            <Responsive as={Segment} maxWidth={700}>
               <Accordion as={Menu} vertical>
-                <Menu.Item>
+                {/* <Menu.Item>
                   <Accordion.Title
                     active={activeIndex === 0}
                     content="Menu"
@@ -242,7 +242,16 @@ class Communication extends Component {
                     active={activeIndex === 0}
                     content={SizeForm}
                   />
-                </Menu.Item>
+                </Menu.Item> */}
+                <Menu.Item
+                  name="home"
+                  color='orange'
+                  inverted
+                  active={activeItem === "home"}
+                  onClick={this.handleItemClick}
+                  href="https://www.lta.com.fj"
+                  target="_blank"
+                />
               </Accordion>
             </Responsive>
 

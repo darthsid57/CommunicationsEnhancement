@@ -9,6 +9,8 @@ import {
   Button,
   Image,
   Grid,
+  TextArea,
+  Label
 } from "semantic-ui-react";
 import Axios from "axios";
 import "./comm.css";
@@ -125,7 +127,7 @@ class ViewPageInternal extends Component {
   }
 
   getImageByCustomerDetailID() {
-    const srcValue = `http://10.2.112.80:2567/images/images/${this.state.CustomerDetailID}`;
+    const srcValue = `https://commform.lta.com.fj/images/images/${this.state.CustomerDetailID}`;
     console.log(srcValue);
     if (this.state.showImage) {
       return (
@@ -167,7 +169,7 @@ class ViewPageInternal extends Component {
 
   handleAssignButtonOnClick() {
     console.log("Assign this Officer: " + this.state.caseID);
-    Axios.put(`http://10.2.112.80:2567/server/assignedTo/${this.state.caseID}`, {
+    Axios.put(`https://commform.lta.com.fj/server/assignedTo/${this.state.caseID}`, {
       assignedTo: this.state.assignOfficer,
     })
       .then((res) => {
@@ -232,14 +234,14 @@ class ViewPageInternal extends Component {
   }
 
   isClose(caseID) {
-    Axios.get(`http://10.2.112.80:2567/server/status/isclose/${caseID}`)
+    Axios.get(`https://commform.lta.com.fj/server/status/isclose/${caseID}`)
       .then((response) => {
         this.setState({ caseClosed: response.data });
         console.log(response.data);
         console.log(response);
         this.state.caseClosed.map((x) => {
           if (x.isClosed !== 1) {
-            Axios.put(`http://10.2.112.80:2567/server/status/isclose/${caseID}`, {
+            Axios.put(`https://commform.lta.com.fj/server/status/isclose/${caseID}`, {
               closedBy: this.state.closedBy,
             })
               .then((response) => {
@@ -265,14 +267,14 @@ class ViewPageInternal extends Component {
   }
 
   isOpen(caseID) {
-    Axios.get(`http://10.2.112.80:2567/server/status/isopen/${caseID}`)
+    Axios.get(`https://commform.lta.com.fj/server/status/isopen/${caseID}`)
       .then((response) => {
         this.setState({ caseOpen: response.data });
         console.log(response.data);
         console.log(response);
         this.state.caseOpen.map((x) => {
           if (x.isOpen !== 1) {
-            Axios.put(`http://10.2.112.80:2567/server/status/isopen/${caseID}`, {
+            Axios.put(`https://commform.lta.com.fj/server/status/isopen/${caseID}`, {
               openedBy: this.state.openedBy,
             })
               .then((response) => {
@@ -388,7 +390,7 @@ class ViewPageInternal extends Component {
 
   componentWillMount() {
     console.log(this.props.match.params.id);
-    Axios.get("http://10.2.112.80:2567/server/grievances")
+    Axios.get("https://commform.lta.com.fj/server/grievances")
       .then((response) => {
         this.setState({ grievances: response.data });
         console.log(response.data);
@@ -398,7 +400,7 @@ class ViewPageInternal extends Component {
         console.log(err);
       });
 
-    Axios.get("http://10.2.112.80:2567/server/commendation")
+    Axios.get("https://commform.lta.com.fj/server/commendation")
       .then((response) => {
         this.setState({ commendations: response.data });
         console.log(response.data);
@@ -408,7 +410,7 @@ class ViewPageInternal extends Component {
         console.log(err);
       });
 
-    Axios.get("http://10.2.112.80:2567/server/enquiries")
+    Axios.get("https://commform.lta.com.fj/server/enquiries")
       .then((response) => {
         this.setState({ enquiries: response.data });
         console.log(response.data);
@@ -581,10 +583,12 @@ class ViewPageInternal extends Component {
                     label="Closed By"
                     value={this.state.closedByOfficer}
                   />
-                  <FormInputReadOnly
+                  {/* <FormInputReadOnly
                     label="Other Details"
                     value={this.state.OtherDetails}
-                  />
+                  /> */}
+                  <Label basic padded>Other Details</Label>
+                  <TextArea label="Other Details" value={this.state.OtherDetails} padded/>
 
                   {/* <img
                     src="https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
@@ -652,7 +656,7 @@ class ViewPageInternal extends Component {
                   <Table.HeaderCell>Customer Name</Table.HeaderCell>
                   <Table.HeaderCell>Communication Type</Table.HeaderCell>
                   <Table.HeaderCell>Commendation Date</Table.HeaderCell>
-                  <Table.HeaderCell>Commendation Reason</Table.HeaderCell>
+                  {/* <Table.HeaderCell>Commendation Reason</Table.HeaderCell> */}
                   <Table.HeaderCell>Officer Assigned</Table.HeaderCell>
                   <Table.HeaderCell>Customer Number</Table.HeaderCell>
                   <Table.HeaderCell>Status</Table.HeaderCell>
@@ -669,7 +673,7 @@ class ViewPageInternal extends Component {
                     <Table.Cell>{gr.CustomerName}</Table.Cell>
                     <Table.Cell>{gr.CommunicationType}</Table.Cell>
                     <Table.Cell>{gr.CommendationDate}</Table.Cell>
-                    <Table.Cell>{gr.CommendationReason}</Table.Cell>
+                    {/* <Table.Cell>{gr.CommendationReason}</Table.Cell> */}
                     <Table.Cell>{gr.officerAssigned}</Table.Cell>
                     <Table.Cell>{gr.CustomerDetailID}</Table.Cell>
                     {this.handleCaseStatus(gr.statusID)}
@@ -736,10 +740,12 @@ class ViewPageInternal extends Component {
                       label="Date of Commendation"
                       value={this.state.CommendationDate}
                     />
-                    <FormInputReadOnly
+                    {/* <FormInputReadOnly
                       label="Reason for Commendation"
                       value={this.state.CommendationReason}
-                    />
+                    /> */}
+                    <Label basic padded>Reason for Commendation</Label>
+                    <TextArea label="Reason for Commendation" value={this.state.CommendationReason} padded/>
                     <FormInputReadOnly
                       label="Officer Assigned"
                       value={this.state.officerAssigned}
@@ -813,7 +819,7 @@ class ViewPageInternal extends Component {
             </Menu>
           </Segment> */}
           <Segment textAlign="center">
-            <Table celled color="orange" key="orange" size="small">
+            <Table celled color="orange" key="orange" size="small" singleLine={false}>
               <Table.Header fullWidth>
                 <Table.Row>
                   <Table.HeaderCell sorted="descending">
@@ -823,7 +829,7 @@ class ViewPageInternal extends Component {
                   <Table.HeaderCell>Customer Name</Table.HeaderCell>
                   <Table.HeaderCell>Communication Type</Table.HeaderCell>
                   <Table.HeaderCell>Enquiry Date</Table.HeaderCell>
-                  <Table.HeaderCell>Enquiry Reason</Table.HeaderCell>
+                  {/* <Table.HeaderCell>Enquiry Reason</Table.HeaderCell> */}
                   <Table.HeaderCell>Officer Assigned</Table.HeaderCell>
                   <Table.HeaderCell>Customer Number</Table.HeaderCell>
                   <Table.HeaderCell>Status</Table.HeaderCell>
@@ -840,7 +846,7 @@ class ViewPageInternal extends Component {
                     <Table.Cell>{gr.CustomerName}</Table.Cell>
                     <Table.Cell>{gr.CommunicationType}</Table.Cell>
                     <Table.Cell>{gr.QueryDate}</Table.Cell>
-                    <Table.Cell>{gr.QueryDetails}</Table.Cell>
+                    {/* <Table.Cell>{gr.QueryDetails}</Table.Cell> */}
                     <Table.Cell>{gr.officerAssigned}</Table.Cell>
                     <Table.Cell>{gr.CustomerDetailID}</Table.Cell>
                     {this.handleCaseStatus(gr.statusID)}
@@ -899,10 +905,12 @@ class ViewPageInternal extends Component {
                       label="Office"
                       value={this.state.OfficeName}
                     />
-                    <FormInputReadOnly
+                    {/* <FormInputReadOnly
                       label="Enquiry Details"
                       value={this.state.QueryDetails}
-                    />
+                    /> */}
+                    <Label basic padded>Enquiry Details</Label>
+                    <TextArea label="Enquiry Details" value={this.state.QueryDetails} padded/>
                     <FormInputReadOnly
                       label="Enquiry Date"
                       value={this.state.QueryDate}
