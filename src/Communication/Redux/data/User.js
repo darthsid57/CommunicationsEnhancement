@@ -494,8 +494,8 @@ class User extends Component {
                     placeholder="Region"
                     onChange={this.handleRegionChange}
                   /> */}
-                    <Grid.Column>
-                    <label className="flabel">Location</label>
+                    <Grid.Column padded verticalAlign="middle" textAlign="center">
+                      <label className="flabel">Location :</label>
                     </Grid.Column>
                     <Offices
                       label="Location"

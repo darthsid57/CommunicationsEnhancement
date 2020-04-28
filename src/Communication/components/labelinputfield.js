@@ -19,6 +19,7 @@ class labelinputfield extends Component {
           </Grid.Column>
           <Grid.Column padded>
             <Input
+            id={this.props.id}
               fluid
               placeholder={this.state._placeholder}
               onChange={this.props.onChange}

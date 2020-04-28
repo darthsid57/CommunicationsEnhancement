@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getSubCategory } from "../Actions/SubCategoryAction";
-import { Dropdown, Grid } from "semantic-ui-react";
+import { Dropdown, Grid, Label } from "semantic-ui-react";
 
 class SubCategory extends Component {
   componentWillMount() {
@@ -14,8 +14,8 @@ class SubCategory extends Component {
         <Dropdown
           label={this.props.label}
           placeholder={this.props.placeholder}
-          fluid
           selection
+          fluid
           search
           options={this.props.SubCategory}
           onChange={this.props.onChange}

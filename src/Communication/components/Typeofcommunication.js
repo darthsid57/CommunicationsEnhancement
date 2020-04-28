@@ -46,7 +46,8 @@ class TypeofCommunication extends Component {
       region: "",
       office: "",
       customerDetail: [],
-      SubCategory: "",
+      SubCategory: 1,
+      SubCategoryError: true,
       LocationOfIncident: "",
       currentTime: new Date(),
       typeofIncident: "",
@@ -118,6 +119,7 @@ class TypeofCommunication extends Component {
     this.handleCommendationReasonChange = this.handleCommendationReasonChange.bind(
       this
     );
+    this.SubCategoryType = this.SubCategoryType.bind(this);
     this.ModalClose = this.ModalClose.bind(this);
     this.ModalOpen = this.ModalOpen.bind(this);
   }
@@ -130,8 +132,29 @@ class TypeofCommunication extends Component {
   //     console.log(event.target.value);
   //   }
 
+  SubCategoryType() {
+    if (this.state.SubCategoryError === true) {
+      return (
+        <SubCategory
+          placeholder="Sub-Category"
+          onChange={this.handleSubCategoryChange}
+        />
+      )
+    }
+    else {
+      return (
+        <SubCategory
+          placeholder="Sub-Category"
+          onChange={this.handleSubCategoryChange}
+          error={true}
+        />
+      )
+    }
+  }
+
   ModalClose() {
     this.setState({ open: false });
+    window.location.reload();
   }
 
   ModalOpen() {
@@ -446,7 +469,10 @@ class TypeofCommunication extends Component {
     }
     this.handleUploadButtonGrievance(value);
     this.setState({ requestType: 1 });
+    document.getElementById("textareaInput").value = "";
     this.ModalOpen();
+
+
   }
 
   handleCommendationSubmit(event) {
@@ -519,13 +545,25 @@ class TypeofCommunication extends Component {
 
     this.handleUploadButtonGrievance(value);
     this.setState({ requestType: 2 });
+    // document.getElementById("staffname").value = "";
+    // document.getElementById("office").value = "";
+    // document.getElementById("reasoncommendation").value = "";
     this.ModalOpen();
   }
 
   handleChange(event, { value }) {
-    this.setState({
-      requestType: value,
-    });
+    if (value === '') {
+      console.log("Type of Commmunication not Selected");
+      this.setState({ SubCategoryError: true })
+    }
+    else {
+      this.setState({
+        requestType: value,
+      });
+    }
+    // this.setState({
+    //   requestType: value,
+    // });
     console.log(value);
     this.props.getNewUser();
 
@@ -674,7 +712,7 @@ class TypeofCommunication extends Component {
         .then((response) => {
           // alert("The File is successfully uploaded");
         })
-        .catch((error) => {});
+        .catch((error) => { });
     }
   }
 
@@ -757,6 +795,7 @@ class TypeofCommunication extends Component {
                         textAlign="center"
                       >
                         <TextArea
+                          id="textareaInput"
                           rows={3}
                           placeholder="Enquiry Details"
                           fluid
@@ -901,12 +940,14 @@ class TypeofCommunication extends Component {
             <Grid.Column stackable>
               <Grid columns={2} divided stackable>
                 <Labelinputfield
+                  id="staffname"
                   label="Staff Name :"
                   placeholder="Staff Name"
                   onChange={this.handleCommendationStaffNameChange}
                 />
 
                 <Labelinputfield
+                  id="office"
                   label="Office Name/Area :*"
                   placeholder="Office/Area"
                   onChange={this.handleCommendationOfficeNameChange}
@@ -925,6 +966,7 @@ class TypeofCommunication extends Component {
                         stackable
                       >
                         <TextArea
+                          id="reasoncommendation"
                           rows={5}
                           placeholder="Reason for the Commendation:*"
                           onChange={this.handleCommendationReasonChange}
@@ -1052,12 +1094,17 @@ class TypeofCommunication extends Component {
                 onChange={this.handleChange}
                 defaultValue={3}
               />
+
             </Grid.Column>
             <Grid.Column stackable>
-              <SubCategory
-                placeholder="Sub-Category"
-                onChange={this.handleSubCategoryChange}
-              />
+              <Grid.Row >
+                <SubCategory
+                  placeholder="Sub-Category"
+                  onChange={this.handleSubCategoryChange}
+                />
+              </Grid.Row>
+
+              {/* {this.SubCategoryType()} */}
             </Grid.Column>
           </Grid.Row>
           <Grid.Row stackable>

@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/static/css/main.d6f52f21.chunk.css",
-    "main.js": "/static/js/main.37cc044c.chunk.js",
+    "main.js": "/static/js/main.3251f9b6.chunk.js",
     "runtime-main.js": "/static/js/runtime-main.59e25771.js",
     "static/css/2.3932ead9.chunk.css": "/static/css/2.3932ead9.chunk.css",
     "static/js/2.971befb0.chunk.js": "/static/js/2.971befb0.chunk.js",
     "index.html": "/index.html",
-    "precache-manifest.fb85a26194266eda0b0d7d8bd236726c.js": "/precache-manifest.fb85a26194266eda0b0d7d8bd236726c.js",
+    "precache-manifest.0e5f8a3520d6531fb9232ff92920f341.js": "/precache-manifest.0e5f8a3520d6531fb9232ff92920f341.js",
     "service-worker.js": "/service-worker.js",
     "static/js/2.971befb0.chunk.js.LICENSE.txt": "/static/js/2.971befb0.chunk.js.LICENSE.txt",
     "static/media/LTAFIJIlogo.png": "/static/media/LTAFIJIlogo.88b8a2aa.png",
@@ -17,6 +17,6 @@
     "static/css/2.3932ead9.chunk.css",
     "static/js/2.971befb0.chunk.js",
     "static/css/main.d6f52f21.chunk.css",
-    "static/js/main.37cc044c.chunk.js"
+    "static/js/main.3251f9b6.chunk.js"
   ]
 }
